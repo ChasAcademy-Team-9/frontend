@@ -11,4 +11,13 @@
      --color-error: #B91C1C;
      --color-success: #166534;
      --color-warning: #f79e2a;
+
+     --color-link: #166534;
+     --color-hover: #2D5A32;
+     --color-disabled: #9CA3AF;
+
+     --color-border: #E5E7EB;
+     --color-surface: #FFFFFF;
+
+     --color-focus: #3C4A3E;
 }

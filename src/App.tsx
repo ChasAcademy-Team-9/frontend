@@ -1,5 +1,6 @@
 import './App.css';
 import { FaBeer } from 'react-icons/fa';
+// import Input from './components/Input';
 
 function App() {
   return (
@@ -7,6 +8,11 @@ function App() {
       <h1 className='text-6xl'>
         hej <FaBeer />
       </h1>
+     {/* <Input 
+        id="test"
+        name="test" 
+        label="Test Input"
+      /> */}
     </>
   );
 }

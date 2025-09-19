@@ -11,7 +11,7 @@ const Input: FC<InputProps> = ({ name, label, id }) => {
           <div className="flex flex-col gap-2 w-100">
                <label
                     htmlFor={id}
-                    className="text-text-dark font-family text-sm"
+                    className="text-text-dark text-sm"
                >
                     {label}
                </label>
@@ -28,7 +28,7 @@ const Input: FC<InputProps> = ({ name, label, id }) => {
                          placeholder:text-able
                          focus:outline-none 
                          focus:border-focus 
-                         focus:ring-focus focus:ring-1 focus:ring-focus
+                         focus:ring-focus focus:ring-1
                          cursor-text   
                          disabled:cursor-not-allowed       
                "

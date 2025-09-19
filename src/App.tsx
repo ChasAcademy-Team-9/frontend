@@ -1,4 +1,3 @@
-import './App.css';
 import { FaBeer } from 'react-icons/fa';
 import { PrimaryButton } from './components/PrimaryButton/PrimaryButton';
 import { SecondaryButton } from './components/SecondaryButton/SecondaryButton';

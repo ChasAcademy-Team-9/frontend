@@ -1,64 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @import 'tailwindcss';
 
-:root {
-     --color-primary: #3C4A3E;
-     --color-secondary: #719677;
-     --background-color: #F6EDD9;
-     --text-color-dark: #333333;
-     --text-color-light: #FFFFFF;
-     --font-family: "Inter", sans-serif;
+@theme {
+  --color-primary: #3c4a3e;
+  --color-secondary: #719677;
+  --color-background: #f6edd9;
+  --color-text-dark: #333333;
+  --color-text-light: #ffffff;
+  --font-family: 'Inter', sans-serif;
 
-     --color-error: #B91C1C;
-     --color-success: #166534;
-     --color-warning: #f79e2a;
+  --color-error: #b91c1c;
+  --color-success: #166534;
+  --color-warning: #f79e2a;
 
-     --color-link: #166534;
-     --color-hover: #2D5A32;
-     --color-disabled: #9CA3AF;
+  --color-link: #166534;
+  --color-hover: #2d5a32;
+  --color-disabled: #9ca3af;
 
-     --color-border: #E5E7EB;
-     --color-surface: #FFFFFF;
+  --color-border: #e5e7eb;
+  --color-surface: #ffffff;
 
-     --color-focus: #3C4A3E;
+  --color-focus: #3c4a3e;
 }
 
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  background-color:#F6EDD9;
-  border-top: 1px solid #3C4A3E;
-  display: flex;
-  justify-content: space-around;
-  padding: 1rem 0;
-  text-align: center;
+button {
+  cursor: pointer;
 }
 
-.nav-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-weight: 600;
-  color: #719677;
-  text-decoration: none;
-  transition: filter 300ms;
+body {
+  font-family: 'Inter', sans-serif;
 }
-
-.nav-link:hover {
-  color: #3C4A3E 
-}
-
-.nav-icon {
-  font-size: 1.5rem;
-  padding: 0.5em;
-  transition: filter 300ms;
-  will-change: filter;
-}
-
-.nav-link:hover .nav-icon {
-  filter: drop-shadow(0 0 2em #334536aa);
-}
-

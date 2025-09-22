@@ -26,7 +26,7 @@ const Login = () => {
                     <div className="relative mb-6">
                          <button
                               onClick={() => setIsOpen(!isOpen)}
-                              className="w-full bg-white border-2xl border-border rounded-lg px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-focus focus:border-focus flex justify-between items-center transition-colors"
+                              className="w-full bg-background border-2xl border-border rounded-lg px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-focus focus:border-focus flex justify-between items-center transition-colors"
                          >
                               <span className="text-dark">
                                    {selectedRole ? options.find(opt => opt.value === selectedRole)?.label : 'Välj din roll...'}
@@ -56,7 +56,7 @@ const Login = () => {
                     </div>
 
                     {selectedRole && (
-                         <div className="p-3 bg-secondary rounded-2xl border border-focus mb-4">
+                         <div className="p-3 bg-background rounded-2xl border border-focus mb-4">
                               <p className="text-dark text-sm">
                                    <span className="font-medium">Vald roll:</span> {options.find(opt => opt.value === selectedRole)?.label}
                               </p>

@@ -1,21 +1,21 @@
-import { Link } from "react-router-dom";
 import { FaHome, FaMapMarkerAlt, FaQrcode } from 'react-icons/fa';
+import { NavItem } from "./NavItem";
 
 export function HeaderNav() {
     return (
         <nav className="flex gap-6 justify-center bg-secondary rounded p-1">
-            <Link to="/" className="flex gap-1 items-center bg-primary text-text-light py-1 px-3 rounded">
+            <NavItem to="/">
                 <FaHome />
                 Home
-            </Link>
-            <Link to="/scan" className="flex gap-1 items-center bg-primary text-text-light py-1 px-3 rounded">
+            </NavItem>
+            <NavItem to="/scan">
                 <FaQrcode />
                 Scan
-            </Link>
-            <Link to="/postion" className="flex gap-1 items-center bg-primary text-text-light py-1 px-3 rounded">
+            </NavItem>
+            <NavItem to="/postion">
                 <FaMapMarkerAlt />
                 Position
-            </Link>
+            </NavItem>
         </nav>
     )
 }

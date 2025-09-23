@@ -1,10 +1,15 @@
+import { useState } from "react";
+import { Dropdown } from "../components/Dropdown/Dropdown";
 import Input from "../components/Input";
 import { PrimaryButton } from "../components/PrimaryButton/PrimaryButton";
+import BackArrow from "../components/BackArrow";
 
 function SignUp() {
+  const [role, setRole] = useState({value: '', label: ''})
+
   return (
-    <>
-      <button className="text-6xl font-bold border rounded-full p-6">←</button> {/* TODO byt till backarrow-komponenten när den är klar */}
+    <main className="p-8 flex flex-col gap-8">
+      <BackArrow />
 
       <h1>Skapa konto</h1>
 
@@ -12,38 +17,10 @@ function SignUp() {
 
       <Input label="Lösenord" name="password" id="password" type="password" />
 
-      <fieldset className="flex flex-col border-1 
-                         px-3 py-2 
-                         bg-surface   
-                         border border-border 
-                         rounded-2xl
-                         text-text-dark
-                         placeholder:text-able
-                         focus:outline-none 
-                         focus:border-focus 
-                         focus:ring-focus focus:ring-1
-                         cursor-text   
-                         disabled:cursor-not-allowed       
-               ">
-        <legend className="text-text-dark text-sm">
-          Kontotyp
-        </legend>
-        <label>
-          <input type="radio" name="role" />
-          Logistik
-        </label>
-        <label>
-          <input type="radio" name="role" />
-          Spårning
-        </label>
-        <label>
-          <input type="radio" name="role" />
-          Data
-        </label>
-      </fieldset>
+      <Dropdown options={[{value:'logistics', label: 'Logistik'},{value:'tracking', label: 'Spårning'},{value:'data', label: 'Data'}]} selectedValue={role.value} onSelect={o => setRole(o)} placeholder="Välj kontotyp"/>
 
       <PrimaryButton text="Registrera" onClick={()=>null} />
-    </>
+    </main>
   );
 }
 

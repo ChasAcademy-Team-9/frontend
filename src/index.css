@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @import 'tailwindcss';
 
-:root {
+@theme {
   --color-primary: #3c4a3e;
   --color-secondary: #719677;
   --color-background: #f6edd9;

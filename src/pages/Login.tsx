@@ -33,13 +33,17 @@ const Login = () => {
           selectedValue={selectedRole}
           placeholder="Välj din roll..."
           onSelect={handleRoleSelect}
-          className="mb-6"
+          className="mb-8"
         />
 
-        <PrimaryButton
-          text="Fortsätt"
-          onClick={handleContinue}
-        />
+        <div className={`w-full transition-all ${!selectedRole ? 'opacity-50 pointer-events-none' : ''}`}>
+          <div className="flex justify-center">
+            <PrimaryButton
+              text="Fortsätt"
+              onClick={handleContinue}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

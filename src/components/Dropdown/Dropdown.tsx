@@ -42,7 +42,6 @@ export const Dropdown = ({
           className={`w-5 h-5 text-dark transition-transform duration-200 ${
             isOpen ? 'rotate-180' : ''
           }`}
-          fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
@@ -61,7 +60,7 @@ export const Dropdown = ({
             <button
               key={option.value}
               onClick={() => handleSelect(option)}
-              className="w-full px-4 py-3 text-left text-dark hover:bg-hover transition-colors border-b border-border last:border-b-0"
+              className="w-full px-4 py-3 text-left text-dark hover:bg-background transition-colors border-b border-border last:border-b-0"
             >
               {option.label}
             </button>

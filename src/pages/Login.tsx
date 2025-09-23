@@ -4,7 +4,7 @@ import { Dropdown } from "../components/Dropdown/Dropdown";
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState('');
-  
+
   const roleOptions = [
     { value: 'avsandare', label: 'Avsändare' },
     { value: 'mottagare', label: 'Mottagare' },
@@ -21,15 +21,13 @@ const Login = () => {
     }
   };
 
-  const selectedOption = roleOptions.find(opt => opt.value === selectedRole);
-
   return (
-    <div className="bg-background min-h-screen flex items-center justify-center p-4">
-      <div className="bg-secondary rounded-2xl shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-6 text-dark">
+    <div className="bg-background min-h-screen flex items-center justify-center px-4 py-8">
+      <div className="bg-secondary rounded-2xl shadow-lg p-12 w-full max-w-lg mx-auto">
+        <h1 className="text-3xl font-bold text-center mb-8 text-text-dark">
           Välj din roll
         </h1>
-        
+
         <Dropdown
           options={roleOptions}
           selectedValue={selectedRole}
@@ -41,7 +39,6 @@ const Login = () => {
         <PrimaryButton
           text="Fortsätt"
           onClick={handleContinue}
-          className="w-full py-3 px-6 text-base font-semibold"
         />
       </div>
     </div>

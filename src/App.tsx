@@ -1,15 +1,15 @@
-import { FaBeer } from 'react-icons/fa';
-import { PrimaryButton } from './components/PrimaryButton/PrimaryButton';
-import { SecondaryButton } from './components/SecondaryButton/SecondaryButton';
+import { Outlet } from 'react-router-dom';
+import BottomNav from './components/BottomNav';
 
 function App() {
   return (
-    <>
-      <h1 className='text-6xl'>
-        hej <FaBeer />
-      </h1>
-    </>
+    <div className="app">
+      <Outlet/>
+      <BottomNav />
+    </div>
   );
 }
 
 export default App;
+
+

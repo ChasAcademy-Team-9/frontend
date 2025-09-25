@@ -5,14 +5,15 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
      label: string;
      id: string;
      className?: string;
+     labelClassName?: string;
 }
 
-const Input: FC<InputProps> = ({ name, label, id, className, ...props }) => {
+const Input: FC<InputProps> = ({ name, label, id, className, labelClassName, ...props }) => {
      return (
           <div className={`flex flex-col gap-2 w-100 ${className || ''}`}>
                <label
                     htmlFor={id}
-                    className="text-text-dark text-sm"
+                    className={`text-text-dark ${labelClassName || ''}`}
                >
                     {label}
                </label>

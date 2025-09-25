@@ -1,6 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @import 'tailwindcss';
 
+<<<<<<< HEAD
+=======
+@theme {
+  --color-primary: #3c4a3e;
+  --color-secondary: #719677;
+  --color-background: #f6edd9;
+  --color-text-dark: #333333;
+  --color-text-light: #ffffff;
+  --font-family: 'Inter', sans-serif;
+
+  --color-error: #b91c1c;
+  --color-success: #166534;
+  --color-warning: #f79e2a;
+
+  --color-link: #166534;
+  --color-hover: #2d5a32;
+  --color-disabled: #9ca3af;
+
+  --color-border: #e5e7eb;
+  --color-surface: #ffffff;
+
+  --color-focus: #3c4a3e;
+}
+
+>>>>>>> Development
 button {
   cursor: pointer;
 }
@@ -8,4 +33,7 @@ button {
 body {
   font-family: 'Inter', sans-serif;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> Development

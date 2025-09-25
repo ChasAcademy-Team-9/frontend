@@ -3,13 +3,11 @@ import BottomNav from './components/BottomNav';
 
 function App() {
   return (
-    <div className="app">
-      <Outlet/>
+    <div className='app'>
+      <Outlet />
       <BottomNav />
     </div>
   );
 }
 
 export default App;
-
-

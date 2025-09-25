@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { path: 'login', element: <Login /> },
       { path: 'scan', element: <Scan /> },
       { path: 'position', element: <Position /> },
-      { path: 'home', element: <Home /> },
+      { path: '', element: <Home /> },
       { path: '*', element: <NotFound /> },
     ],
   },

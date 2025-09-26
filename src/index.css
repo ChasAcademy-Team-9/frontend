@@ -29,4 +29,5 @@ button {
 
 body {
   font-family: 'Inter', sans-serif;
+  background-color: var(--color-background);
 }

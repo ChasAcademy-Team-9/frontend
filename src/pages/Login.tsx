@@ -32,7 +32,7 @@ function Login() {
       <div className="mt-6 text-center">
         <p className="text-text-dark opacity-70">
           Har du inget konto än?{' '}
-          <Link to="/sign-up" className="text-primary font-semibold hover:underline transition-colors">
+          <Link to="/sign-up" className="text-text-dark text-md underline font-bold hover:underline transition-colors">
             Registrera dig här
           </Link>
         </p>

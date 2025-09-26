@@ -8,7 +8,14 @@ function Login() {
     <main className="p-8 flex flex-col gap-8 max-sm:min-h-screen max-sm:w-screen max-sm:fixed max-sm:inset-0 max-sm:p-4">
       <BackArrow />
 
-      <h1>Logga in</h1>
+      <div className="text-center">
+        <h1 className='text-4xl font-bold text-text-dark mb-2'>
+          Välkommen!
+        </h1>
+        <p className='text-lg text-text-dark opacity-80'>
+          Logga in för att fortsätta till din profil
+        </p>
+      </div>
 
       <Input label="Email" name="email" id="email" type="email" className="max-sm:w-full" />
 

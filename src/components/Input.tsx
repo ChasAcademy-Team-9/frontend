@@ -24,7 +24,7 @@ const Input: FC<InputProps> = ({ name, label, id, className, labelClassName, ...
                     className="
                          px-3 py-2 
                          bg-background   
-                         border border-border 
+                         border-secondary border-2
                          rounded-2xl
                          text-text-dark
                          placeholder:text-able
@@ -32,7 +32,8 @@ const Input: FC<InputProps> = ({ name, label, id, className, labelClassName, ...
                          focus:border-focus 
                          focus:ring-focus focus:ring-1
                          cursor-text   
-                         disabled:cursor-not-allowed       
+                         disabled:cursor-not-allowed   
+                         disabled:opacity-50    
                "
                     {...props}
                />

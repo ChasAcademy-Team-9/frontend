@@ -1,15 +1,11 @@
-import { Outlet } from 'react-router-dom';
-import BottomNav from './components/BottomNav';
+import HomeScreen from './components/HomeScreen';
 
 function App() {
   return (
-    <div className="app">
-      <Outlet/>
-      <BottomNav />
+    <div>
+      <HomeScreen />
     </div>
   );
 }
 
 export default App;
-
-

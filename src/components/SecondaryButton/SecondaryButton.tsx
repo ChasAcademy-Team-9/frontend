@@ -1,11 +1,25 @@
-export function SecondaryButton(props: { text: string; onClick: React.MouseEventHandler<HTMLButtonElement> }) {
-    const { text, onClick } = props
-    return (
-        <button
-            className="bg-secondary hover:brightness-110 text-text-light px-6 py-2 rounded-2xl cursor-pointer"
-            onClick={ onClick }
-        >
-            { text }
-        </button>
-    )
+export function SecondaryButton(props: {
+  text: string;
+  fullWidth?: boolean;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}) {
+  const { text, onClick, fullWidth = false } = props;
+
+  return (
+    <button
+      className={`   
+        ${fullWidth ? 'w-full' : 'w-auto'} 
+
+        sm:w-auto
+
+
+        min-w-32
+
+
+        bg-secondary hover:brightness-110 text-text-light px-6 py-2 rounded-2xl cursor-pointer`}
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
 }

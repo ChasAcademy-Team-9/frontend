@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 function HomeScreen() {
   return (
-    <main className='min-h-screen flex flex-col justify-center items-center px-8 py-16 text-center'>
+    <main className='flex flex-col justify-center items-center px-8 py-16 text-center'>
       <div className='max-w-4xl w-full space-y-8 lg:space-y-12'>
         <div className='space-y-4 lg:space-y-6'>
           <h1 className='text-4xl sm:text-5xl lg:text-6xl font-extrabold text-primary'>

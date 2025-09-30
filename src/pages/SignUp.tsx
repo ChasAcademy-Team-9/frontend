@@ -10,8 +10,7 @@ function SignUp() {
   return (
     <main className='p-8 flex flex-col justify-center items-center gap-8'>
       <BackArrow />
-
-      <h1 className='text-xl'>Skapa konto</h1>
+      <h1 className='text-4xl font-bold text-text-dark mb-2'>Skapa konto</h1>
 
       <Input
         label='Email'

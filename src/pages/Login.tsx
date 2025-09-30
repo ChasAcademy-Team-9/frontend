@@ -40,7 +40,7 @@ function Login() {
       />
 
       <div className='text-center'>
-        <p className='text-text-dark opacity-70'>
+        <p className='text-text-dark '>
           Har du inget konto än?{' '}
           <Link
             to='/sign-up'

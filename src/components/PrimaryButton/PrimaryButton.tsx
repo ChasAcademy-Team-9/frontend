@@ -15,7 +15,7 @@ export function PrimaryButton(props: {
 
         sm:w-auto
 
-        
+        min-w-32
 
         bg-primary hover:brightness-150 text-text-light px-6 py-2 rounded-2xl cursor-pointer
       `}

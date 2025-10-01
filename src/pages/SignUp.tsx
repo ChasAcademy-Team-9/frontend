@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Dropdown } from '../components/Dropdown/Dropdown';
+import { Dropdown } from '../components/Dropdown';
 import Input from '../components/Input';
-import { PrimaryButton } from '../components/PrimaryButton/PrimaryButton';
+import { PrimaryButton } from '../components/PrimaryButton';
 import BackArrow from '../components/BackArrow';
 
 function SignUp() {

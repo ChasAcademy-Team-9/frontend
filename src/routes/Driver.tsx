@@ -25,7 +25,7 @@ const Driver = () => {
       <div className="mt-8 grid grid-cols-1 gap-4">
         <Dashboard label="Temperatur" value={22} unit="°C" trend="up" />
         <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" />
-        <Dashboard label="Batterinivå " value={35} unit="%" trend="warning" />
+        <Dashboard label="Batterinivå " value={65} unit="%" trend="warning" />
       </div>
     </div>
   );

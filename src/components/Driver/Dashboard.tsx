@@ -29,7 +29,6 @@ const generateData = (trend: 'up' | 'down' | 'warning' = 'up') => {
       { value: 61 },
     ];
   } else {
-
     return [
       { value: 45 },
       { value: 48 },
@@ -44,11 +43,13 @@ const generateData = (trend: 'up' | 'down' | 'warning' = 'up') => {
 
 const Dashboard = ({ label, value, unit, trend = 'up' }: DashboardProps) => {
   const data = generateData(trend);
-  const lineColor = trend === 'up'
-    ? 'var(--color-success)'
-    : trend === 'down'
-      ? 'var(--color-error)'
-      : 'var(--color-warning)';
+  
+  const getStrokeColor = () => {
+    if (trend === 'warning') {
+      return 'url(#warningGradient)';
+    }
+    return trend === 'up' ? 'var(--color-success)' : 'var(--color-error)';
+  };
 
   return (
     <div className="bg-secondary/80 rounded-2xl p-4 shadow-sm flex items-center justify-between">
@@ -63,12 +64,19 @@ const Dashboard = ({ label, value, unit, trend = 'up' }: DashboardProps) => {
       <div className="w-32 h-20">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
+            <defs>
+              <linearGradient id="warningGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="var(--color-error)" />
+                <stop offset="50%" stopColor="var(--color-warning)" />
+                <stop offset="100%" stopColor="var(--color-success)" />
+              </linearGradient>
+            </defs>
             <Line
               type="monotone"
               dataKey="value"
-              stroke={lineColor}
+              stroke={getStrokeColor()}
               strokeWidth={3}
-              dot={true}
+              dot={false}
             />
           </LineChart>
         </ResponsiveContainer>

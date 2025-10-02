@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound.tsx';
 import Scan from './routes/Scan.tsx';
 import Position from './routes/Position.tsx';
 import Home from './routes/Home.tsx';
+import Driver from './routes/Driver.tsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
   { path: '/scan', element: <Scan /> },
   { path: '/position', element: <Position /> },
   { path: '/home', element: <Home /> },
+  { path: '/driver', element: <Driver /> },
   { path: '*', element: <NotFound /> },
 ]);
 

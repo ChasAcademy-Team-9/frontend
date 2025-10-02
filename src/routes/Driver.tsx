@@ -1,3 +1,4 @@
+import Dashboard from "../components/Driver/Dashboard";
 import InfoCard from "../components/Driver/InfoCard"
 import { PrimaryButton } from "../components/PrimaryButton";
 
@@ -20,6 +21,11 @@ const Driver = () => {
             onClick={() => alert('Tillagd!')}
           />
         </div>
+      </div>
+      <div className="mt-8 grid grid-cols-1 gap-4">
+        <Dashboard label="Temperatur" value={22} unit="°C" trend="up" />
+        <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" />
+        <Dashboard label="Batterinivå " value={35} unit="%" trend="warning" />
       </div>
     </div>
   );

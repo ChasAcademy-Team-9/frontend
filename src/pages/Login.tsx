@@ -1,5 +1,5 @@
 import Input from '../components/Input';
-import { PrimaryButton } from '../components/PrimaryButton/PrimaryButton';
+import { PrimaryButton } from '../components/PrimaryButton';
 import BackArrow from '../components/BackArrow';
 import { Link } from 'react-router-dom';
 

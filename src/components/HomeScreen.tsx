@@ -1,5 +1,5 @@
-import { PrimaryButton } from '../components/PrimaryButton/PrimaryButton';
-import { SecondaryButton } from '../components/SecondaryButton/SecondaryButton';
+import { PrimaryButton } from './PrimaryButton';
+import { SecondaryButton } from './SecondaryButton';
 import {
   FaWarehouse,
   FaTruckMoving,

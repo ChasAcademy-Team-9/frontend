@@ -14,7 +14,7 @@ const Driver = () => {
         ]}
       />
       <div className="mt-8 flex justify-center">
-        <div className="scale-125"> 
+        <div className="scale-125">
           <PrimaryButton
             text="Skanna för att lägga till"
             onClick={() => alert('Tillagd!')}

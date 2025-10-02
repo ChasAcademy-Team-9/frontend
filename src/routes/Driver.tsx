@@ -27,7 +27,25 @@ const Driver = () => {
         <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" />
         <Dashboard label="Batterinivå " value={65} unit="%" trend="warning" />
       </div>
+
+      <div className="mt-8 flex justify-center">
+        <div className="scale-125">
+          <PrimaryButton
+            text="Visa Rutt"
+            onClick={() => alert('Rutt!')}
+          />
+        </div>
+      </div>
+      <div className="mt-8 flex justify-center">
+        <div className="scale-125">
+          <PrimaryButton
+            text="Lista med packet"
+            onClick={() => alert('Listan!')}
+          />
+        </div>
+      </div>
     </div>
+
   );
 };
 

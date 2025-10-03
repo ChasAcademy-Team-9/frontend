@@ -19,7 +19,7 @@ export function New() {
       <BackArrow />
       <h1>Nytt paket</h1>
       <p>Steg 1 av 4: Paketdetaljer</p>
-      <form className="flex flex-col gap-8">
+      <form className="flex flex-col gap-8 bg-white/75 p-4 m-[-1rem] rounded-b-3xl rounded-t-2xl">
         <Input label="Beskrivning" id="a" name="description" />
         <Input label="Vikt (kg)" name="0.0" id="weight" />
         <fieldset className="flex flex-wrap gap-4">

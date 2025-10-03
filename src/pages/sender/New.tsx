@@ -11,7 +11,7 @@ export function New() {
     { value: "economy", label: "Ekonomi" },
     { value: "express", label: "Express" },
   ];
-  const [priority, setPriority] = useState(priorities[0]);
+  const [priority, setPriority] = useState({ value: "", label: "" });
   const navigate = useNavigate();
 
   return (
@@ -34,7 +34,7 @@ export function New() {
             onSelect={(o) => setPriority(o)}
             options={priorities}
             selectedValue={priority.value}
-            placeholder="Välj priotitet"
+            placeholder="Välj prioritet"
           />
         </label>
         <Input

@@ -1,6 +1,6 @@
-# Chas Advance Frontend
+# 🚚 Chas Advance 9 Frontend
 
-## Översikt
+## 📝 Översikt
 
 Detta är frontend-applikationen för **Chas Advance 9**, ett logistiksystem som säkerställer klimatkontrollerad leverans av specialvaror. Frontend är uppdelad i tre huvudappar:
 
@@ -10,7 +10,7 @@ Detta är frontend-applikationen för **Chas Advance 9**, ett logistiksystem som
 
 ---
 
-## Funktioner
+## ✨ Funktioner
 
 - Realtidsövervakning av paket och leveranser
 - Sensordata från paket, inklusive temperatur och luftfuktighet
@@ -20,7 +20,7 @@ Detta är frontend-applikationen för **Chas Advance 9**, ett logistiksystem som
 
 ---
 
-## Teknikstack
+## 🛠️ Teknikstack
 
 - React
 - Vite

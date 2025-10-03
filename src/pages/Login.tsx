@@ -4,6 +4,8 @@ import BackArrow from '../components/BackArrow';
 import { Link } from 'react-router-dom';
 
 function Login() {
+ 
+
   return (
     <main className='p-8 flex flex-col justify-center items-center gap-8'>
       <BackArrow />
@@ -21,6 +23,7 @@ function Login() {
         id='email'
         type='email'
         className='max-sm:w-full'
+  
       />
 
       <Input
@@ -29,14 +32,13 @@ function Login() {
         id='password'
         type='password'
         className='max-sm:w-full'
+
       />
 
       <PrimaryButton
         fullWidth={true}
         text='Logga in'
-        onClick={() => {
-          console.log('Du är inloggad, yay!');
-        }}
+        onClick={() => alert('Logged in!')} 
       />
 
       <div className='text-center'>

@@ -9,10 +9,14 @@ export function Sender() {
   const navigate = useNavigate();
 
   return (
-    <main>
-      <BackArrow />
-      <h1>Avsändare</h1>
-      <p>Hantera dina paket och sensorer.</p>
+    <main className="flex flex-col p-8 gap-8 max-w-4xl mx-auto">
+      <header className="flex gap-2">
+        <BackArrow />
+        <div className="flex flex-col">
+          <h1 className="text-4xl">Avsändare</h1>
+          <p>Hantera dina paket och sensorer.</p>
+        </div>
+      </header>
       <section>
         <div>
           {" "}

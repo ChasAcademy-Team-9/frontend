@@ -11,7 +11,7 @@ export function Sender() {
   return (
     <main>
       <BackArrow />
-      <h1>Avänsändare</h1>
+      <h1>Avsändare</h1>
       <p>Hantera dina paket och sensorer.</p>
       <section>
         <div>

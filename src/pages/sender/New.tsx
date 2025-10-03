@@ -15,18 +15,33 @@ export function New() {
   const navigate = useNavigate();
 
   return (
-    <main className="flex flex-col p-8 gap-8">
+    <main className="flex flex-col p-8 gap-8 max-w-4xl mx-auto">
       <BackArrow />
       <h1>Nytt paket</h1>
       <p>Steg 1 av 4: Paketdetaljer</p>
       <form className="flex flex-col gap-8">
         <Input label="Beskrivning" id="a" name="description" />
         <Input label="Vikt (kg)" name="0.0" id="weight" />
-        <fieldset className="flex">
+        <fieldset className="flex flex-wrap gap-4">
           <legend>Dimensioner (cm)</legend>
-          <Input label="" id="l" name="Längd" />
-          <Input label="" id="w" name="Bredd" />
-          <Input label="" id="h" name="Höjd" />
+          <Input
+            label=""
+            id="l"
+            name="Längd"
+            className="flex-1 basis-full md:basis-1/4"
+          />
+          <Input
+            label=""
+            id="w"
+            name="Bredd"
+            className="flex-1 basis-full md:basis-1/4"
+          />
+          <Input
+            label=""
+            id="h"
+            name="Höjd"
+            className="flex-1 basis-full md:basis-1/4"
+          />
         </fieldset>
         <label>
           Prioritet

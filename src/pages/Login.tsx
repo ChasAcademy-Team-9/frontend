@@ -1,28 +1,10 @@
 import Input from '../components/Input';
 import { PrimaryButton } from '../components/PrimaryButton';
 import BackArrow from '../components/BackArrow';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Login() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = () => {
-
-    console.log('Du är inloggad, yay!');
-    
-    const userRole = 'driver';
-    
-    localStorage.setItem('userRole', userRole);
-    
-    if (userRole === 'driver') {
-      navigate('/driver');
-    } else if (userRole === 'customer') {
-      navigate('/home');
-    }
-  };
+ 
 
   return (
     <main className='p-8 flex flex-col justify-center items-center gap-8'>
@@ -41,8 +23,7 @@ function Login() {
         id='email'
         type='email'
         className='max-sm:w-full'
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+  
       />
 
       <Input
@@ -51,14 +32,13 @@ function Login() {
         id='password'
         type='password'
         className='max-sm:w-full'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+
       />
 
       <PrimaryButton
         fullWidth={true}
         text='Logga in'
-        onClick={handleLogin}
+        onClick={() => alert('Logged in!')} 
       />
 
       <div className='text-center'>

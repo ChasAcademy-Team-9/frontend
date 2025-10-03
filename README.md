@@ -1,69 +1,31 @@
-# React + TypeScript + Vite
+# Chas Advance Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Översikt
 
-Currently, two official plugins are available:
+Detta är frontend-applikationen för **Chas Advance 9**, ett logistiksystem som säkerställer klimatkontrollerad leverans av specialvaror. Frontend är uppdelad i tre huvudappar:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Logistikflödet** – hanterar lager och transportörer, kopplat till lastbilar och deras styrenheter.
+- **Spårningsapp** – låter kunder och kontor övervaka specifika paket eller hela leveranser med lokal och sensordata inklusive varningar.
+- **Dataapp** – webbaserad app för kontorsanvändare med dataöversikt och analys.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Funktioner
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Realtidsövervakning av paket och leveranser
+- Sensordata från paket, inklusive temperatur och luftfuktighet
+- Integration med lastbilens styrenhet för styrning och återkoppling
+- Användarroller för lagerpersonal, transportörer och kontor
+- Responsiv design för mobil och desktop
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Teknikstack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- React
+- Vite
+- Typescript
+- Tailwind CSS för styling
+- React Router för navigation
+- Azure App Service för hosting
+- CI/CD via GitHub Actions

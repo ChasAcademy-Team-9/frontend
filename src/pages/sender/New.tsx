@@ -16,9 +16,13 @@ export function New() {
 
   return (
     <main className="flex flex-col p-8 gap-8 max-w-4xl mx-auto">
-      <BackArrow />
-      <h1>Nytt paket</h1>
-      <p>Steg 1 av 4: Paketdetaljer</p>
+      <header className="grid gap-2 grid-cols-2 ">
+        <div className="row-span-2 w-min">
+          <BackArrow />
+        </div>
+        <h1>Nytt paket</h1>
+        <p>Steg 1 av 4: Paketdetaljer</p>
+      </header>
       <form className="flex flex-col gap-8 bg-white/75 p-4 m-[-1rem] rounded-b-3xl rounded-t-2xl">
         <Input label="Beskrivning" id="a" name="description" />
         <Input label="Vikt (kg)" name="0.0" id="weight" />

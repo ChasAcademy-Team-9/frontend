@@ -2,6 +2,7 @@ import Dashboard from "../components/Driver/Dashboard";
 import InfoCard from "../components/Driver/InfoCard";
 import NavigationCard from "../components/Driver/NavigationCard";
 import { PrimaryButton } from "../components/PrimaryButton";
+import BottomNav from "../components/BottomNav";
 
 const Driver = () => {
   return (
@@ -9,8 +10,8 @@ const Driver = () => {
       <h1 className="text-3xl font-bold text-text-dark mb-6 bg-secondary/80 p-5">
         Förar Dashboard
       </h1>
-      
-      <div className="min-h-screen bg-background p-4 space-y-6">
+
+      <div className="min-h-screen bg-background p-4 space-y-6 pb-20">
         <InfoCard
           title="Information"
           items={[
@@ -19,7 +20,7 @@ const Driver = () => {
             { label: 'Hastighet:', value: '60 km/h' }
           ]}
         />
-        
+
         <div className="flex justify-center">
           <div className="scale-125">
             <PrimaryButton
@@ -28,7 +29,7 @@ const Driver = () => {
             />
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 gap-4">
           <Dashboard label="Temperatur" value={22} unit="°C" trend="up" />
           <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" />
@@ -37,6 +38,8 @@ const Driver = () => {
 
         <NavigationCard />
       </div>
+
+      <BottomNav />
     </div>
   );
 };

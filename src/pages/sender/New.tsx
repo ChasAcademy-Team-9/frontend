@@ -23,7 +23,7 @@ export function New() {
         <Input label="Beskrivning" id="a" name="description" />
         <Input label="Vikt (kg)" name="0.0" id="weight" />
         <fieldset className="flex flex-wrap gap-4">
-          <legend>Dimensioner (cm)</legend>
+          <legend>Storlek (cm)</legend>
           <Input
             label=""
             id="l"

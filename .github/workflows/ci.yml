@@ -1,0 +1,17 @@
+name: React CI
+
+on: [push]
+
+jobs:
+  build-test-react:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v3
+
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build

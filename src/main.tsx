@@ -11,6 +11,7 @@ import Position from './routes/Position.tsx';
 import Home from './routes/Home.tsx';
 import DriverList from './pages/DriverList.tsx';
 import Driver from './routes/Driver.tsx';
+import PackageList from './pages/PackageList.tsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
@@ -19,7 +20,8 @@ const router = createBrowserRouter([
   { path: '/scan', element: <Scan /> },
   { path: '/position', element: <Position /> },
   { path: '/home', element: <Home /> },
-  { path: '/driverlist', element: <DriverList /> },
+  { path: '/driver-list', element: <DriverList /> },
+  { path: '/package-list', element: <PackageList /> },
   { path: '/driver', element: <Driver /> },
   { path: '*', element: <NotFound /> },
 ]);

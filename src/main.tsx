@@ -9,7 +9,7 @@ import NotFound from './pages/NotFound.tsx';
 import Scan from './routes/Scan.tsx';
 import Position from './routes/Position.tsx';
 import Home from './routes/Home.tsx';
-import DriverList from './components/DriverList.tsx';
+import DriverList from './pages/DriverList.tsx';
 import Driver from './routes/Driver.tsx';
 
 const router = createBrowserRouter([

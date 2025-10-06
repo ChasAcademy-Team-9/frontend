@@ -1,6 +1,11 @@
 name: React CI
 
-on: [push]
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+      - development
 
 jobs:
   build-test-react:

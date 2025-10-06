@@ -1,6 +1,7 @@
 import Card from "../components/Card";
 import BackArrow from "../components/BackArrow";
 import { PrimaryButton } from "../components/PrimaryButton";
+import { LuCheck } from 'react-icons/lu';
 
 const ConfirmationRapport: React.FC = () => {
      const currentTime = new Date().toLocaleTimeString('sv-SE', {
@@ -13,7 +14,8 @@ const ConfirmationRapport: React.FC = () => {
      return (
           <div className="p-5 max-w-2xl mx-auto">
                <div className="text-center mb-8 p-5 bg-secondary text-text-dark rounded-2xl">
-                    <h1 className="text-4xl font-bold mb-3">
+                    <h1 className="text-4xl font-bold mb-3 flex items-center justify-center gap-3">
+                         <LuCheck className="text-success" size={36} />
                          Rapport Skickad
                     </h1>
                </div>
@@ -55,14 +57,17 @@ const ConfirmationRapport: React.FC = () => {
                     <h2 className="text-xl font-semibold text-text-dark mb-3 mt-0">
                          Nästa steg
                     </h2>
-                    <ul className="m-0 pl-5 space-y-2">
-                         <li className="text-text-dark">
+                    <ul>
+                         <li className="text-text-dark flex items-center gap-2">
+                              <LuCheck className="text-success" size={16} />
                               Rapporten har sparats i systemet
                          </li>
-                         <li className="text-text-dark">
+                         <li className="text-text-dark flex items-center gap-2">
+                              <LuCheck className="text-success" size={16} />
                               En kopia har skickats till huvudkontoret
                          </li>
-                         <li className="text-text-dark">
+                         <li className="text-text-dark flex items-center gap-2">
+                              <LuCheck className="text-success" size={16} />
                               Du kan nu fortsätta med nästa transport
                          </li>
                     </ul>

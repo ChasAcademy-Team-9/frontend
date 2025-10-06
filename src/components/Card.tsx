@@ -16,6 +16,7 @@ type CardProps = {
     tid?: string;
     adress?: string;
   };
+  className?: string;
   onClick?: () => void;
 };
 
@@ -28,16 +29,17 @@ const Card: React.FC<CardProps> = ({
   fordonId,
   status,
   info,
+  className,
   onClick,
 }) => {
 
 
-// Beroende på variant, så ska det rendera olika innehåll. 
-// I detta fall paket, transport, bekräftelse eller status...
-// Dessa är alltså våra huvudbehållare för kort informationen.
+  // Beroende på variant, så ska det rendera olika innehåll. 
+  // I detta fall paket, transport, bekräftelse eller status...
+  // Dessa är alltså våra huvudbehållare för kort informationen.
   return (
-    <div className="card" onClick={onClick} role="button" tabIndex={0}>
-     
+    <div className={`card ${className || ''}`} onClick={onClick} role="button" tabIndex={0}>
+
       {variant === 'package' && (
         <>
           <h3>Paketinformation</h3>

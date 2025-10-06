@@ -51,7 +51,7 @@ const ConfirmationScanning: React.FC = () => {
                     </div>
                </div>
 
-               <div className="flex gap-4 justify-center mt-8 flex-wrap">
+               <div className="scale-125 flex gap-4 justify-center mt-8 flex-wrap">
                     <BackArrow />
                     <PrimaryButton
                          text="Starta transport"

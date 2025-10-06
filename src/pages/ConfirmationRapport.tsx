@@ -12,55 +12,57 @@ const ConfirmationRapport: React.FC = () => {
 
      return (
           <div className="p-5 max-w-2xl mx-auto">
-               {/* Header Section */}
                <div className="text-center mb-8 p-5 bg-secondary text-text-dark rounded-2xl">
                     <h1 className="text-4xl font-bold mb-3">
                          Rapport Skickad
                     </h1>
                </div>
 
-               <div className="bg-secondary/50 p-5 rounded-lg mb-6 border-2xl border-[var(--color-success)] shadow-sm">
+               <div className="bg-secondary/80 p-5 rounded-2xl mb-6 bordered-2xl">
                     <h2 className="text-xl font-semibold text-text-dark mb-4 mt-0">
                          Rapportdetaljer
                     </h2>
-                    <div className="flex justify-between items-center py-2 border-b border-border">
-                         <span className="font-semibold text-text-dark opacity-75">Skickad:</span>
+                    <div className="flex justify-between items-center py-2">
+                         <span className="font-semibold text-text-dark">Skickad:</span>
                          <span className="text-text-dark">{currentDate} kl. {currentTime}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-[var(--color-border)]">
-                         <span className="font-semibold text-[var(--color-text-dark)] opacity-75">Status:</span>
-                         <span className="text-[var(--color-success)] font-semibold">Bekräftad</span>
+                         <span className="font-semibold text-text-dark ">Status:</span>
+                         <span className="text-success font-semibold">Bekräftad</span>
                     </div>
                     <div className="flex justify-between items-center py-2">
-                         <span className="font-semibold text-[var(--color-text-dark)] opacity-75">Rapport-ID:</span>
-                         <span className="text-[var(--color-text-dark)]">RPT-{Date.now().toString().slice(-6)}</span>
+                         <span className="font-semibold text-text-dark">Rapport-ID:</span>
+                         <span className="text-text-dark">RPT-{Date.now().toString().slice(-6)}</span>
                     </div>
                </div>
 
-               <div className="mb-6">
-                    <h2 className="text-xl font-semibold text-[var(--color-text-dark)] mb-4">
-                         Transportinformation
+               <div className="bg-secondary/80 p-5 mb-6 rounded-2xl">
+                    <h2 className="text-xl text-text-dark font-semibold mb-4">
+                         Packetinformation
                     </h2>
                     <Card
-                         variant="confirmation"
+                         className="text-text-dark"
+                         variant="package"
                          fordonId="XYZ123"
                          paketId="12345"
+                         destination="Stockholm"
+                         vikt="5 kg"
                          info={{ tid: currentTime }}
                     />
                </div>
 
-               <div className="bg-secondary/50 p-5 rounded-2xl mb-6 border-l-4 border-border">
+               <div className="bg-secondary/80 p-5 mb-6 rounded-2xl">
                     <h2 className="text-xl font-semibold text-text-dark mb-3 mt-0">
                          Nästa steg
                     </h2>
                     <ul className="m-0 pl-5 space-y-2">
-                         <li className="text-[var(--color-text-dark)]">
+                         <li className="text-text-dark">
                               Rapporten har sparats i systemet
                          </li>
-                         <li className="text-[var(--color-text-dark)]">
+                         <li className="text-text-dark">
                               En kopia har skickats till huvudkontoret
                          </li>
-                         <li className="text-[var(--color-text-dark)]">
+                         <li className="text-text-dark">
                               Du kan nu fortsätta med nästa transport
                          </li>
                     </ul>
@@ -69,10 +71,8 @@ const ConfirmationRapport: React.FC = () => {
                <div className="flex gap-4 justify-center mt-8 flex-wrap">
                     <BackArrow />
                     <PrimaryButton
-                         type="button"
                          text="Skriv ut Bekräftelse"
                          onClick={() => window.print()}
-                         className="bg-[var(--color-surface)] text-[var(--color-text-dark)] border-2 border-[var(--color-border)] px-6 py-3 rounded-md text-base cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-gray-400"
                     />
                </div>
           </div>

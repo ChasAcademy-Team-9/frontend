@@ -11,7 +11,7 @@ const DefaultIcon = L.icon({
      iconAnchor: [12, 41]
 });
 
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+delete (L.Icon.Default.prototype as unknown as { _getIconUrl?: unknown })._getIconUrl;
 L.Icon.Default.mergeOptions({
      iconRetinaUrl: icon,
      iconUrl: icon,

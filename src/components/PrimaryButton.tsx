@@ -1,7 +1,7 @@
 export function PrimaryButton(props: {
   text: string;
   fullWidth?: boolean;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   const { text, onClick, fullWidth = false } = props;
 

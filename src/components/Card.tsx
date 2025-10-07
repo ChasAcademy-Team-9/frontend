@@ -16,6 +16,7 @@ type CardProps = {
   variant: CardVariant;
   paketId?: string;
   destination?: string;
+  vikt?: string;
   fordonId?: string;
   status?: string;
   info?: TransportInfo;
@@ -41,6 +42,7 @@ const Card: React.FC<CardProps> = ({
   variant,
   paketId,
   destination,
+  vikt,
   fordonId,
   status,
   info,
@@ -63,6 +65,7 @@ const Card: React.FC<CardProps> = ({
           <h3 className="text-lg font-bold mb-2">Paketinformation</h3>
           <p><strong>Paket-ID:</strong> {paketId}</p>
           <p><strong>Destination:</strong> {destination}</p>
+          <p><strong>Vikt:</strong> {vikt}</p>
         </>
       )}
 

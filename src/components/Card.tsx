@@ -20,6 +20,27 @@ type CardProps = {
   onClick?: () => void;
 };
 
+const getCardClasses = (status?: string) => {
+  const baseClasses = "p-4 rounded-lg cursor-pointer transition-all duration-300";
+
+  if (!status) return `${baseClasses} text-text-dark`;
+
+  switch (status.toLowerCase()) {
+    case 'kritisk':
+      return `${baseClasses} bg-error text-text-light`;
+    case 'rapportera':
+      return `${baseClasses} bg-warning text-text-dark`;
+    case 'varning':
+      return `${baseClasses} bg-warning text-text-dark`;
+    case 'ok':
+      return `${baseClasses} bg-success text-text-light`;
+    case 'kärnd':
+      return `${baseClasses} bg-success text-text-light`;
+    default:
+      return `${baseClasses} bg-secondary/80 text-text-dark`;
+  }
+};
+
 // Vår Card-komponent
 const Card: React.FC<CardProps> = ({
   variant,
@@ -29,16 +50,23 @@ const Card: React.FC<CardProps> = ({
   fordonId,
   status,
   info,
-  className,
   onClick,
 }) => {
-
 
   // Beroende på variant, så ska det rendera olika innehåll. 
   // I detta fall paket, transport, bekräftelse eller status...
   // Dessa är alltså våra huvudbehållare för kort informationen.
+  const hasNestedInteractiveElements = variant === 'confirmation';
+
   return (
-    <div className={`card ${className || ''}`} onClick={onClick} role="button" tabIndex={0}>
+    <div
+      className={getCardClasses(status)}
+      {...(!hasNestedInteractiveElements && onClick ? {
+        onClick,
+        role: "button",
+        tabIndex: 0
+      } : {})}
+    >
 
       {variant === 'package' && (
         <>
@@ -70,7 +98,9 @@ const Card: React.FC<CardProps> = ({
         <>
           <h3>Bekräftelse</h3>
           <p>Lyckad skanning!</p>
-          <button>Starta transport</button>
+          <div onClick={(e) => e.stopPropagation()}>
+            <button>Starta transport</button>
+          </div>
         </>
       )}
     </div>

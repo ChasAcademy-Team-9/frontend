@@ -24,7 +24,7 @@ const router = createBrowserRouter([
   { path: '/driver-list', element: <DriverList /> },
   { path: '/package-list', element: <PackageList /> },
   { path: '/confirmation-rapport', element: <ConfirmationRapport /> },
-  { path: '/driverlist', element: <DriverList /> },
+  { path: '/driver-list', element: <DriverList /> },
   { path: '/confirmation-scanning', element: <ConfirmationScanning /> },
   { path: '*', element: <NotFound /> },
 ]);

@@ -12,6 +12,7 @@ import Home from './routes/Home.tsx';
 import ConfirmationRapport from './pages/ConfirmationRapport.tsx';
 import DriverList from './components/DriverList.tsx';
 import ConfirmationScanning from './pages/ConfirmationScanning.tsx';
+import Driver from './pages/Driver.tsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
   { path: '/scan', element: <Scan /> },
   { path: '/position', element: <Position /> },
   { path: '/home', element: <Home /> },
+  { path: '/driver', element: <Driver /> },
   { path: '/confirmation-rapport', element: <ConfirmationRapport /> },
   { path: '/driverlist', element: <DriverList /> },
   { path: '/confirmation-scanning', element: <ConfirmationScanning /> },

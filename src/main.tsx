@@ -13,6 +13,7 @@ import DriverList from './pages/DriverList.tsx';
 import PackageList from './pages/PackageList.tsx';
 import ConfirmationRapport from './pages/ConfirmationRapport.tsx';
 import ConfirmationScanning from './pages/ConfirmationScanning.tsx';
+import Driver from './pages/Driver.tsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
@@ -21,10 +22,10 @@ const router = createBrowserRouter([
   { path: '/scan', element: <Scan /> },
   { path: '/position', element: <Position /> },
   { path: '/home', element: <Home /> },
+  { path: '/driver', element: <Driver /> },
   { path: '/driver-list', element: <DriverList /> },
   { path: '/package-list', element: <PackageList /> },
   { path: '/confirmation-rapport', element: <ConfirmationRapport /> },
-  { path: '/driver-list', element: <DriverList /> },
   { path: '/confirmation-scanning', element: <ConfirmationScanning /> },
   { path: '*', element: <NotFound /> },
 ]);

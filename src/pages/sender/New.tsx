@@ -70,8 +70,30 @@ export function New() {
       <form className="flex flex-col gap-8 bg-white/75 p-4 m-[-1rem] rounded-b-3xl rounded-t-2xl min-h-[calc(100vh-16rem)]">
         {currentStep.number == 1 && (
           <>
-            <Input label="Beskrivning" id="a" name="description" />
-            <Input label="Vikt (kg)" name="0.0" id="weight" />
+            <Input
+              label="Beskrivning"
+              id="a"
+              name="description"
+              onChange={(e) =>
+                setPackageDetails({
+                  ...packageDetails,
+                  description: e.target.value,
+                })
+              }
+              value={packageDetails.description || ""}
+            />
+            <Input
+              label="Vikt (kg)"
+              name="0.0"
+              id="weight"
+              onChange={(e) =>
+                setPackageDetails({
+                  ...packageDetails,
+                  weight: e.target.value,
+                })
+              }
+              value={packageDetails.weight || ""}
+            />
             <fieldset className="flex flex-wrap gap-4">
               <legend>Storlek (cm)</legend>
               <Input
@@ -85,6 +107,7 @@ export function New() {
                     length: e.target.value,
                   })
                 }
+                value={packageDetails.length || ""}
               />
               <Input
                 label=""
@@ -137,9 +160,71 @@ export function New() {
             />
           </>
         )}
-        {currentStep.number == 2 && <></>}
-        {currentStep.number == 3 && <></>}
-        {currentStep.number == 4 && <></>}
+        {currentStep.number == 2 && (
+          <>
+            <Input label="Namn" id="name" name="name" />
+            <Input label="Adress" id="address" name="address" />
+            <Input label="Postnummer" id="postal" name="postal" />
+            <Input label="Stad" id="city" name="city" />
+          </>
+        )}
+        {currentStep.number == 3 && (
+          <>
+            <label>
+              {" "}
+              Typ av paket/Gränsvärden
+              {/* <Dropdown */}
+            </label>
+            <Input
+              label="Högsta temperatur (°C)"
+              id="max-temp"
+              name="max-temp"
+              onChange={(e) =>
+                setPackageDetails({
+                  ...packageDetails,
+                  maxTemp: e.target.value,
+                })
+              }
+              value={packageDetails.maxTemp || ""}
+            />
+            <Input
+              label="Gräns luftfuktighet (%)"
+              id="max-humidity"
+              name="max-humidity"
+              onChange={(e) =>
+                setPackageDetails({
+                  ...packageDetails,
+                  maxHumidity: e.target.value,
+                })
+              }
+              value={packageDetails.maxHumidity || ""}
+            />
+          </>
+        )}
+        {currentStep.number == 4 && (
+          <>
+            <p>Kontrollera att uppgifterna stämmer.</p>
+            <dl>
+              <dt>Beskrivning</dt>
+              <dd>{packageDetails.description}</dd>
+              <dt>Vikt</dt>
+              <dd>{packageDetails.weight} kg</dd>
+              <dt>Storlek (LxBxH)</dt>
+              <dd>
+                {packageDetails.length} x {packageDetails.width} x{" "}
+                {packageDetails.height} cm
+              </dd>
+              <dt>Prioritet</dt>
+              <dd>{priority.label}</dd>
+              <dt>Önskad leveransdag</dt>
+              <dd>{packageDetails.deliveryDate}</dd>
+              <dt>Max temperatur</dt>
+              <dd>{packageDetails.maxTemp} °C</dd>
+              <dt>Max luftfuktighet</dt>
+              <dd>{packageDetails.maxHumidity} %</dd>
+            </dl>
+          </>
+        )}
         <nav
           className={
             "grid " +

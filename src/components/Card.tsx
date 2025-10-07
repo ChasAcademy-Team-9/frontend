@@ -50,6 +50,7 @@ const Card: React.FC<CardProps> = ({
   fordonId,
   status,
   info,
+  className,
   onClick,
 }) => {
 
@@ -60,7 +61,7 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div
-      className={getCardClasses(status)}
+      className={`${getCardClasses(status)} ${className || ''}`}
       {...(!hasNestedInteractiveElements && onClick ? {
         onClick,
         role: "button",

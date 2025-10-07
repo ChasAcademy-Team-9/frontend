@@ -204,7 +204,7 @@ export function New() {
         {currentStep.number == 4 && (
           <>
             <p>Kontrollera att uppgifterna stämmer.</p>
-            <dl>
+            <dl className="grid grid-cols-2 gap-x-8 gap-y-4">
               <dt>Beskrivning</dt>
               <dd>{packageDetails.description}</dd>
               <dt>Vikt</dt>

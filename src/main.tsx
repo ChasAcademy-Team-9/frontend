@@ -9,8 +9,8 @@ import NotFound from './pages/NotFound.tsx';
 import Scan from './routes/Scan.tsx';
 import Position from './routes/Position.tsx';
 import Home from './routes/Home.tsx';
+import ConfirmationRapport from './pages/ConfirmationRapport.tsx';
 import DriverList from './components/DriverList.tsx';
-import Driver from './routes/Driver.tsx';
 import ConfirmationScanning from './pages/ConfirmationScanning.tsx';
 
 const router = createBrowserRouter([
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
   { path: '/scan', element: <Scan /> },
   { path: '/position', element: <Position /> },
   { path: '/home', element: <Home /> },
+  { path: '/confirmation-rapport', element: <ConfirmationRapport /> },
   { path: '/driverlist', element: <DriverList /> },
-  { path: '/driver', element: <Driver /> },
   { path: '/confirmation-scanning', element: <ConfirmationScanning /> },
   { path: '*', element: <NotFound /> },
 ]);

@@ -1,15 +1,16 @@
 export function PrimaryButton(props: {
   text: string;
+  icon?: React.ReactNode;
   fullWidth?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }) {
-  const { text, onClick, fullWidth = false } = props;
+  const { text, icon, onClick, fullWidth = false } = props;
 
   return (
     <button
       className={` 
 
-
+        flex items-center justify-center gap-2
 
         ${fullWidth ? 'w-full' : 'w-auto'} 
 
@@ -21,6 +22,7 @@ export function PrimaryButton(props: {
       `}
       onClick={onClick}
     >
+      {icon && icon}
       {text}
     </button>
   );

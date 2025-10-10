@@ -19,6 +19,7 @@ import ConfirmationScanning from "./pages/ConfirmationScanning.tsx";
 import Driver from "./pages/Driver.tsx";
 import { Sender } from "./pages/sender/Sender.tsx";
 import { New } from "./pages/sender/New.tsx";
+import Scanning from "./pages/Scanning.tsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
   { path: "/package-list", element: <PackageList /> },
   { path: "/confirmation-rapport", element: <ConfirmationRapport /> },
   { path: "/confirmation-scanning", element: <ConfirmationScanning /> },
+  { path: "/scanning", element: <Scanning /> },
   { path: "/recipient", element: <Recipient /> },
   { path: "/package/:paketId", element: <PackageDetailsPage /> },
   { path: "/receipt/:paketId", element: <ReceiptPage /> },

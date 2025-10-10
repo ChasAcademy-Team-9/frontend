@@ -1,4 +1,6 @@
 import BackArrow from "../components/BackArrow"
+import { PrimaryButton } from "../components/PrimaryButton"
+import { FaCamera } from "react-icons/fa";
 
 const Photo = () => {
      return (
@@ -31,6 +33,15 @@ const Photo = () => {
                               Rikta kameran mot objektet och tryck på knappen för att ta en bild.
                          </p>
                     </div>
+
+                    <div className="scale-125 mt-8">
+                         <PrimaryButton
+                              text="Ta en bild"
+                              icon={<FaCamera name="camera" size={24} />}
+                              onClick={() => { console.log('Ta en bild') }}
+                         />
+                    </div>
+
 
                </div>
 

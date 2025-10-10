@@ -5,6 +5,17 @@ import { PrimaryButton } from "../../components/PrimaryButton";
 import BackArrow from "../../components/BackArrow";
 import { SecondaryButton } from "../../components/SecondaryButton";
 
+type PackageDetails = {
+  description?: string;
+  weight?: string;
+  length?: string;
+  width?: string;
+  height?: string;
+  deliveryDate?: string;
+  maxTemp?: string;
+  maxHumidity?: string;
+};
+
 export function New() {
   const steps = [
     {
@@ -22,7 +33,7 @@ export function New() {
     },
   ];
   const [currentStep, setCurrentStep] = useState(steps[0]);
-  const [packageDetails, setPackageDetails] = useState({});
+  const [packageDetails, setPackageDetails] = useState({} as PackageDetails);
 
   function nextStep(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -39,7 +50,7 @@ export function New() {
     alert("Skicka till api.");
     console.log("Nytt paket:", packageDetails);
   }
-  function prevStep(e) {
+  function prevStep(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     const prev = steps.find((s) => s.number === currentStep.number - 1);
     if (prev) {

@@ -1,7 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Olika varianter av vår Card-komponent
 type CardVariant = 'package' | 'transport' | 'status' | 'confirmation';
+
+// Typ för transportinfo
+type TransportInfo = {
+  stad?: string;
+  tid?: string;
+  adress?: string;
+};
 
 // Props som vår Card-komponent tar emot
 type CardProps = {
@@ -11,32 +19,21 @@ type CardProps = {
   vikt?: string;
   fordonId?: string;
   status?: string;
-  info?: {
-    stad?: string;
-    tid?: string;
-    adress?: string;
-  };
+  info?: TransportInfo;
   onClick?: () => void;
 };
 
-const getCardClasses = (status?: string) => {
-  const baseClasses = "p-4 rounded-lg cursor-pointer transition-all duration-300";
-
-  if (!status) return `${baseClasses} text-text-dark`;
-
-  switch (status.toLowerCase()) {
-    case 'kritisk':
-      return `${baseClasses} bg-error text-text-light`;
-    case 'rapportera':
-      return `${baseClasses} bg-warning text-text-dark`;
-    case 'varning':
-      return `${baseClasses} bg-warning text-text-dark`;
-    case 'ok':
-      return `${baseClasses} bg-success text-text-light`;
-    case 'kärnd':
-      return `${baseClasses} bg-success text-text-light`;
+// Variantbaserad bakgrundsfärg
+const getVariantStyle = (variant: CardVariant) => {
+  switch (variant) {
+    case 'confirmation':
+      return 'bg-success';
+    case 'status':
+      return 'bg-warning';
+    case 'transport':
+      return 'bg-secondary';
     default:
-      return `${baseClasses} bg-secondary/80 text-text-dark`;
+      return 'bg-secondary';
   }
 };
 
@@ -51,44 +48,68 @@ const Card: React.FC<CardProps> = ({
   info,
   onClick,
 }) => {
-
-
-  // Beroende på variant, så ska det rendera olika innehåll. 
-  // I detta fall paket, transport, bekräftelse eller status...
-  // Dessa är alltså våra huvudbehållare för kort informationen.
   return (
-    <div className={getCardClasses(status)} onClick={onClick} role="button" tabIndex={0}>
-
+    <div
+      className={`card p-4 rounded shadow-md ${getVariantStyle(
+        variant
+      )} cursor-pointer`}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onClick?.();
+        }
+      }}
+      role='button'
+      tabIndex={0}
+    >
       {variant === 'package' && (
         <>
-          <h3>Paketinformation</h3>
-          <p><strong>Destination:</strong> {destination}</p>
-          <p><strong>Vikt:</strong> {vikt}</p>
+          <h3 className='text-lg font-bold mb-2'>Paketinformation</h3>
+          <p>
+            <strong>Paket-ID:</strong> {paketId}
+          </p>
+          <p>
+            <strong>Destination:</strong> {destination}
+          </p>
+          <p>
+            <strong>Vikt:</strong> {vikt}
+          </p>
         </>
       )}
 
       {variant === 'transport' && (
         <>
-          <h3>Transportinformation</h3>
-          <p><strong>Fordon-ID:</strong> {fordonId}</p>
+          <h3 className='text-lg font-bold mb-2'>Transportinformation</h3>
+          <p>
+            <strong>Fordon-ID:</strong> {fordonId}
+          </p>
           {info && (
-            <p><strong>Plats:</strong> {info.stad}, {info.tid}, {info.adress}</p>
+            <p>
+              <strong>Plats:</strong> {info.stad}, {info.tid}, {info.adress}
+            </p>
           )}
         </>
       )}
 
       {variant === 'status' && (
         <>
-          <h3>Status</h3>
-          <p><strong>Nuvarande status:</strong> {status}</p>
+          <h3 className='text-lg font-bold mb-2'>Status</h3>
+          <p>
+            <strong>Nuvarande status:</strong> {status}
+          </p>
         </>
       )}
 
       {variant === 'confirmation' && (
         <>
-          <h3>Bekräftelse</h3>
+          <h3 className='text-lg font-bold mb-2'>Bekräftelse</h3>
           <p>Lyckad skanning!</p>
-          <button>Starta transport</button>
+          <Link
+            to='/start-transport'
+            className='mt-2 inline-block bg-white text-primary px-4 py-2 rounded hover:bg-gray-100 transition'
+          >
+            Starta transport
+          </Link>
         </>
       )}
     </div>

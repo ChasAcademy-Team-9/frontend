@@ -10,8 +10,8 @@ const InfoCard = ({ title, items }: InfoCardProps) => {
                <div className="space-y-2">
                     {items.map((item, index) => (
                          <div key={index} className="flex justify-between items-center">
-                              <span className="text-sm text-text-dark/70">{item.label}</span>
-                              <span className="text-sm font-medium text-text-dark">{item.value}</span>
+                              <span className="text-sm text-text-dark">{item.label}</span>
+                              <span className="text-md font-medium text-text-dark">{item.value}</span>
                          </div>
                     ))}
                </div>

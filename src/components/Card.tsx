@@ -20,6 +20,7 @@ type CardProps = {
   fordonId?: string;
   status?: string;
   info?: TransportInfo;
+  className?: string;
   onClick?: () => void;
 };
 
@@ -34,13 +35,7 @@ const getVariantStyle = (variant: CardVariant) => {
       return 'bg-secondary';
     default:
       return 'bg-white';
-  info?: {
-    stad?: string;
-    tid?: string;
-    adress?: string;
-  };
-  className?: string;
-  onClick?: () => void;
+  }
 };
 
 const getCardClasses = (status?: string) => {
@@ -76,19 +71,6 @@ const Card: React.FC<CardProps> = ({
   className,
   onClick,
 }) => {
-  return (
-    <div
-      className={`card p-4 rounded shadow-md ${getVariantStyle(variant)} cursor-pointer`}
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          onClick?.();
-        }
-      }}
-      role="button"
-      tabIndex={0}
-    >
-
   // Beroende på variant, så ska det rendera olika innehåll. 
   // I detta fall paket, transport, bekräftelse eller status...
   // Dessa är alltså våra huvudbehållare för kort informationen.
@@ -96,14 +78,18 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div
-      className={`${getCardClasses(status)} ${className || ''}`}
+      className={`${getCardClasses(status)} ${getVariantStyle(variant)} ${className || ''}`}
       {...(!hasNestedInteractiveElements && onClick ? {
         onClick,
+        onKeyDown: (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            onClick?.();
+          }
+        },
         role: "button",
         tabIndex: 0
       } : {})}
     >
-
       {variant === 'package' && (
         <>
           <h3 className="text-lg font-bold mb-2">Paketinformation</h3>

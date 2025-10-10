@@ -33,7 +33,7 @@ const getVariantStyle = (variant: CardVariant) => {
     case 'transport':
       return 'bg-secondary';
     default:
-      return 'bg-white';
+      return 'bg-secondary';
   }
 };
 

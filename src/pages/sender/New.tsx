@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Dropdown } from "../../components/Dropdown";
 import Input from "../../components/Input";
 import { PrimaryButton } from "../../components/PrimaryButton";
-import { useNavigate } from "react-router-dom";
 import BackArrow from "../../components/BackArrow";
 import { SecondaryButton } from "../../components/SecondaryButton";
 
@@ -54,7 +53,6 @@ export function New() {
     { value: "express", label: "Express" },
   ];
   const [priority, setPriority] = useState({ value: "", label: "" }); // TODO flytta in i packageDetails
-  const navigate = useNavigate();
 
   return (
     <main className="flex flex-col p-8 gap-8 max-w-4xl mx-auto">

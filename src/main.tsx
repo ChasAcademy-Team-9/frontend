@@ -9,6 +9,9 @@ import NotFound from './pages/NotFound.tsx';
 import Scan from './routes/Scan.tsx';
 import Position from './routes/Position.tsx';
 import Home from './routes/Home.tsx';
+import Recipient from './pages/RecipientPage.tsx';
+import PackageDetailsPage from './pages/PackageDetailsPage.tsx';
+import ReceiptPage from './pages/ReceiptPage.tsx';
 import DriverList from './pages/DriverList.tsx';
 import PackageList from './pages/PackageList.tsx';
 import ConfirmationRapport from './pages/ConfirmationRapport.tsx';
@@ -28,6 +31,11 @@ const router = createBrowserRouter([
   { path: '/confirmation-rapport', element: <ConfirmationRapport /> },
   { path: '/confirmation-scanning', element: <ConfirmationScanning /> },
   { path: '*', element: <NotFound /> },
+  { path: '/recipient', element: <Recipient /> },
+  { path: '/package/:paketId', element: <PackageDetailsPage /> },
+  { path: '/receipt/:paketId', element: <ReceiptPage /> },
+
+
 ]);
 
 createRoot(document.getElementById('root')!).render(

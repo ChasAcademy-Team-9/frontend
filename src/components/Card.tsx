@@ -34,6 +34,33 @@ const getVariantStyle = (variant: CardVariant) => {
       return 'bg-secondary';
     default:
       return 'bg-white';
+  info?: {
+    stad?: string;
+    tid?: string;
+    adress?: string;
+  };
+  className?: string;
+  onClick?: () => void;
+};
+
+const getCardClasses = (status?: string) => {
+  const baseClasses = "p-4 rounded-lg cursor-pointer transition-all duration-300";
+
+  if (!status) return `${baseClasses} text-text-dark`;
+
+  switch (status.toLowerCase()) {
+    case 'kritisk':
+      return `${baseClasses} bg-error text-text-light`;
+    case 'rapportera':
+      return `${baseClasses} bg-warning text-text-dark`;
+    case 'varning':
+      return `${baseClasses} bg-warning text-text-dark`;
+    case 'ok':
+      return `${baseClasses} bg-success text-text-light`;
+    case 'kärnd':
+      return `${baseClasses} bg-success text-text-light`;
+    default:
+      return `${baseClasses} bg-secondary/80 text-text-dark`;
   }
 };
 
@@ -46,6 +73,7 @@ const Card: React.FC<CardProps> = ({
   fordonId,
   status,
   info,
+  className,
   onClick,
 }) => {
   return (
@@ -60,6 +88,22 @@ const Card: React.FC<CardProps> = ({
       role="button"
       tabIndex={0}
     >
+
+  // Beroende på variant, så ska det rendera olika innehåll. 
+  // I detta fall paket, transport, bekräftelse eller status...
+  // Dessa är alltså våra huvudbehållare för kort informationen.
+  const hasNestedInteractiveElements = variant === 'confirmation';
+
+  return (
+    <div
+      className={`${getCardClasses(status)} ${className || ''}`}
+      {...(!hasNestedInteractiveElements && onClick ? {
+        onClick,
+        role: "button",
+        tabIndex: 0
+      } : {})}
+    >
+
       {variant === 'package' && (
         <>
           <h3 className="text-lg font-bold mb-2">Paketinformation</h3>
@@ -98,6 +142,9 @@ const Card: React.FC<CardProps> = ({
           >
             Starta transport
           </Link>
+          <div onClick={(e) => e.stopPropagation()}>
+            <button>Starta transport</button>
+          </div>
         </>
       )}
     </div>

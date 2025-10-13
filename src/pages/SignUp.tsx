@@ -51,6 +51,7 @@ function SignUp() {
       setRoleAccount({ value: '', label: '' });
     } catch (error) {
       console.error('Error:', error);
+      setStatusMsg('Registrering misslyckades. Försök igen.');
     }
   }
 

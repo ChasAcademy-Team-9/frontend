@@ -1,7 +1,9 @@
 import InfoCard from "../components/Driver/InfoCard"
 import Dashboard from "../components/Driver/Dashboard"
-import NavigationCard from "../components/Driver/NavigationCard"
+import MapComponent from "../components/Driver/MapComponent"
 import { useNavigate } from "react-router-dom"
+import { PrimaryButton } from "../components/PrimaryButton"
+
 
 const PackageDetailsDriver = () => {
      const navigate = useNavigate()
@@ -22,12 +24,20 @@ const PackageDetailsDriver = () => {
                     <Dashboard label="Batterinivå" value={65} unit="%" trend="warning" />
                </div>
 
-               <NavigationCard
-                    firstButtonText="Bekräfta leverans"
-                    secondButtonText="Ta en bild"
-                    onFirstButtonClick={() => navigate('/confirmation-delivery')}
-                    onSecondButtonClick={() => navigate('/scanning')}
+               <MapComponent     
                />
+
+               <div className="flex justify-center mt-4 gap-4">
+                    <PrimaryButton
+                    text="Bekräfta leverans"
+                    onClick={() => navigate('/confirmation-delivery')}
+                    />
+
+                    <PrimaryButton
+                    text="Ta en bild"
+                    onClick={() => navigate('/photo')}
+                    />
+               </div>
           </div>
      )
 }

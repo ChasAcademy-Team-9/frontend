@@ -43,6 +43,12 @@ function SignUp() {
       const data = await response.json();
       console.log('Success:', data);
       setStatusMsg('Användaren skapad!');
+
+      setFirstName('');
+      setLastName('');
+      setUserNameInput('');
+      setPasswordInput('');
+      setRoleAccount({ value: '', label: '' });
     } catch (error) {
       console.error('Error:', error);
     }

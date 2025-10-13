@@ -7,6 +7,7 @@ import BackArrow from '../components/BackArrow';
 function SignUp() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [userAdress, setUserAdress] = useState('');
   const [userNameInput, setUserNameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [roleAccount, setRoleAccount] = useState({ value: '', label: '' });
@@ -17,6 +18,7 @@ function SignUp() {
     const newUser = {
       FirstName: firstName,
       LastName: lastName,
+      Adress: userAdress,
       UserName: userNameInput,
       Password: passwordInput,
       TableName: roleAccount.value,
@@ -46,6 +48,7 @@ function SignUp() {
 
       setFirstName('');
       setLastName('');
+      setUserAdress('');
       setUserNameInput('');
       setPasswordInput('');
       setRoleAccount({ value: '', label: '' });
@@ -81,6 +84,16 @@ function SignUp() {
       />
 
       <Input
+        label='Adress'
+        name='adress'
+        id='adress'
+        type='text'
+        value={userAdress}
+        onChange={(e) => setUserAdress(e.target.value)}
+        className='max-sm:w-full'
+      />
+
+      <Input
         label='Username'
         name='Username'
         id='Username'
@@ -103,6 +116,8 @@ function SignUp() {
       <Dropdown
         options={[
           { value: 'Drivers', label: 'Driver' },
+          { value: 'Senders', label: 'Sender' },
+          { value: 'Receivers', label: 'Receiver' },
           { value: 'logistics', label: 'Logistik' },
           { value: 'tracking', label: 'Spårning' },
           { value: 'data', label: 'Data' },

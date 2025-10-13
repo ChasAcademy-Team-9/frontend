@@ -1,8 +1,11 @@
 import InfoCard from "../components/Driver/InfoCard"
 import Dashboard from "../components/Driver/Dashboard"
 import NavigationCard from "../components/Driver/NavigationCard"
+import { useNavigate } from "react-router-dom"
 
 const PackageDetailsDriver = () => {
+     const navigate = useNavigate()
+
      return (
           <div className="min-h-screen bg-background p-4 space-y-6 pb-20">
                <InfoCard
@@ -19,11 +22,11 @@ const PackageDetailsDriver = () => {
                     <Dashboard label="Batterinivå" value={65} unit="%" trend="warning" />
                </div>
 
-               <NavigationCard 
+               <NavigationCard
                     firstButtonText="Bekräfta leverans"
                     secondButtonText="Ta en bild"
-                    onFirstButtonClick={() => alert('Leverans bekräftad!')}
-                    onSecondButtonClick={() => alert('Öppna kamera!')}
+                    onFirstButtonClick={() => navigate('/confirmation-delivery')}
+                    onSecondButtonClick={() => navigate('/scanning')}
                />
           </div>
      )

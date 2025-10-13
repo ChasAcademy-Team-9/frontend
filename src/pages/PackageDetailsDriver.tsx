@@ -3,6 +3,7 @@ import Dashboard from "../components/Driver/Dashboard"
 import MapComponent from "../components/Driver/MapComponent"
 import { useNavigate } from "react-router-dom"
 import { PrimaryButton } from "../components/PrimaryButton"
+import PackageList from "../pages/PackageList"
 
 
 const PackageDetailsDriver = () => {
@@ -38,6 +39,10 @@ const PackageDetailsDriver = () => {
                     onClick={() => navigate('/photo')}
                     />
                </div>
+
+               <div className="flex justify-center mt-4 gap-4">
+                    <PackageList />
+                         </div>
           </div>
      )
 }

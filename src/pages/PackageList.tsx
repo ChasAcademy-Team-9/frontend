@@ -1,10 +1,10 @@
 import Card from '../components/Card';
 
-const DriverList = () => {
+const PackageList = () => {
   return (
     <div>
       <h1 className='text-2xl font-bold mb-4 text-center bg-secondary/80 p-4'>
-        Alla paket med information
+        All packages with information
       </h1>
       <div className='bg-background p-4 space-y-4'>
         <Card
@@ -66,4 +66,4 @@ const DriverList = () => {
   );
 };
 
-export default DriverList;
+export default PackageList;

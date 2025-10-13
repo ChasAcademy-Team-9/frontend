@@ -21,6 +21,8 @@ import { Sender } from "./pages/sender/Sender.tsx";
 import { New } from "./pages/sender/New.tsx";
 import Photo from "./pages/Photo.tsx";
 import Scanning from "./pages/Scanning.tsx";
+import PackageDetailsDriver from "./pages/PackageDetailsDriver.tsx";
+
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -42,6 +44,8 @@ const router = createBrowserRouter([
   { path: "/sender/new", element: <New /> },
   { path: "*", element: <NotFound /> },
   { path: "/photo", element: <Photo /> },
+  { path: "/package-details-driver", element: <PackageDetailsDriver /> },
+
 ]);
 
 createRoot(document.getElementById("root")!).render(

@@ -36,7 +36,12 @@ const Driver = () => {
           <Dashboard label="Batterinivå" value={65} unit="%" trend="warning" />
         </div>
 
-        <NavigationCard />
+        <NavigationCard 
+          firstButtonText="Visa rutt"
+          secondButtonText="Lista paket"
+          onFirstButtonClick={() => alert('Visar rutt!')}
+          onSecondButtonClick={() => alert('Visar paketlista!')}
+        />
       </div>
 
       <BottomNav />

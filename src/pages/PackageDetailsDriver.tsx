@@ -19,7 +19,12 @@ const PackageDetailsDriver = () => {
                     <Dashboard label="Batterinivå" value={65} unit="%" trend="warning" />
                </div>
 
-               <NavigationCard />
+               <NavigationCard 
+                    firstButtonText="Bekräfta leverans"
+                    secondButtonText="Ta en bild"
+                    onFirstButtonClick={() => alert('Leverans bekräftad!')}
+                    onSecondButtonClick={() => alert('Öppna kamera!')}
+               />
           </div>
      )
 }

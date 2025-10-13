@@ -29,7 +29,7 @@ const MapComponent = () => {
      ];
 
      return (
-          <div className="w-full h-64 rounded-2xl overflow-hidden">
+          <div className="w-full h-64 rounded overflow-hidden">
                <MapContainer
                     center={center}
                     zoom={10}

@@ -52,7 +52,7 @@ const Dashboard = ({ label, value, unit, trend = 'up' }: DashboardProps) => {
   };
 
   return (
-    <div className="bg-secondary/80 rounded-2xl p-4 shadow-sm flex items-center justify-between">
+    <div className="bg-secondary rounded p-4 shadow-sm flex items-center justify-between">
       <div>
         <p className="text-sm text-dark mb-2">{label}</p>
         <div className="flex items-baseline gap-2">

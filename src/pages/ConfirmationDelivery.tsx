@@ -9,14 +9,18 @@ const ConfirmationDelivery: React.FC = () => {
   });
 
   return (
-    <div className='p-5 max-w-2xl mx-auto'>
-      <div className='text-center mb-8 p-5 bg-secondary text-dark rounded-2xl'>
-        <h1 className='text-4xl font-bold mb-3 flex items-center justify-center gap-3'>
-          Bekräftelse Leverans
-        </h1>
+    <div className='max-w-2xl mx-auto'>
+      <div className='p-4 text-center p-3 bg-secondary text-dark mb-6'>
+        <div className='flex items-center justify-between mb-3'>
+          <BackArrow />
+          <h1 className='text-4xl font-bold flex-1 text-center'>
+            Bekräftelse Leverans
+          </h1>
+          <div className='w-8'></div>
+        </div>
       </div>
 
-      <div className='flex justify-center mb-8'>
+      <div className='flex justify-center mb-6'>
         <div className='w-40 h-40 bg-success rounded-full flex items-center justify-center'>
           <LuCheck className='text-text-light' size={80} strokeWidth={3} />
         </div>
@@ -24,7 +28,7 @@ const ConfirmationDelivery: React.FC = () => {
 
       <h2 className='text-2xl font-bold text-center text-dark mb-8'>Lyckad leverans!</h2>
 
-      <div className='mb-6'>
+      <div className='p-4 mb-5 space-y-4'>
         <Card
           variant='package'
           fordonId='XYZ123'
@@ -32,10 +36,7 @@ const ConfirmationDelivery: React.FC = () => {
           destination='Stockholm'
           vikt='2 kg'
           info={{ tid: currentTime }}
-        />
-      </div>
-
-      <div className='mb-6'>
+        /> 
         <Card
           variant='transport'
           fordonId='XYZ123'
@@ -43,9 +44,7 @@ const ConfirmationDelivery: React.FC = () => {
         />
       </div>
 
-      <div className='scale-125 flex gap-4 justify-center mt-8 flex-wrap'>
-        <BackArrow />
-      </div>
+
     </div>
   );
 };

@@ -1,11 +1,15 @@
 import Card from '../components/Card';
+import BackArrow from '../components/BackArrow';
 
 const PackageList = () => {
   return (
-    <div>
-      <h1 className='text-2xl font-bold mb-4 text-center bg-secondary p-5'>
-        All packages with information
-      </h1>
+    <div className='min-h-screen flex flex-col bg-background'>
+      <div className='flex items-center p-5 bg-secondary text-text-dark'>
+        <div className='mr-4'>
+          <BackArrow />
+        </div>
+        <h1 className='text-2xl font-bold flex-1 text-center mr-10'>All packages with information</h1>
+      </div>
       <div className='bg-background m-4 space-y-4'>
         <Card
           variant='package'

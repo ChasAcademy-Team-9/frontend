@@ -25,19 +25,19 @@ const Driver = () => {
         />
 
         <div className="flex justify-center">
-            <PrimaryButton
-              text="Skanna för att lägga till"
-              onClick={() => navigate('/scanning')} 
-            />
+          <PrimaryButton
+            text="Skanna för att lägga till"
+            onClick={() => navigate('/scanning')}
+          />
         </div>
 
         <div className="grid grid-cols-1 gap-4">
-          <Dashboard label="Temperatur" value={22} unit="°C" trend="up" />
-          <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" />
-          <Dashboard label="Batterinivå" value={65} unit="%" trend="warning" />
+          <Dashboard label="Temperatur" value={22} unit="°C" trend="up" onClick={() => navigate('/driver-list')} />
+          <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" onClick={() => navigate('/driver-list')} />
+          <Dashboard label="Batterinivå" value={65} unit="%" trend="warning" onClick={() => navigate('/driver-list')} />
         </div>
 
-        <NavigationCard 
+        <NavigationCard
           firstButtonText="Visa rutt"
           secondButtonText="Lista paket"
           onFirstButtonClick={() => alert('Visar rutt!')}

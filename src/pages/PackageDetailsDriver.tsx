@@ -20,29 +20,29 @@ const PackageDetailsDriver = () => {
                     ]}
                />
                <div className="grid grid-cols-1 gap-4">
-                    <Dashboard label="Temperatur" value={22} unit="°C" trend="up" />
-                    <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" />
-                    <Dashboard label="Batterinivå" value={65} unit="%" trend="warning" />
+                    <Dashboard label="Temperatur" value={22} unit="°C" trend="up" onClick={() => navigate('/driver-list')} />
+                    <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" onClick={() => navigate('/driver-list')} />
+                    <Dashboard label="Batterinivå" value={65} unit="%" trend="warning" onClick={() => navigate('/driver-list')} />
                </div>
 
-               <MapComponent     
+               <MapComponent
                />
 
                <div className="flex justify-center mt-4 gap-4">
                     <PrimaryButton
-                    text="Bekräfta leverans"
-                    onClick={() => navigate('/confirmation-delivery')}
+                         text="Bekräfta leverans"
+                         onClick={() => navigate('/confirmation-delivery')}
                     />
 
                     <PrimaryButton
-                    text="Ta en bild"
-                    onClick={() => navigate('/photo')}
+                         text="Ta en bild"
+                         onClick={() => navigate('/photo')}
                     />
                </div>
 
                <div className="flex justify-center mt-4 gap-4">
                     <PackageList />
-                         </div>
+               </div>
           </div>
      )
 }

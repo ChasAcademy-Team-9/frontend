@@ -5,6 +5,7 @@ interface DashboardProps {
   value: number;
   unit: string;
   trend?: 'up' | 'down' | 'warning';
+  onClick?: () => void;
 }
 
 const generateData = (trend: 'up' | 'down' | 'warning' = 'up') => {
@@ -41,9 +42,9 @@ const generateData = (trend: 'up' | 'down' | 'warning' = 'up') => {
   }
 };
 
-const Dashboard = ({ label, value, unit, trend = 'up' }: DashboardProps) => {
+const Dashboard = ({ label, value, unit, trend = 'up', onClick }: DashboardProps) => {
   const data = generateData(trend);
-  
+
   const getStrokeColor = () => {
     if (trend === 'warning') {
       return 'url(#warningGradient)';
@@ -52,7 +53,11 @@ const Dashboard = ({ label, value, unit, trend = 'up' }: DashboardProps) => {
   };
 
   return (
-    <div className="bg-secondary rounded p-4 shadow-sm flex items-center justify-between">
+    <div
+      className={`bg-secondary rounded p-4 shadow-sm flex items-center justify-between ${onClick ? 'cursor-pointer hover:bg-opacity-80 transition-all' : ''
+        }`}
+      onClick={onClick}
+    >
       <div>
         <p className="text-sm text-dark mb-2">{label}</p>
         <div className="flex items-baseline gap-2">

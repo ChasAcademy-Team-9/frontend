@@ -15,7 +15,8 @@ const PackageDetailsDriver = () => {
           <div className="min-h-screen bg-background">
                <div className="flex items-center p-4 bg-secondary">
                     <BackArrow />
-                    <h1 className="text-xl font-bold flex-1 text-center mr-10 text-text-dark">Paketdetaljer</h1>
+                    <h1 className="text-4xl font-bold flex-1 text-center text-dark">Paketdetaljer</h1>
+                    <div className='w-8'></div>
                </div>
 
                <div className="p-4 space-y-6 pb-20">
@@ -47,7 +48,7 @@ const PackageDetailsDriver = () => {
                               onClick={() => navigate('/confirmation-delivery')}
                          />
                     </div>
-                         <div className="bg-secondary rounded-lg p-4 cursor-pointer transition-all" onClick={() => navigate('/package-list')}>
+                    <div className="bg-secondary rounded-lg p-4 cursor-pointer transition-all" onClick={() => navigate('/package-list')}>
                          <p className="text-center text-lg font-semibold text-dark">Packet List</p>
                     </div>
                </div>

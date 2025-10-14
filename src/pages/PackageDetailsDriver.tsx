@@ -40,7 +40,7 @@ const PackageDetailsDriver = () => {
                     />
                </div>
 
-               <div>
+               <div >
                     <PackageList />
                </div>
           </div>

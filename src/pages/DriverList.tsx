@@ -56,22 +56,22 @@ const DriverList = () => {
         />
         <Card
           variant="package"
-          paketId="12345"
-          destination="Stockholm"
-          vikt="2kg"
+          paketId="12349"
+          destination="Lund"
+          vikt="1.2kg"
           fordonId="AB123CD"
-          status="In Transit"
-          info={{ stad: "Göteborg", tid: "12:00", adress: "Storgatan 1" }}
+          status="kärnd"
+          info={{ stad: "Göteborg", tid: "16:00", adress: "Storgatan 5" }}
           onClick={() => navigate('/package-details-driver')}
         />
         <Card
           variant="package"
-          paketId="12345"
-          destination="Stockholm"
-          vikt="2kg"
+          paketId="12350"
+          destination="Helsingborg"
+          vikt="2.8kg"
           fordonId="AB123CD"
-          status="In Transit"
-          info={{ stad: "Göteborg", tid: "12:00", adress: "Storgatan 1" }}
+          status="pending"
+          info={{ stad: "Göteborg", tid: "17:00", adress: "Storgatan 6" }}
           onClick={() => navigate('/package-details-driver')}
         />
       </div>

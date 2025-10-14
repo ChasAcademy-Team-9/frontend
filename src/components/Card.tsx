@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Olika varianter av vår Card-komponent
-type CardVariant = 'package' | 'transport' | 'status' | 'confirmation';
+type CardVariant = 'package' | 'transport' | 'status' | 'confirmation' | 'error';
 
 // Typ för transportinfo
 type TransportInfo = {
@@ -23,17 +23,38 @@ type CardProps = {
   onClick?: () => void;
 };
 
-// Variantbaserad bakgrundsfärg
-const getVariantStyle = (variant: CardVariant) => {
+const getVariantStyle = (variant: CardVariant, status?: string) => {
+  const baseClasses = 'card p-4 rounded shadow-md cursor-pointer';
+
+  const getStatusBasedColor = (status?: string) => {
+    if (status) {
+      switch (status.toLowerCase()) {
+        case 'kritisk':
+          return `${baseClasses} bg-error text-text-light`;
+        case 'varning':
+          return `${baseClasses} bg-warning text-dark`;
+        case 'ok':
+          return `${baseClasses} bg-success text-text-light`;
+        default:
+          return `${baseClasses} bg-primary text-text-light`;
+      }
+    }
+    return 'bg-secondary';
+  };
+
   switch (variant) {
     case 'confirmation':
       return 'bg-success';
     case 'status':
-      return 'bg-warning';
+      return getStatusBasedColor(status);
+    case 'package':
+      return getStatusBasedColor(status);
     case 'transport':
       return 'bg-secondary';
+    case 'error':
+      return 'bg-error';
     default:
-      return 'bg-secondary';
+      return 'bg-background';
   }
 };
 
@@ -48,11 +69,12 @@ const Card: React.FC<CardProps> = ({
   info,
   onClick,
 }) => {
+  const cardClasses = getVariantStyle(variant, status);
+  const isFullClassName = cardClasses.includes('card p-4');
+
   return (
     <div
-      className={`card p-4 rounded shadow-md ${getVariantStyle(
-        variant
-      )} cursor-pointer`}
+      className={isFullClassName ? cardClasses : `card p-4 rounded shadow-md ${cardClasses} cursor-pointer`}
       onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {

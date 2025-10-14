@@ -7,13 +7,13 @@ const DriverList = () => {
 
   return (
     <div>
-      <div className="flex items-center p-4 bg-secondary/80 text-text-dark">
+      <div className="flex items-center p-4 mb-4 bg-secondary text-dark">
         <div className="mr-4">
           <BackArrow />
         </div>
         <h1 className="text-2xl font-bold flex-1 text-center mr-10">Förarens paketlista</h1>
       </div>
-      <div className="bg-background space-y-4">
+      <div className="bg-background p-4 space-y-4">
         <Card
           variant="package"
           paketId="12345"

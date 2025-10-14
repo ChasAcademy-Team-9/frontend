@@ -3,7 +3,7 @@ import Dashboard from "../components/Driver/Dashboard"
 import MapComponent from "../components/Driver/MapComponent"
 import { useNavigate } from "react-router-dom"
 import { PrimaryButton } from "../components/PrimaryButton"
-import PackageList from "../pages/PackageList"
+import PackageList from "./PackageList"
 
 
 const PackageDetailsDriver = () => {
@@ -40,7 +40,7 @@ const PackageDetailsDriver = () => {
                     />
                </div>
 
-               <div className="flex justify-center mt-4 gap-4">
+               <div>
                     <PackageList />
                </div>
           </div>

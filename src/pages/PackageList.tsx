@@ -6,14 +6,14 @@ const PackageList = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='min-h-screen flex flex-col bg-background'>
-      <div className='flex items-center mb-4 rounded p-5 bg-secondary text-dark'>
-        <div className='m-4'>
+    <div className='min-h-screen bg-background'>
+      <div className='flex items-center p-4 mb-6 bg-secondary text-dark'>
+        <div className='mr-4'>
           <BackArrow />
         </div>
-        <h1 className='text-2xl font-bold flex-1 text-center mr-10'>All packages with information</h1>
+        <h1 className='text-3xl font-bold flex-1 text-center mr-10'>All packages with information</h1>
       </div>
-      <div className='bg-background space-y-4'>
+      <div className='bg-background space-y-6'>
         <Card
           variant='package'
           paketId='12345'

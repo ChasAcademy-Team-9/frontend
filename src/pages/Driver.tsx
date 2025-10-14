@@ -10,7 +10,7 @@ const Driver = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-text-dark mb-6 bg-secondary/80 p-5">
+      <h1 className="text-3xl font-bold text-dark mb-6 bg-secondary p-5">
         Förar Dashboard
       </h1>
 

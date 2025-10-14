@@ -3,10 +3,10 @@ import Card from '../components/Card';
 const PackageList = () => {
   return (
     <div>
-      <h1 className='text-2xl font-bold mb-4 text-center bg-secondary/80 p-4'>
+      <h1 className='text-2xl font-bold mb-4 text-center bg-secondary p-4 rounded'>
         All packages with information
       </h1>
-      <div className='bg-background p-4 space-y-4'>
+      <div className='bg-background space-y-4'>
         <Card
           variant='package'
           paketId='12345'

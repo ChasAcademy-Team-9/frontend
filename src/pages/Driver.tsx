@@ -47,7 +47,7 @@ const Driver = () => {
 
       <BottomNav />
     </div>
-  );
+  ); 
 };
 
 export default Driver;

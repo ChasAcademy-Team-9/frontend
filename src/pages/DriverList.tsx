@@ -1,9 +1,15 @@
 import Card from "../components/Card"
+import BackArrow from "../components/BackArrow"
 
 const DriverList = () => {
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4 text-center bg-secondary/80 p-4">Förarens paketlista</h1>
+      <div className="flex items-center p-4 bg-secondary/80 text-text-dark">
+        <div className="mr-4">
+          <BackArrow />
+        </div>
+        <h1 className="text-2xl font-bold flex-1 text-center mr-10">Förarens paketlista</h1>
+      </div>
       <div className="bg-background p-4 space-y-4">
         <Card
           variant="package"

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { PrimaryButton } from "../components/PrimaryButton"
 import BackArrow from "../components/BackArrow"
 import { FaCamera } from "react-icons/fa";
+import PackageList from "./PackageList"
 
 
 const PackageDetailsDriver = () => {
@@ -45,6 +46,9 @@ const PackageDetailsDriver = () => {
                               text="Bekräfta leverans"
                               onClick={() => navigate('/confirmation-delivery')}
                          />
+                    </div>
+                         <div className="bg-secondary rounded-lg p-4 cursor-pointer transition-all" onClick={() => navigate('/package-list')}>
+                         <p className="text-center text-lg font-semibold text-dark">Packet List</p>
                     </div>
                </div>
           </div>

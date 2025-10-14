@@ -1,7 +1,10 @@
 import Card from "../components/Card"
 import BackArrow from "../components/BackArrow"
+import { useNavigate } from 'react-router-dom'
 
 const DriverList = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className="flex items-center p-4 bg-secondary/80 text-text-dark">
@@ -10,7 +13,7 @@ const DriverList = () => {
         </div>
         <h1 className="text-2xl font-bold flex-1 text-center mr-10">Förarens paketlista</h1>
       </div>
-      <div className="bg-background p-4 space-y-4">
+      <div className="bg-background space-y-4">
         <Card
           variant="package"
           paketId="12345"
@@ -19,7 +22,7 @@ const DriverList = () => {
           fordonId="AB123CD"
           status="kritisk"
           info={{ stad: "Göteborg", tid: "12:00", adress: "Storgatan 1" }}
-          onClick={() => alert('Card clicked!')}
+          onClick={() => navigate('/package-details-driver')}
         />
         <Card
           variant="package"
@@ -29,7 +32,7 @@ const DriverList = () => {
           fordonId="AB123CD"
           status="ok"
           info={{ stad: "Göteborg", tid: "13:00", adress: "Storgatan 2" }}
-          onClick={() => alert('Card clicked!')}
+          onClick={() => navigate('/package-details-driver')}
         />
         <Card
           variant="package"
@@ -39,7 +42,7 @@ const DriverList = () => {
           fordonId="AB123CD"
           status="varning"
           info={{ stad: "Göteborg", tid: "14:00", adress: "Storgatan 3" }}
-          onClick={() => alert('Card clicked!')}
+          onClick={() => navigate('/package-details-driver')}
         />
         <Card
           variant="package"
@@ -49,7 +52,7 @@ const DriverList = () => {
           fordonId="AB123CD"
           status="rapportera"
           info={{ stad: "Göteborg", tid: "15:00", adress: "Storgatan 4" }}
-          onClick={() => alert('Card clicked!')}
+          onClick={() => navigate('/package-details-driver')}
         />
         <Card
           variant="package"
@@ -59,7 +62,7 @@ const DriverList = () => {
           fordonId="AB123CD"
           status="In Transit"
           info={{ stad: "Göteborg", tid: "12:00", adress: "Storgatan 1" }}
-          onClick={() => alert('Card clicked!')}
+          onClick={() => navigate('/package-details-driver')}
         />
         <Card
           variant="package"
@@ -69,7 +72,7 @@ const DriverList = () => {
           fordonId="AB123CD"
           status="In Transit"
           info={{ stad: "Göteborg", tid: "12:00", adress: "Storgatan 1" }}
-          onClick={() => alert('Card clicked!')}
+          onClick={() => navigate('/package-details-driver')}
         />
       </div>
     </div>

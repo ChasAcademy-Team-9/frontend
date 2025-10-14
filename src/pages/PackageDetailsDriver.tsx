@@ -3,7 +3,7 @@ import Dashboard from "../components/Driver/Dashboard"
 import MapComponent from "../components/Driver/MapComponent"
 import { useNavigate } from "react-router-dom"
 import { PrimaryButton } from "../components/PrimaryButton"
-import PackageList from "./PackageList"
+import { FaCamera } from "react-icons/fa";
 
 
 const PackageDetailsDriver = () => {
@@ -28,20 +28,17 @@ const PackageDetailsDriver = () => {
                <MapComponent
                />
 
-               <div className="flex justify-center mt-4 gap-4">
+               <div className="flex flex-col sm:flex-row justify-center items-center mt-6 gap-3 px-4">
                     <PrimaryButton
                          text="Bekräfta leverans"
                          onClick={() => navigate('/confirmation-delivery')}
                     />
 
                     <PrimaryButton
+                         icon={<FaCamera />}
                          text="Ta en bild"
                          onClick={() => navigate('/photo')}
                     />
-               </div>
-
-               <div >
-                    <PackageList />
                </div>
           </div>
      )

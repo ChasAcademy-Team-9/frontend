@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom"
 import { PrimaryButton } from "../components/PrimaryButton"
 import BackArrow from "../components/BackArrow"
 import { FaCamera } from "react-icons/fa";
-import PackageList from "./PackageList"
 
 
 const PackageDetailsDriver = () => {

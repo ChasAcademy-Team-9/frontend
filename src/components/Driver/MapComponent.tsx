@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -40,7 +40,11 @@ interface RouteInfo {
      duration: number;
 }
 
-const MapComponent = () => {
+interface MapComponentProps {
+     onRouteLoaded?: (openInGoogleMaps: () => void) => void;
+}
+
+const MapComponent = ({ onRouteLoaded }: MapComponentProps) => {
      const [routeData, setRouteData] = useState<RouteData | null>(null);
      const [routeInfo, setRouteInfo] = useState<RouteInfo | null>(null);
      const [loading, setLoading] = useState(true);
@@ -71,6 +75,22 @@ const MapComponent = () => {
 
           loadData();
      }, []);
+
+     const openInGoogleMaps = useCallback(() => {
+          if (!routeData) return;
+
+          const { startPoint, endPoint } = routeData;
+
+          const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${startPoint.lat},${startPoint.lng}&destination=${endPoint.lat},${endPoint.lng}&travelmode=driving`;
+
+          window.open(googleMapsUrl, '_blank');
+     }, [routeData]);
+     useEffect(() => {
+          if (routeData && onRouteLoaded) {
+               onRouteLoaded(openInGoogleMaps);
+          }
+     }, [routeData, onRouteLoaded, openInGoogleMaps]);
+
 
      const calculateRoute = async (data: RouteData) => {
           try {
@@ -116,7 +136,7 @@ const MapComponent = () => {
 
      if (loading) {
           return (
-               <div className="w-full h-64 flex items-center justify-center bg-gray-100 rounded">
+               <div className="w-full h-64 flex items-center justify-center bg-background rounded">
                     <p>Laddar karta...</p>
                </div>
           );
@@ -124,7 +144,7 @@ const MapComponent = () => {
 
      if (error || !routeData || !routeInfo) {
           return (
-               <div className="w-full h-64 flex items-center justify-center bg-gray-100 rounded">
+               <div className="w-full h-64 flex items-center justify-center bg-background rounded">
                     <p className="text-red-600">Fel: {error || 'Data inte tillgänglig'}</p>
                </div>
           );
@@ -138,14 +158,14 @@ const MapComponent = () => {
      return (
           <div className="w-full space-y-2">
                {routeInfo.distance > 0 && (
-                    <div className="bg-background text-dark p-3 rounded shadow-sm text-sm">
+                    <div className="mb-3 bg-background text-dark p-3 rounded shadow-sm text-sm">
                          <span className="font-semibold">Distans:</span> {(routeInfo.distance / 1000).toFixed(1)} km
                          <span className="mx-3">|</span>
                          <span className="font-semibold">Beräknad tid:</span> {Math.round(routeInfo.duration / 60)} min
                     </div>
                )}
 
-               <div className="w-full h-64 rounded overflow-hidden shadow">
+               <div className="w-full h-70 rounded overflow-hidden shadow">
                     <MapContainer
                          center={center}
                          zoom={7}

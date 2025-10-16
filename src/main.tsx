@@ -12,6 +12,11 @@ import Home from './routes/Home.tsx';
 import Recipient from './pages/RecipientPage.tsx';
 import PackageDetailsPage from './pages/PackageDetailsPage.tsx';
 import ReceiptPage from './pages/ReceiptPage.tsx';
+import DriverList from './pages/DriverList.tsx';
+import PackageList from './pages/PackageList.tsx';
+import ConfirmationRapport from './pages/ConfirmationRapport.tsx';
+import ConfirmationScanning from './pages/ConfirmationScanning.tsx';
+import Driver from './pages/Driver.tsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
@@ -20,6 +25,11 @@ const router = createBrowserRouter([
   { path: '/scan', element: <Scan /> },
   { path: '/position', element: <Position /> },
   { path: '/home', element: <Home /> },
+  { path: '/driver', element: <Driver /> },
+  { path: '/driver-list', element: <DriverList /> },
+  { path: '/package-list', element: <PackageList /> },
+  { path: '/confirmation-rapport', element: <ConfirmationRapport /> },
+  { path: '/confirmation-scanning', element: <ConfirmationScanning /> },
   { path: '*', element: <NotFound /> },
   { path: '/recipient', element: <Recipient /> },
   { path: '/package/:paketId', element: <PackageDetailsPage /> },

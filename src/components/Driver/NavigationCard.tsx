@@ -2,7 +2,17 @@ import { useState } from 'react';
 import { PrimaryButton } from '../PrimaryButton';
 import MapComponent from './MapComponent';
 
-const NavigationCard = () => {
+interface NavigationCardProps {
+  firstButtonText: string;
+  secondButtonText: string;
+  onSecondButtonClick: () => void;
+}
+
+const NavigationCard = ({ 
+  firstButtonText, 
+  secondButtonText, 
+  onSecondButtonClick 
+}: NavigationCardProps) => {
   const [openGoogleMaps, setOpenGoogleMaps] = useState<(() => void) | null>(null);
 
   const handleRouteLoaded = (openMapsFn: () => void) => {
@@ -15,7 +25,7 @@ const NavigationCard = () => {
       
       <div className="flex gap-2 justify-center mb-4 p-4">
         <PrimaryButton
-          text="Visa Rutt"
+          text={firstButtonText}
           onClick={() => {
             if (openGoogleMaps) {
               openGoogleMaps();

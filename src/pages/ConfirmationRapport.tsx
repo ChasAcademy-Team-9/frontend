@@ -13,39 +13,36 @@ const ConfirmationRapport: React.FC = () => {
 
   return (
     <div className='p-5 max-w-2xl mx-auto'>
-      <div className='text-center mb-8 p-5 bg-secondary text-text-dark rounded-2xl'>
-        <h1 className='text-4xl font-bold mb-3 flex items-center justify-center gap-3'>
-          <LuCheck className='text-success' size={36} />
+      <div className='text-center mb-8 p-5 bg-success text-text-dark rounded'>
+        <h1 className='text-4xl text-text-light font-bold mb-3 flex items-center justify-center gap-3'>
+          <LuCheck className='text-text-light' size={36} />
           Rapport Skickad
         </h1>
       </div>
 
-      <div className='bg-secondary/80 p-5 rounded-2xl mb-6 bordered-2xl'>
-        <h2 className='text-xl font-semibold text-text-dark mb-4 mt-0'>
+      <div className='bg-secondary p-5 rounded mb-6 rounded'>
+        <h2 className='text-xl font-semibold text-dark mb-4 mt-0'>
           Rapportdetaljer
         </h2>
         <div className='flex justify-between items-center py-2'>
-          <span className='font-semibold text-text-dark'>Skickad:</span>
-          <span className='text-text-dark'>
+          <span className='text-dark'>Skickad:</span>
+          <span className='text-dark'>
             {currentDate} kl. {currentTime}
           </span>
         </div>
         <div className='flex justify-between items-center py-2 border-b border-[var(--color-border)]'>
-          <span className='font-semibold text-text-dark '>Status:</span>
+          <span className='font-semibold text-dark '>Status:</span>
           <span className='text-success font-semibold'>Bekräftad</span>
         </div>
         <div className='flex justify-between items-center py-2'>
-          <span className='font-semibold text-text-dark'>Rapport-ID:</span>
-          <span className='text-text-dark'>
+          <span className='font-semibold text-dark'>Rapport-ID:</span>
+          <span className='text-dark'>
             RPT-{Date.now().toString().slice(-6)}
           </span>
         </div>
       </div>
 
-      <div className='bg-secondary/80 p-5 mb-6 rounded-2xl'>
-        <h2 className='text-xl text-text-dark font-semibold mb-4'>
-          Packetinformation
-        </h2>
+      <div className='mb-6'>
         <Card
           variant='package'
           fordonId='XYZ123'
@@ -56,21 +53,21 @@ const ConfirmationRapport: React.FC = () => {
         />
       </div>
 
-      <div className='bg-secondary/80 p-5 mb-6 rounded-2xl'>
-        <h2 className='text-xl font-semibold text-text-dark mb-3 mt-0'>
+      <div className='bg-secondary p-5 mb-6 rounded'>
+        <h2 className='text-xl font-semibold text-dark mb-3 mt-0'>
           Nästa steg
         </h2>
         <ul>
-          <li className='text-text-dark flex items-center gap-2'>
-            <LuCheck className='text-success' size={16} />
+          <li className='text-dark flex items-center gap-2'>
+            <LuCheck className='text-light' size={16} />
             Rapporten har sparats i systemet
           </li>
-          <li className='text-text-dark flex items-center gap-2'>
-            <LuCheck className='text-success' size={16} />
+          <li className='text-dark flex items-center gap-2'>
+            <LuCheck className='text-light' size={16} />
             En kopia har skickats till huvudkontoret
           </li>
-          <li className='text-text-dark flex items-center gap-2'>
-            <LuCheck className='text-success' size={16} />
+          <li className='text-dark flex items-center gap-2'>
+            <LuCheck className='text-light' size={16} />
             Du kan nu fortsätta med nästa transport
           </li>
         </ul>

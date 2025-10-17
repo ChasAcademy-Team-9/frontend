@@ -150,7 +150,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-type CardVariant = 'package' | 'transport' | 'status' | 'confirmation';
+// Olika varianter av vår Card-komponent
+type CardVariant = 'package' | 'transport' | 'status' | 'confirmation' | 'error';
 
 type TransportInfo = {
   stad?: string;
@@ -170,22 +171,38 @@ type CardProps = {
   onClick?: () => void;
 };
 
+const getVariantStyle = (variant: CardVariant, status?: string) => {
+  const baseClasses = 'card p-4 rounded shadow-md cursor-pointer';
 
-const getCardClasses = (status?: string) => {
-  const base = 'p-4 rounded-lg cursor-pointer transition-all duration-300';
-  if (!status) return `${base} text-text-dark`;
+  const getStatusBasedColor = (status?: string) => {
+    if (status) {
+      switch (status.toLowerCase()) {
+        case 'kritisk':
+          return `${baseClasses} bg-error text-text-light`;
+        case 'varning':
+          return `${baseClasses} bg-warning text-dark`;
+        case 'ok':
+          return `${baseClasses} bg-success text-text-light`;
+        default:
+          return `${baseClasses} bg-primary text-text-light`;
+      }
+    }
+    return 'bg-secondary';
+  };
 
-  switch (status.toLowerCase()) {
-    case 'kritisk':
-      return `${base} bg-error text-text-light`;
-    case 'rapportera':
-    case 'varning':
-      return `${base} bg-warning text-text-dark`;
-    case 'ok':
-    case 'kärnd':
-      return `${base} bg-success text-text-light`;
+  switch (variant) {
+    case 'confirmation':
+      return 'bg-success';
+    case 'status':
+      return getStatusBasedColor(status);
+    case 'package':
+      return getStatusBasedColor(status);
+    case 'transport':
+      return 'bg-secondary';
+    case 'error':
+      return 'bg-error';
     default:
-      return `${base} bg-secondary/80 text-text-dark`;
+      return 'bg-background';
   }
 };
 
@@ -197,17 +214,22 @@ const Card: React.FC<CardProps> = ({
   fordonId,
   status,
   info,
-  className,
   onClick,
 }) => {
-  const hasNestedInteractiveElements = variant === 'confirmation';
+  const cardClasses = getVariantStyle(variant, status);
+  const isFullClassName = cardClasses.includes('card p-4');
 
   return (
     <div
-      className={`${getCardClasses(status)} ${className || ''}`}
-      {...(!hasNestedInteractiveElements && onClick
-        ? { onClick, role: 'button', tabIndex: 0 }
-        : {})}
+      className={isFullClassName ? cardClasses : `card p-4 rounded shadow-md ${cardClasses} cursor-pointer`}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onClick?.();
+        }
+      }}
+      role='button'
+      tabIndex={0}
     >
       {variant === 'package' && (
         <>

@@ -1,20 +1,32 @@
 import { PrimaryButton } from '../PrimaryButton';
 import MapComponent from './MapComponent';
 
-const NavigationCard = () => {
+interface NavigationCardProps {
+  firstButtonText: string;
+  secondButtonText: string;
+  onFirstButtonClick?: () => void;
+  onSecondButtonClick?: () => void;
+}
+
+const NavigationCard = ({ 
+  firstButtonText, 
+  secondButtonText,
+  onFirstButtonClick = () => alert('First button clicked!'),
+  onSecondButtonClick = () => alert('Second button clicked!')
+}: NavigationCardProps) => {
   return (
     <div className="bg-secondary/80 rounded-2xl p-4">
-      <h3 className="font-semibold text-text-dark mb-4">Navigation</h3>
+      <h3 className="font-semibold text-lg text-dark mb-4">Navigation</h3>
       
-      <div className="flex gap-2 justify-center mb-4 scale-125 p-4">
+      <div className="flex gap-2 justify-center mb-4 p-4">
         <PrimaryButton
-          text="Visa Rutt"
-          onClick={() => alert('Rutt!')}
+          text={firstButtonText}
+          onClick={onFirstButtonClick}
         />
         
         <PrimaryButton
-          text="Lista med packet"
-          onClick={() => alert('Listan!')}
+          text={secondButtonText}
+          onClick={onSecondButtonClick}
         />
       </div>
 

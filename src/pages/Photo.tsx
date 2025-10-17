@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import BackArrow from "../components/BackArrow"
 import { PrimaryButton } from "../components/PrimaryButton"
 import { FaCamera } from "react-icons/fa";
 
 const Photo = () => {
+          const navigate = useNavigate()
+          
      return (
           <div className="min-h-screen flex flex-col bg-background">
 
@@ -26,19 +29,19 @@ const Photo = () => {
                     </div>
 
                     <div className="text-center max-w-xs">
-                         <h2 className="text-2xl font-semibold text-text-dark mb-3">
+                         <h2 className="text-2xl font-semibold text-dark mb-3">
                               Ta en bild
                          </h2>
-                         <p className="text-text-dark text-base">
+                         <p className="text-dark text-base">
                               Rikta kameran mot objektet och tryck på knappen för att ta en bild.
                          </p>
                     </div>
 
-                    <div className="scale-125 mt-8">
+                    <div className=" mt-8">
                          <PrimaryButton
                               text="Ta en bild"
                               icon={<FaCamera name="camera" size={24} />}
-                              onClick={() => { console.log('Ta en bild') }}
+                              onClick={() => navigate('/photo')}
                          />
                     </div>
 

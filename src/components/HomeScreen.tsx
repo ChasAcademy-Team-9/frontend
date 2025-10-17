@@ -33,7 +33,7 @@ function HomeScreen() {
         <div className='relative group'>
           <img
             className='rounded-2xl lg:rounded-3xl max-w-2xl w-full mx-auto '
-            src='public\truck-home-2.webp'
+            src='truck-home-2.webp'
             alt='Lastbil åker på motorväg'
           />
         </div>

@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
       <div className="relative z-10 min-h-screen">
         <h1 className="text-3xl font-bold text-dark bg-secondary p-5">
-          Förar Dashboard
+          Förare Dashboard
         </h1>
 
         <div className="p-4 space-y-6 pb-20">

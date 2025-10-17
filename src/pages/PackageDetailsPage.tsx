@@ -18,9 +18,9 @@ export default function PackageDetailsPage() {
   const { paketId } = useParams();
 
   const packages = [
-    { paketId: "12345", destination: "Stockholm", status: "Under transport" },
-    { paketId: "67890", destination: "Göteborg", status: "Levererad", showReceipt: true },
-    { paketId: "54321", destination: "Malmö", status: "Försenad" },
+    { paketId: "12345", destination: "Stockholm", status: "Under transport", leveransDatum: "2024-10-31", avsändare: "Chas Advance" },
+    { paketId: "67890", destination: "Göteborg", status: "Levererad", showReceipt: true, leveransDatum: "2024-10-17", avsändare: "Tech Solutions" },
+    { paketId: "54321", destination: "Malmö", status: "Försenad", leveransDatum: "2024-10-28", avsändare: "LogiCorp" },
   ];
 
   // Hitta rätt paket baserat på URL-parametern
@@ -64,8 +64,23 @@ export default function PackageDetailsPage() {
 
           {/* Destination */}
           <p className="text-white font-inter text-md">
-            Destination: {packageData.destination}
+            Destination: <em>{packageData.destination}</em>
           </p>
+
+          {/* Leveransdatum */}
+          {packageData.leveransDatum && (
+            <p className="text-white font-inter text-md" >
+              Beräknat leveransdatum: <em>{packageData.leveransDatum}</em>
+            </p>
+          )}
+
+          {/* Avsändare */}
+          {packageData.avsändare && (
+            <p className="text-white font-inter text-md">
+              Avsändare: <em>{packageData.avsändare}</em>
+            </p>
+          )}
+
 
           {/* Kvitto-knapp */}
           {packageData.showReceipt && (

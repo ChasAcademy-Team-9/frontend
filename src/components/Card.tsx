@@ -214,7 +214,6 @@ const Card: React.FC<CardProps> = ({
   fordonId,
   status,
   info,
-  className,
   onClick,
 }) => {
   const cardClasses = getVariantStyle(variant, status);

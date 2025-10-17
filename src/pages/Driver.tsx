@@ -5,16 +5,16 @@ import { PrimaryButton } from "../components/PrimaryButton";
 import BottomNav from "../components/BottomNav";
 import { useNavigate } from "react-router-dom";
 
-const Driver = () => {
+  const Driver = () => {
   const navigate = useNavigate();
 
   return (
     <div className="relative min-h-screen">
 
-      {/* Content overlay with semi-transparent background */}
+
       <div className="relative z-10 min-h-screen">
         <h1 className="text-3xl font-bold text-dark bg-secondary p-5">
-          Förar Dashboard
+          Förare Dashboard
         </h1>
 
         <div className="p-4 space-y-6 pb-20">
@@ -45,7 +45,6 @@ const Driver = () => {
           <NavigationCard
             firstButtonText="Visa rutt"
             secondButtonText="Lista paket"
-            onFirstButtonClick={() => alert('Visar rutt!')}
             onSecondButtonClick={() => navigate('/package-list')}
           />
         </div>

@@ -45,7 +45,6 @@ import { useNavigate } from "react-router-dom";
           <NavigationCard
             firstButtonText="Visa rutt"
             secondButtonText="Lista paket"
-            onFirstButtonClick={() => alert('Visar rutt!')}
             onSecondButtonClick={() => navigate('/package-list')}
           />
         </div>

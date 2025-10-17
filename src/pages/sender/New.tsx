@@ -12,6 +12,10 @@ type PackageDetails = {
   width?: string;
   height?: string;
   deliveryDate?: string;
+  name?: string;
+  address?: string;
+  postCode?: string;
+  city?: string;
   maxTemp?: string;
   maxHumidity?: string;
 };
@@ -171,10 +175,54 @@ export function New() {
         )}
         {currentStep.number == 2 && (
           <>
-            <Input label="Namn" id="name" name="name" />
-            <Input label="Adress" id="address" name="address" />
-            <Input label="Postnummer" id="postal" name="postal" />
-            <Input label="Stad" id="city" name="city" />
+            <Input
+              label="Namn"
+              id="name"
+              name="name"
+              onChange={(e) =>
+                setPackageDetails({
+                  ...packageDetails,
+                  name: e.target.value,
+                })
+              }
+              value={packageDetails.name || ""}
+            />
+            <Input
+              label="Adress"
+              id="address"
+              name="address"
+              onChange={(e) =>
+                setPackageDetails({
+                  ...packageDetails,
+                  address: e.target.value,
+                })
+              }
+              value={packageDetails.address || ""}
+            />
+            <Input
+              label="Postnummer"
+              id="postal"
+              name="postal"
+              onChange={(e) =>
+                setPackageDetails({
+                  ...packageDetails,
+                  postCode: e.target.value,
+                })
+              }
+              value={packageDetails.postCode || ""}
+            />
+            <Input
+              label="Stad"
+              id="city"
+              name="city"
+              onChange={(e) =>
+                setPackageDetails({
+                  ...packageDetails,
+                  city: e.target.value,
+                })
+              }
+              value={packageDetails.city || ""}
+            />
           </>
         )}
         {currentStep.number == 3 && (
@@ -213,25 +261,68 @@ export function New() {
         {currentStep.number == 4 && (
           <>
             <p>Kontrollera att uppgifterna stämmer.</p>
-            <dl className="grid grid-cols-2 gap-x-8 gap-y-4">
-              <dt>Beskrivning</dt>
-              <dd>{packageDetails.description}</dd>
-              <dt>Vikt</dt>
-              <dd>{packageDetails.weight} kg</dd>
-              <dt>Storlek (LxBxH)</dt>
-              <dd>
-                {packageDetails.length} x {packageDetails.width} x{" "}
-                {packageDetails.height} cm
-              </dd>
-              <dt>Prioritet</dt>
-              <dd>{priority.label}</dd>
-              <dt>Önskad leveransdag</dt>
-              <dd>{packageDetails.deliveryDate}</dd>
-              <dt>Max temperatur</dt>
-              <dd>{packageDetails.maxTemp} °C</dd>
-              <dt>Max luftfuktighet</dt>
-              <dd>{packageDetails.maxHumidity} %</dd>
-            </dl>
+            <table className="text-left">
+              <caption className="text-left text-xl border-b">
+                Paketdetaljer
+              </caption>
+              <tr>
+                <th className="w-1/4">Beskrivning</th>
+                <td>{packageDetails.description}</td>
+              </tr>
+              <tr>
+                <th>Vikt</th>
+                <td>{packageDetails.weight + " kg"}</td>
+              </tr>
+              <tr>
+                <th>Storlek</th>
+                <td>
+                  {packageDetails.length} x {packageDetails.width} x{" "}
+                  {packageDetails.height} cm
+                </td>
+              </tr>
+              <tr>
+                <th>Prioritet</th>
+                <td>{priority.label}</td>
+              </tr>
+              <tr>
+                <th>Önskad leveransdag</th>
+                <td>{packageDetails.deliveryDate}</td>
+              </tr>
+            </table>
+            <table className="text-left">
+              <caption className="text-left text-xl border-b">
+                Mottagare
+              </caption>
+              <tr>
+                <th className="w-1/4">Namn</th>
+                <td>{packageDetails.name}</td>
+              </tr>
+              <tr>
+                <th>Adress</th>
+                <td>{packageDetails.address}</td>
+              </tr>
+              <tr>
+                <th>Postnummer</th>
+                <td>{packageDetails.postCode}</td>
+              </tr>
+              <tr>
+                <th>Stad</th>
+                <td>{packageDetails.city}</td>
+              </tr>
+            </table>
+            <table className="text-left">
+              <caption className="text-left text-xl border-b">
+                Gränsvärden
+              </caption>
+              <tr>
+                <th className="w-1/4">Högsta temperatur</th>
+                <td>{packageDetails.maxTemp + " ℃"}</td>
+              </tr>
+              <tr>
+                <th>Gräns luftfuktighet</th>
+                <td>{packageDetails.maxHumidity + " %"}</td>
+              </tr>
+            </table>
           </>
         )}
         <nav

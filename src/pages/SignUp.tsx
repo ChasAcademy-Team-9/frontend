@@ -18,17 +18,16 @@ function SignUp() {
     const newUser = {
       FirstName: firstName,
       LastName: lastName,
-      Adress: userAdress,
       UserName: userNameInput,
       Password: passwordInput,
-      TableName: roleAccount.value,
+      Role: roleAccount.value,
     };
 
     console.log(newUser);
 
     try {
       const response = await fetch(
-        'https://johntest-linux-gzbpcmd8hcbphue0.swedencentral-01.azurewebsites.net/api/register',
+        'https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register',
         {
           method: 'POST',
           headers: {
@@ -83,7 +82,7 @@ function SignUp() {
         className='max-sm:w-full'
       />
 
-      <Input
+      {/* <Input
         label='Adress'
         name='adress'
         id='adress'
@@ -91,7 +90,7 @@ function SignUp() {
         value={userAdress}
         onChange={(e) => setUserAdress(e.target.value)}
         className='max-sm:w-full'
-      />
+      /> */}
 
       <Input
         label='Username'
@@ -115,12 +114,9 @@ function SignUp() {
 
       <Dropdown
         options={[
-          { value: 'Drivers', label: 'Driver' },
-          { value: 'Senders', label: 'Sender' },
-          { value: 'Receivers', label: 'Receiver' },
-          { value: 'logistics', label: 'Logistik' },
-          { value: 'tracking', label: 'Spårning' },
-          { value: 'data', label: 'Data' },
+          { value: 'driver', label: 'Driver' },
+          { value: 'sender', label: 'Sender' },
+          { value: 'receiver', label: 'Receiver' },
         ]}
         selectedValue={roleAccount.value}
         onSelect={(o) => setRoleAccount(o)}

@@ -7,7 +7,7 @@ import BackArrow from '../components/BackArrow';
 function SignUp() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [userAdress, setUserAdress] = useState('');
+  // const [userAdress, setUserAdress] = useState('');
   const [userNameInput, setUserNameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [roleAccount, setRoleAccount] = useState({ value: '', label: '' });
@@ -47,7 +47,7 @@ function SignUp() {
 
       setFirstName('');
       setLastName('');
-      setUserAdress('');
+      // setUserAdress('');
       setUserNameInput('');
       setPasswordInput('');
       setRoleAccount({ value: '', label: '' });
@@ -132,7 +132,7 @@ function SignUp() {
         onClick={handleSubmit}
       />
 
-      {statusMsg}
+      <p className='font-bold'>{statusMsg}</p>
     </main>
   );
 }

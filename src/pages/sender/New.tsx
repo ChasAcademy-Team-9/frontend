@@ -20,16 +20,21 @@ type PackageDetails = {
   maxHumidity?: string;
 };
 
+// TODO ta bort utkommenterad kod eller fixa så att det går slå på och av funktioner som inte används
+// TODO fixa types PackageDetails och gå ignom formuläret
+// TODO fixa förare och mottagare
+// TODO ta bort steg tre, slå ihop steg 1 och 2?
+
 export function New() {
   const steps = [
     {
       number: 1,
       name: "Paketdetaljer",
     },
-    { number: 2, name: "Mottagare" },
+    { number: 2, name: "Leverans" },
     {
       number: 3,
-      name: "Gränsvärden",
+      name: "Adresser",
     },
     {
       number: 4,
@@ -83,7 +88,7 @@ export function New() {
       <form className="flex flex-col gap-8 bg-white/75 p-4 m-[-1rem] rounded-b-3xl rounded-t-2xl min-h-[calc(100vh-16rem)]">
         {currentStep.number == 1 && (
           <>
-            <Input
+            {/* <Input
               label="Beskrivning"
               id="a"
               name="description"
@@ -94,7 +99,7 @@ export function New() {
                 })
               }
               value={packageDetails.description || ""}
-            />
+            /> */}
             <Input
               label="Vikt (kg)"
               name="0.0"
@@ -149,7 +154,7 @@ export function New() {
                 value={packageDetails.height || ""}
               />
             </fieldset>
-            <label>
+            {/* <label>
               Prioritet
               <Dropdown
                 onSelect={(o) => setPriority(o)}
@@ -157,8 +162,8 @@ export function New() {
                 selectedValue={priority.value}
                 placeholder="Välj prioritet"
               />
-            </label>
-            <Input
+            </label> */}
+            {/* <Input
               label="Önskad leveransdag"
               id="delivery-date"
               name="åååå-mm-dd"
@@ -170,12 +175,30 @@ export function New() {
                 })
               }
               value={packageDetails.deliveryDate || ""}
-            />
+            /> */}
           </>
         )}
         {currentStep.number == 2 && (
           <>
-            <Input
+            <label>
+              Förare
+              <Dropdown
+                onSelect={(o) => setPriority(o)}
+                options={priorities}
+                selectedValue={priority.value}
+                placeholder="Laddar förarlista"
+              />
+            </label>
+            <label>
+              Mottagare
+              <Dropdown
+                onSelect={(o) => setPriority(o)}
+                options={priorities}
+                selectedValue={priority.value}
+                placeholder="Laddar mottagarlista"
+              />
+            </label>
+            {/* <Input
               label="Namn"
               id="name"
               name="name"
@@ -222,20 +245,15 @@ export function New() {
                 })
               }
               value={packageDetails.city || ""}
-            />
+            /> */}
           </>
         )}
         {currentStep.number == 3 && (
           <>
-            <label>
-              {" "}
-              Typ av paket/Gränsvärden
-              {/* <Dropdown */}
-            </label>
             <Input
-              label="Högsta temperatur (°C)"
+              label="Avsändarens adress"
               id="max-temp"
-              name="max-temp"
+              name="Malmö"
               onChange={(e) =>
                 setPackageDetails({
                   ...packageDetails,
@@ -245,9 +263,9 @@ export function New() {
               value={packageDetails.maxTemp || ""}
             />
             <Input
-              label="Gräns luftfuktighet (%)"
+              label="Mottagarens adress"
               id="max-humidity"
-              name="max-humidity"
+              name="Göteborg"
               onChange={(e) =>
                 setPackageDetails({
                   ...packageDetails,
@@ -265,10 +283,10 @@ export function New() {
               <caption className="text-left text-xl border-b">
                 Paketdetaljer
               </caption>
-              <tr>
+              {/* <tr>
                 <th className="w-1/4">Beskrivning</th>
                 <td>{packageDetails.description}</td>
-              </tr>
+              </tr> */}
               <tr>
                 <th>Vikt</th>
                 <td>{packageDetails.weight + " kg"}</td>
@@ -280,47 +298,43 @@ export function New() {
                   {packageDetails.height} cm
                 </td>
               </tr>
-              <tr>
+              {/* <tr>
                 <th>Prioritet</th>
                 <td>{priority.label}</td>
               </tr>
               <tr>
                 <th>Önskad leveransdag</th>
                 <td>{packageDetails.deliveryDate}</td>
-              </tr>
+              </tr> */}
             </table>
             <table className="text-left">
-              <caption className="text-left text-xl border-b">
-                Mottagare
-              </caption>
+              <caption className="text-left text-xl border-b">Leverans</caption>
               <tr>
-                <th className="w-1/4">Namn</th>
+                <th className="w-1/4">Förare</th>
                 <td>{packageDetails.name}</td>
               </tr>
               <tr>
-                <th>Adress</th>
+                <th>Mottagare</th>
                 <td>{packageDetails.address}</td>
               </tr>
-              <tr>
+              {/* <tr>
                 <th>Postnummer</th>
                 <td>{packageDetails.postCode}</td>
               </tr>
               <tr>
                 <th>Stad</th>
                 <td>{packageDetails.city}</td>
-              </tr>
+              </tr> */}
             </table>
             <table className="text-left">
-              <caption className="text-left text-xl border-b">
-                Gränsvärden
-              </caption>
+              <caption className="text-left text-xl border-b">Adresser</caption>
               <tr>
-                <th className="w-1/4">Högsta temperatur</th>
-                <td>{packageDetails.maxTemp + " ℃"}</td>
+                <th className="w-1/4">Avsändare</th>
+                <td>{packageDetails.maxTemp}</td>
               </tr>
               <tr>
-                <th>Gräns luftfuktighet</th>
-                <td>{packageDetails.maxHumidity + " %"}</td>
+                <th>Mottagare</th>
+                <td>{packageDetails.maxHumidity}</td>
               </tr>
             </table>
           </>

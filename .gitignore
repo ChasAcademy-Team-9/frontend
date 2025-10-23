@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# iTerm color schemes (keep out of frontend repo)
+iterm/

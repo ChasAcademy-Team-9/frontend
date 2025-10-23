@@ -1,14 +1,48 @@
 import InfoCard from "../components/Driver/InfoCard"
 import Dashboard from "../components/Driver/Dashboard"
 import MapComponent from "../components/Driver/MapComponent"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { PrimaryButton } from "../components/PrimaryButton"
 import BackArrow from "../components/BackArrow"
 import { FaCamera } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { packageService } from '../api/packageService';
+import type { Package } from "../types/package"
 
 
 const PackageDetailsDriver = () => {
      const navigate = useNavigate()
+     const { paketID } = useParams<{ paketID: string }>()
+
+
+     useEffect(() => {
+          const fetchPackage = async () => {
+               if (!paketID) {
+                    setError('Paket ID är inte giltigt.');
+                    setLoading(false);
+                    return;
+               }
+
+               try {
+                    const packageId = parseInt(paketID, 10);
+                    if (isNaN(packageId)) {
+                         setError('Paket ID är inte giltigt.');
+                         setLoading(false);
+                         return;
+                    }
+                    const response = await packageService.getPackageById(packageId);
+                    setPackageData(response.package);
+               } catch (err) {
+                    setError('Kunde inte hämta paketinformation.');
+                    console.error('❌ Error:', err);
+               } finally {
+                    setLoading(false);
+               }
+          }
+
+          fetchPackage();
+     }, [paketID]);
+
 
      return (
           <div className="min-h-screen bg-background">

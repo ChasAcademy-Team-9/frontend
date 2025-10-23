@@ -1,12 +1,63 @@
 import Card from '../components/Card';
 import BackArrow from '../components/BackArrow';
 import { LuCheck } from 'react-icons/lu';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { packageService } from '../api/packageService';
+import type { Package } from '../types/package';
 
 const ConfirmationDelivery: React.FC = () => {
+  const { paketId } = useParams<{ paketId: string }>();
+  const [packageData, setPackageData] = useState<Package | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const currentTime = new Date().toLocaleTimeString('sv-SE', {
     hour: '2-digit',
     minute: '2-digit',
   });
+
+  useEffect(() => {
+    const fetchPackageData = async () => {
+      if (!paketId) {
+        setError("Package ID not found");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await packageService.getPackageById(parseInt(paketId));
+        setPackageData(response.package);
+      } catch (err: unknown) {
+        console.error("Error fetching package:", err);
+        setError("Failed to load package data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPackageData();
+  }, [paketId]);
+
+  if (loading) {
+    return (
+      <div className='max-w-2xl mx-auto'>
+        <div className='p-4 text-center'>
+          <div className="text-xl font-semibold text-dark">Loading...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !packageData) {
+    return (
+      <div className='max-w-2xl mx-auto'>
+        <div className='p-4 text-center'>
+          <div className="text-xl font-semibold text-red-600">{error || "Package not found"}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='max-w-2xl mx-auto'>
@@ -31,12 +82,12 @@ const ConfirmationDelivery: React.FC = () => {
       <div className='p-4 mb-5 space-y-4'>
         <Card
           variant='package'
-          fordonId='XYZ123'
-          paketId='12345'
-          destination='Stockholm'
-          vikt='2 kg'
+          fordonId='AB123CD'
+          paketId={packageData.PackageID.toString()}
+          destination={packageData.Destination || 'Unknown'}
+          vikt={`${packageData.PackageWeight} kg`}
           info={{ tid: currentTime }}
-        /> 
+        />
         <Card
           variant='transport'
           fordonId='XYZ123'

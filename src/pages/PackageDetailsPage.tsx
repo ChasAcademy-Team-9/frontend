@@ -1,13 +1,19 @@
 import { useParams, Link } from "react-router-dom";
 import BackArrow from "../components/BackArrow";
+import { useState, useEffect } from "react";
+import { packageService } from "../api/packageService";
+import type { Package } from "../types/package";
 
 function getStatusColor(status: string) {
-  switch (status.toLowerCase()) {
+  switch (status?.toLowerCase()) {
     case "levererad":
+    case "delivered":
       return "bg-success";
     case "under transport":
+    case "transit":
       return "bg-warning";
     case "försenad":
+    case "delayed":
       return "bg-gray";
     default:
       return "bg-secondary";
@@ -16,24 +22,50 @@ function getStatusColor(status: string) {
 
 export default function PackageDetailsPage() {
   const { paketId } = useParams();
+  const [packageData, setPackageData] = useState<Package | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const packages = [
-    { paketId: "12345", destination: "Stockholm", status: "Under transport", leveransDatum: "2024-10-31", avsändare: "Chas Advance" },
-    { paketId: "67890", destination: "Göteborg", status: "Levererad", showReceipt: true, leveransDatum: "2024-10-17", avsändare: "Tech Solutions" },
-    { paketId: "54321", destination: "Malmö", status: "Försenad", leveransDatum: "2024-10-28", avsändare: "LogiCorp" },
-  ];
+  useEffect(() => {
+    const fetchPackageData = async () => {
+      if (!paketId) {
+        setError("Package ID not found");
+        setLoading(false);
+        return;
+      }
 
-  // Hitta rätt paket baserat på URL-parametern
-  const packageData = packages.find(pkg => pkg.paketId === paketId);
+      try {
+        const response = await packageService.getPackageById(parseInt(paketId));
+        setPackageData(response.package);
+      } catch (err: unknown) {
+        console.error("Error fetching package:", err);
+        setError("Failed to load package data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPackageData();
+  }, [paketId]);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-background px-6 py-8">
+        <div className="max-w-md mx-auto text-white text-center">
+          <div className="text-xl font-semibold">Loading package details...</div>
+        </div>
+      </main>
+    );
+  }
 
   // Om inget paket hittas, visa fallback
-  if (!packageData) {
+  if (error || !packageData) {
     return (
       <main className="min-h-screen bg-background px-6 py-8">
         <div className="max-w-md mx-auto text-white text-center">
           <BackArrow />
           <p className="mt-8 text-lg">
-            Paketet med ID <strong>{paketId}</strong> hittades inte.
+            {error || `Paketet med ID ${paketId} hittades inte.`}
           </p>
         </div>
       </main>
@@ -51,48 +83,65 @@ export default function PackageDetailsPage() {
           {/* Paket-ID + Status */}
           <div className="flex items-center justify-between">
             <span className="text-white font-inter text-lg">
-              Paket-ID: {packageData.paketId}
+              Paket-ID: {packageData.PackageID}
             </span>
             <div className="flex items-center gap-2">
               <div
-                className={`w-4 h-4 rounded-full ${getStatusColor(packageData.status)}`}
-                title={packageData.status}
+                className={`w-4 h-4 rounded-full ${getStatusColor(packageData.Status || 'Unknown')}`}
+                title={packageData.Status || 'Unknown'}
               />
-              <span className="text-white font-inter">{packageData.status}</span>
+              <span className="text-white font-inter">{packageData.Status || 'Unknown'}</span>
             </div>
           </div>
 
           {/* Destination */}
           <p className="text-white font-inter text-md">
-            Destination: <em>{packageData.destination}</em>
+            Destination: <em>{packageData.Destination || 'Unknown'}</em>
           </p>
 
-          {/* Leveransdatum */}
-          {packageData.leveransDatum && (
-            <p className="text-white font-inter text-md" >
-              Beräknat leveransdatum: <em>{packageData.leveransDatum}</em>
+          {/* Origin */}
+          {packageData.Origin && (
+            <p className="text-white font-inter text-md">
+              Origin: <em>{packageData.Origin}</em>
             </p>
           )}
 
           {/* Avsändare */}
-          {packageData.avsändare && (
+          {packageData.SenderName && (
             <p className="text-white font-inter text-md">
-              Avsändare: <em>{packageData.avsändare}</em>
+              Avsändare: <em>{packageData.SenderName}</em>
             </p>
           )}
 
+          {/* Mottagare */}
+          {packageData.ReceiverName && (
+            <p className="text-white font-inter text-md">
+              Mottagare: <em>{packageData.ReceiverName}</em>
+            </p>
+          )}
+
+          {/* Package dimensions */}
+          <div className="text-white font-inter text-md">
+            <p>Vikt: <em>{packageData.PackageWeight} kg</em></p>
+            <p>Dimensioner: <em>{packageData.PackageWidth} x {packageData.PackageHeight} x {packageData.PackageDepth} cm</em></p>
+          </div>
+
+          {/* GPS Position if available */}
+          {packageData.GPSLatitude && packageData.GPSLongitude && (
+            <p className="text-white font-inter text-md">
+              GPS Position: <em>{packageData.GPSLatitude}, {packageData.GPSLongitude}</em>
+            </p>
+          )}
 
           {/* Kvitto-knapp */}
-          {packageData.showReceipt && (
-            <div className="flex">
-              <Link
-                to={`/receipt/${packageData.paketId}`}
-                className="bg-white text-primary px-4 py-2 rounded hover:bg-gray-100 transition text-center block"
-              >
-                Kvitto
-              </Link>
-            </div>
-          )}
+          <div className="flex">
+            <Link
+              to={`/receipt/${packageData.PackageID}`}
+              className="bg-white text-primary px-4 py-2 rounded hover:bg-gray-100 transition text-center block"
+            >
+              Kvitto
+            </Link>
+          </div>
         </div>
       </div>
     </main>

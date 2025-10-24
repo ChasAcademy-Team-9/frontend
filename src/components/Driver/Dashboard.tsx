@@ -1,91 +1,55 @@
-import { LineChart, Line, ResponsiveContainer } from 'recharts';
+import { RadialBarChart, RadialBar, ResponsiveContainer } from 'recharts';
 
 interface DashboardProps {
   label: string;
   value: number;
   unit: string;
-  trend?: 'up' | 'down' | 'warning';
+  min?: number;
+  max?: number;
+  color?: string;
   onClick?: () => void;
 }
 
-const generateData = (trend: 'up' | 'down' | 'warning' = 'up') => {
-  if (trend === 'up') {
-    return [
-      { value: 18 },
-      { value: 19 },
-      { value: 20 },
-      { value: 21 },
-      { value: 22 },
-      { value: 23 },
-      { value: 24 },
-    ];
-  } else if (trend === 'down') {
-    return [
-      { value: 70 },
-      { value: 68 },
-      { value: 66 },
-      { value: 64 },
-      { value: 63 },
-      { value: 62 },
-      { value: 61 },
-    ];
-  } else {
-    return [
-      { value: 45 },
-      { value: 48 },
-      { value: 44 },
-      { value: 50 },
-      { value: 47 },
-      { value: 52 },
-      { value: 49 },
-    ];
-  }
-};
-
-const Dashboard = ({ label, value, unit, trend = 'up', onClick }: DashboardProps) => {
-  const data = generateData(trend);
-
-  const getStrokeColor = () => {
-    if (trend === 'warning') {
-      return 'url(#warningGradient)';
-    }
-    return trend === 'up' ? 'var(--color-success)' : 'var(--color-error)';
-  };
+const Dashboard = ({
+  label,
+  value,
+  unit,
+  min = 0,
+  max = 100,
+  color = '#f6edd9',
+  onClick,
+}: DashboardProps) => {
+  const percent = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
+  const data = [{ name: label, value: percent, fill: color }];
 
   return (
     <div
-      className={`bg-secondary rounded p-4 shadow-sm flex items-center justify-between ${onClick ? 'cursor-pointer hover:bg-opacity-80 transition-all' : ''
-        }`}
+      className={`bg-secondary rounded-lg p-5 shadow flex flex-col items-center justify-center ${onClick ? 'cursor-pointer hover:bg-opacity-80 transition' : ''}`}
       onClick={onClick}
     >
-      <div>
-        <p className="text-sm text-dark mb-2">{label}</p>
-        <div className="flex items-baseline gap-2">
-          <p className="text-4xl font-bold text-dark">{value}</p>
-          <span className="text-lg text-dark">{unit}</span>
+      <div className="relative w-24 h-24 mb-2">
+        <ResponsiveContainer width="100%" height="100%">
+          <RadialBarChart
+            innerRadius="80%"
+            outerRadius="100%"
+            barSize={12}
+            data={data}
+            startAngle={90}
+            endAngle={-270}
+          >
+            <RadialBar
+              background
+              dataKey="value"
+              cornerRadius={8}
+            />
+          </RadialBarChart>
+        </ResponsiveContainer>
+        <div className="absolute w-24 h-24 flex flex-col items-center justify-center top-0 left-0 pointer-events-none">
+          <span className="text-2xl font-bold text-dark">{value}</span>
+          <span className="text-base text-dark">{unit}</span>
         </div>
       </div>
-
-      <div className="w-32 h-20">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
-            <defs>
-              <linearGradient id="warningGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="var(--color-error)" />
-                <stop offset="50%" stopColor="var(--color-warning)" />
-                <stop offset="100%" stopColor="var(--color-success)" />
-              </linearGradient>
-            </defs>
-            <Line
-              type="monotone"
-              dataKey="value"
-              stroke={getStrokeColor()}
-              strokeWidth={3}
-              dot={false}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      <span className="text-dark font-medium">{label}</span>
     </div>
   );
 };

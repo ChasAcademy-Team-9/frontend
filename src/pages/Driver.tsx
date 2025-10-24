@@ -114,16 +114,16 @@ const Driver = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-4">
-            <Dashboard label="Temperatur" value={22} unit="°C" trend="up" onClick={() => navigate('/driver-list')} />
-            <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" onClick={() => navigate('/driver-list')} />
-          </div>
-
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-4">
             <PrimaryButton
               text="Lista paket"
               onClick={() => navigate('/package-list')}
             />
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            <Dashboard label="Temperatur" value={22} unit="°C" trend="up" onClick={() => navigate('/driver-list')} />
+            <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" onClick={() => navigate('/driver-list')} />
           </div>
         </div>
       </div>

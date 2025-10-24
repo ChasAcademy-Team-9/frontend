@@ -21,9 +21,7 @@ type PackageDetails = {
 
   Origin?: string;
   Destination?: string;
-}; // Eller två typer en för min kod och en för api
-
-// TODO fixa förare och mottagare
+};
 
 export function New() {
   const steps = [
@@ -85,16 +83,39 @@ export function New() {
     }
   }
 
-  const drivers = [
-    { value: "1", label: "Adam" },
-    { value: "2", label: "Bertil" },
-    { value: "3", label: "Cesar" },
-  ];
-  const receivers = [
-    { value: "1", label: "Adam" },
-    { value: "2", label: "Bertil" },
-    { value: "3", label: "Cesar" },
-  ];
+  const [drivers, setDrivers] = useState([]);
+  useEffect(() => {
+    async function fetchDrivers() {
+      const response = await fetch(
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/drivers"
+      );
+      const { drivers } = await response.json();
+      const driverOptions = drivers.map((driver: any) => ({
+        value: driver.DriverID,
+        label: driver.FirstName + " " + driver.LastName,
+      }));
+      setDrivers(driverOptions);
+    }
+    fetchDrivers();
+  }, []);
+
+  const [recievers, setReceivers] = useState([]);
+  useEffect(() => {
+    async function fetchReceivers() {
+      const response = await fetch(
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/receivers"
+      );
+      const data = await response.json();
+      const receivers = data.drivers; // OBS Intressant namngivning i api. Enligt dokumentation.
+      const receiverOptions = receivers.map((receiver: any) => ({
+        value: receiver.ReceiverID,
+        label: receiver.FirstName + " " + receiver.LastName,
+      }));
+      setReceivers(receiverOptions);
+    }
+    fetchReceivers();
+  }, []);
+
   const [driver, setDriver] = useState({ value: "", label: "" });
   const [receiver, setReceiver] = useState({ value: "", label: "" });
 
@@ -182,7 +203,7 @@ export function New() {
                 }}
                 options={drivers}
                 selectedValue={driver.value}
-                placeholder="Laddar förarlista"
+                placeholder="Välj förare"
               />
             </label>
             <label>
@@ -195,9 +216,9 @@ export function New() {
                     ReceiverID: +o.value,
                   });
                 }}
-                options={receivers}
+                options={recievers}
                 selectedValue={receiver.value}
-                placeholder="Laddar mottagarlista"
+                placeholder="Välj mottagare"
               />
             </label>
           </>

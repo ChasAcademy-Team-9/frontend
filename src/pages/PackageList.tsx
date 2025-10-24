@@ -54,7 +54,7 @@ const PackageList = () => {
         setPackages(response.packages);
       } catch (err: unknown) {
         console.error("Error fetching packages:", err);
-        setError("Kunde inte ladda paket");
+        setError("Kunde inte ladda paket från servern. Backend server returnerar 500-fel.");
       } finally {
         setLoading(false);
       }
@@ -127,7 +127,7 @@ const PackageList = () => {
 
         {/* Snabbstatusfilter */}
         <div className="mb-3">
-          <label className="text-dark font-medium mb-2 block">Status</label>
+          <label className="text-text-dark font-medium mb-2 block">Status</label>
           <div className="flex flex-wrap gap-2">
             {quickFilters.map((filter) => (
               <button
@@ -145,7 +145,7 @@ const PackageList = () => {
         </div>
 
         <div className="flex justify-between items-center">
-          <p className="text-sm text-dark">
+          <p className="text-sm text-gray-600">
             Visar {filteredPackages.length} av {packages.length} paket
           </p>
 

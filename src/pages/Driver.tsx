@@ -86,29 +86,27 @@ const Driver = () => {
         </h1>
 
         <div className="p-4 space-y-6 pb-20">
-          <div className="bg-background bg-opacity-90 rounded-lg p-4">
-            {loading ? (
-              <div className="bg-secondary rounded p-7">
-                <h3 className="font-semibold text-lg text-dark mb-3">Information</h3>
-                <div className="text-center text-dark">Laddar data...</div>
-              </div>
-            ) : error ? (
-              <div className="bg-secondary rounded p-7">
-                <h3 className="font-semibold text-lg text-dark mb-3">Information</h3>
-                <div className="text-center text-red-600">{error}</div>
-              </div>
-            ) : (
-              <InfoCard
-                title="Information"
-                items={[
-                  { label: 'Tid:', value: driverStats.currentTime },
-                  { label: 'Totala paket:', value: driverStats.totalPackages.toString() },
-                  { label: 'Total distans:', value: `${driverStats.totalDistance} km` },
-                  { label: 'Snittshastighet:', value: `${driverStats.averageSpeed} km/h` }
-                ]}
-              />
-            )}
-          </div>
+          {loading ? (
+            <div className="bg-secondary rounded p-7">
+              <h3 className="font-semibold text-lg text-dark mb-3">Information</h3>
+              <div className="text-center text-dark">Laddar data...</div>
+            </div>
+          ) : error ? (
+            <div className="bg-secondary rounded p-7">
+              <h3 className="font-semibold text-lg text-dark mb-3">Information</h3>
+              <div className="text-center text-red-600">{error}</div>
+            </div>
+          ) : (
+            <InfoCard
+              title="Information"
+              items={[
+                { label: 'Tid:', value: driverStats.currentTime },
+                { label: 'Totala paket:', value: driverStats.totalPackages.toString() },
+                { label: 'Total distans:', value: `${driverStats.totalDistance} km` },
+                { label: 'Snittshastighet:', value: `${driverStats.averageSpeed} km/h` }
+              ]}
+            />
+          )}
 
           <div className="flex justify-center">
             <PrimaryButton

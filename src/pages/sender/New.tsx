@@ -6,19 +6,22 @@ import BackArrow from "../../components/BackArrow";
 import { SecondaryButton } from "../../components/SecondaryButton";
 
 type PackageDetails = {
-  description?: string;
-  weight?: string;
-  length?: string;
-  width?: string;
-  height?: string;
-  deliveryDate?: string;
-  name?: string;
-  address?: string;
-  postCode?: string;
-  city?: string;
-  maxTemp?: string;
-  maxHumidity?: string;
-};
+  PackageID?: number;
+
+  DriverID?: number;
+  ReceiverID?: number;
+  SenderID?: number;
+
+  Status?: string;
+
+  PackageWeight?: number;
+  PackageDepth?: number;
+  PackageWidth?: number;
+  PackageHeight?: number;
+
+  Origin?: string;
+  Destination?: string;
+}; // Eller två typer en för min kod och en för api
 
 // TODO ta bort utkommenterad kod eller fixa så att det går slå på och av funktioner som inte används
 // TODO fixa types PackageDetails och gå ignom formuläret
@@ -42,11 +45,14 @@ export function New() {
     },
   ];
   const [currentStep, setCurrentStep] = useState(steps[0]);
-  const [packageDetails, setPackageDetails] = useState({} as PackageDetails);
+  const [packageDetails, setPackageDetails] = useState({
+    SenderID: 1, // TODO Lägg in sender id från JWT-token
+    PackageID: 999, // Skapas av api? Dokumentationen säger att det ska skickas
+    Status: "Created", // Samma här
+  } as PackageDetails);
 
   function nextStep(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    console.log("next step", currentStep);
     const next = steps.find((s) => s.number === currentStep.number + 1);
     if (next) {
       setCurrentStep(next);
@@ -67,12 +73,18 @@ export function New() {
     }
   }
 
-  const priorities = [
-    { value: "normal", label: "Normal" },
-    { value: "economy", label: "Ekonomi" },
-    { value: "express", label: "Express" },
+  const drivers = [
+    { value: "1", label: "Adam" },
+    { value: "2", label: "Bertil" },
+    { value: "3", label: "Cesar" },
   ];
-  const [priority, setPriority] = useState({ value: "", label: "" }); // TODO flytta in i packageDetails
+  const receivers = [
+    { value: "1", label: "Adam" },
+    { value: "2", label: "Bertil" },
+    { value: "3", label: "Cesar" },
+  ];
+  const [driver, setDriver] = useState({ value: "", label: "" });
+  const [receiver, setReceiver] = useState({ value: "", label: "" });
 
   return (
     <main className="flex flex-col p-8 gap-8 max-w-4xl mx-auto">
@@ -88,18 +100,6 @@ export function New() {
       <form className="flex flex-col gap-8 bg-white/75 p-4 m-[-1rem] rounded-b-3xl rounded-t-2xl min-h-[calc(100vh-16rem)]">
         {currentStep.number == 1 && (
           <>
-            {/* <Input
-              label="Beskrivning"
-              id="a"
-              name="description"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  description: e.target.value,
-                })
-              }
-              value={packageDetails.description || ""}
-            /> */}
             <Input
               label="Vikt (kg)"
               name="0.0"
@@ -107,10 +107,10 @@ export function New() {
               onChange={(e) =>
                 setPackageDetails({
                   ...packageDetails,
-                  weight: e.target.value,
+                  PackageWeight: +e.target.value,
                 })
               }
-              value={packageDetails.weight || ""}
+              value={packageDetails.PackageWeight || ""}
             />
             <fieldset className="flex flex-wrap gap-4">
               <legend>Storlek (cm)</legend>
@@ -122,10 +122,10 @@ export function New() {
                 onChange={(e) =>
                   setPackageDetails({
                     ...packageDetails,
-                    length: e.target.value,
+                    PackageDepth: +e.target.value,
                   })
                 }
-                value={packageDetails.length || ""}
+                value={packageDetails.PackageDepth || ""}
               />
               <Input
                 label=""
@@ -135,10 +135,10 @@ export function New() {
                 onChange={(e) =>
                   setPackageDetails({
                     ...packageDetails,
-                    width: e.target.value,
+                    PackageWidth: +e.target.value,
                   })
                 }
-                value={packageDetails.width || ""}
+                value={packageDetails.PackageWidth || ""}
               />
               <Input
                 label=""
@@ -148,34 +148,12 @@ export function New() {
                 onChange={(e) =>
                   setPackageDetails({
                     ...packageDetails,
-                    height: e.target.value,
+                    PackageHeight: +e.target.value,
                   })
                 }
-                value={packageDetails.height || ""}
+                value={packageDetails.PackageHeight || ""}
               />
             </fieldset>
-            {/* <label>
-              Prioritet
-              <Dropdown
-                onSelect={(o) => setPriority(o)}
-                options={priorities}
-                selectedValue={priority.value}
-                placeholder="Välj prioritet"
-              />
-            </label> */}
-            {/* <Input
-              label="Önskad leveransdag"
-              id="delivery-date"
-              name="åååå-mm-dd"
-              type="date"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  deliveryDate: e.target.value,
-                })
-              }
-              value={packageDetails.deliveryDate || ""}
-            /> */}
           </>
         )}
         {currentStep.number == 2 && (
@@ -183,96 +161,60 @@ export function New() {
             <label>
               Förare
               <Dropdown
-                onSelect={(o) => setPriority(o)}
-                options={priorities}
-                selectedValue={priority.value}
+                onSelect={(o) => {
+                  setDriver(o);
+                  setPackageDetails({
+                    ...packageDetails,
+                    DriverID: +o.value,
+                  });
+                }}
+                options={drivers}
+                selectedValue={driver.value}
                 placeholder="Laddar förarlista"
               />
             </label>
             <label>
               Mottagare
               <Dropdown
-                onSelect={(o) => setPriority(o)}
-                options={priorities}
-                selectedValue={priority.value}
+                onSelect={(o) => {
+                  setReceiver(o);
+                  setPackageDetails({
+                    ...packageDetails,
+                    ReceiverID: +o.value,
+                  });
+                }}
+                options={receivers}
+                selectedValue={receiver.value}
                 placeholder="Laddar mottagarlista"
               />
             </label>
-            {/* <Input
-              label="Namn"
-              id="name"
-              name="name"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  name: e.target.value,
-                })
-              }
-              value={packageDetails.name || ""}
-            />
-            <Input
-              label="Adress"
-              id="address"
-              name="address"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  address: e.target.value,
-                })
-              }
-              value={packageDetails.address || ""}
-            />
-            <Input
-              label="Postnummer"
-              id="postal"
-              name="postal"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  postCode: e.target.value,
-                })
-              }
-              value={packageDetails.postCode || ""}
-            />
-            <Input
-              label="Stad"
-              id="city"
-              name="city"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  city: e.target.value,
-                })
-              }
-              value={packageDetails.city || ""}
-            /> */}
           </>
         )}
         {currentStep.number == 3 && (
           <>
             <Input
               label="Avsändarens adress"
-              id="max-temp"
+              id="origin"
               name="Malmö"
               onChange={(e) =>
                 setPackageDetails({
                   ...packageDetails,
-                  maxTemp: e.target.value,
+                  Origin: e.target.value,
                 })
               }
-              value={packageDetails.maxTemp || ""}
+              value={packageDetails.Origin || ""}
             />
             <Input
               label="Mottagarens adress"
-              id="max-humidity"
+              id="destination"
               name="Göteborg"
               onChange={(e) =>
                 setPackageDetails({
                   ...packageDetails,
-                  maxHumidity: e.target.value,
+                  Destination: e.target.value,
                 })
               }
-              value={packageDetails.maxHumidity || ""}
+              value={packageDetails.Destination || ""}
             />
           </>
         )}
@@ -283,58 +225,38 @@ export function New() {
               <caption className="text-left text-xl border-b">
                 Paketdetaljer
               </caption>
-              {/* <tr>
-                <th className="w-1/4">Beskrivning</th>
-                <td>{packageDetails.description}</td>
-              </tr> */}
               <tr>
                 <th>Vikt</th>
-                <td>{packageDetails.weight + " kg"}</td>
+                <td>{packageDetails.PackageWeight + " kg"}</td>
               </tr>
               <tr>
                 <th>Storlek</th>
                 <td>
-                  {packageDetails.length} x {packageDetails.width} x{" "}
-                  {packageDetails.height} cm
+                  {packageDetails.PackageDepth} x {packageDetails.PackageWidth}{" "}
+                  x {packageDetails.PackageHeight} cm
                 </td>
               </tr>
-              {/* <tr>
-                <th>Prioritet</th>
-                <td>{priority.label}</td>
-              </tr>
-              <tr>
-                <th>Önskad leveransdag</th>
-                <td>{packageDetails.deliveryDate}</td>
-              </tr> */}
             </table>
             <table className="text-left">
               <caption className="text-left text-xl border-b">Leverans</caption>
               <tr>
                 <th className="w-1/4">Förare</th>
-                <td>{packageDetails.name}</td>
+                <td>{driver.label}</td>
               </tr>
               <tr>
                 <th>Mottagare</th>
-                <td>{packageDetails.address}</td>
+                <td>{receiver.label}</td>
               </tr>
-              {/* <tr>
-                <th>Postnummer</th>
-                <td>{packageDetails.postCode}</td>
-              </tr>
-              <tr>
-                <th>Stad</th>
-                <td>{packageDetails.city}</td>
-              </tr> */}
             </table>
             <table className="text-left">
               <caption className="text-left text-xl border-b">Adresser</caption>
               <tr>
                 <th className="w-1/4">Avsändare</th>
-                <td>{packageDetails.maxTemp}</td>
+                <td>{packageDetails.Origin}</td>
               </tr>
               <tr>
                 <th>Mottagare</th>
-                <td>{packageDetails.maxHumidity}</td>
+                <td>{packageDetails.Destination}</td>
               </tr>
             </table>
           </>

@@ -119,6 +119,12 @@ const Driver = () => {
         </h1>
 
         <div className="p-4 space-y-6 pb-20">
+          <div className="flex justify-center mb-4">
+            <PrimaryButton
+              text="Lista paket"
+              onClick={() => navigate('/package-list')}
+            />
+          </div>
           {loading ? (
             <div className="bg-secondary rounded p-7">
               <h3 className="font-semibold text-lg text-dark mb-3">Information</h3>
@@ -141,25 +147,16 @@ const Driver = () => {
             />
           )}
 
-          <div className="space-y-4">
-            <div className="flex justify-center">
-              <PrimaryButton
-                text="Skanna för att lägga till"
-                onClick={() => navigate('/scanning')}
-              />
-            </div>
-
-            <div className="flex justify-center">
-              <PrimaryButton
-                text="Lista paket"
-                onClick={() => navigate('/package-list')}
-              />
-            </div>
+          <div className="flex justify-center">
+            <PrimaryButton
+              text="Skanna för att lägga till"
+              onClick={() => navigate('/scanning')}
+            />
           </div>
 
           <div className="grid grid-cols-1 gap-4">
-            <Dashboard label="Temperatur" value={22} unit="°C" trend="up" onClick={() => navigate('/driver-list')} />
-            <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" onClick={() => navigate('/driver-list')} />
+            <Dashboard label="Temperatur" value={22} unit="°C" status="ok" onClick={() => navigate('/driver-list')} />
+            <Dashboard label="Luftfuktighet" value={60} unit="%" status="warning" onClick={() => navigate('/driver-list')} />
           </div>
 
 

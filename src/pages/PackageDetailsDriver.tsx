@@ -137,7 +137,7 @@ const PackageDetailsDriver = () => {
                          ]}
                     />
 
-          
+
                     <div className="space-y-4">
                          <div className="bg-secondary rounded-lg p-4 flex flex-col gap-3 shadow-md">
                               <button
@@ -179,9 +179,9 @@ const PackageDetailsDriver = () => {
                     </div>
 
                     <div className="grid grid-cols-1 gap-4">
-                         <Dashboard label="Temperatur" value={22} unit="°C" trend="up" onClick={() => navigate('/driver-list')} />
-                         <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" onClick={() => navigate('/driver-list')} />
-                         <Dashboard label="Batterinivå" value={65} unit="%" trend="warning" onClick={() => navigate('/driver-list')} />
+                         <Dashboard label="Temperatur" value={22} unit="°C" status="ok" onClick={() => navigate('/driver-list')} />
+                         <Dashboard label="Luftfuktighet" value={60} unit="%" status="warning" onClick={() => navigate('/driver-list')} />
+                         <Dashboard label="Batterinivå" value={65} unit="%" status="warning" onClick={() => navigate('/driver-list')} />
                     </div>
 
                     <MapComponent />

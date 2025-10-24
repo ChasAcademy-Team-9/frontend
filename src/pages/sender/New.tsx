@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "../../components/Dropdown";
 import Input from "../../components/Input";
 import { PrimaryButton } from "../../components/PrimaryButton";
@@ -23,10 +23,7 @@ type PackageDetails = {
   Destination?: string;
 }; // Eller två typer en för min kod och en för api
 
-// TODO ta bort utkommenterad kod eller fixa så att det går slå på och av funktioner som inte används
-// TODO fixa types PackageDetails och gå ignom formuläret
 // TODO fixa förare och mottagare
-// TODO ta bort steg tre, slå ihop steg 1 och 2?
 
 export function New() {
   const steps = [
@@ -60,11 +57,26 @@ export function New() {
       submitForm();
     }
   }
-  function submitForm() {
-    // TODO
-    alert("Skicka till api.");
+  async function submitForm() {
     console.log("Nytt paket:", packageDetails);
+    const response = await fetch(
+      "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/packages",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(packageDetails),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    if (data.success == true) {
+      alert("Paket skapat.");
+      console.log("Paket skapat. Svar från API:", data);
+    }
   }
+
   function prevStep(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     const prev = steps.find((s) => s.number === currentStep.number - 1);

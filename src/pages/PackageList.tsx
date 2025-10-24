@@ -194,6 +194,8 @@ const PackageList = () => {
                   onClick={() => navigate(`/package-details-driver/${pkg.PackageID}`)}
                 />
 
+                {/* Transportinformation och Personinformation - kommenterat */}
+                {/*
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-secondary rounded p-4 cursor-pointer"
                     onClick={() => navigate(`/package-details-driver/${pkg.PackageID}`)}>
@@ -217,6 +219,7 @@ const PackageList = () => {
                     </div>
                   </div>
                 </div>
+                */}
 
                 {pkg.GPSLatitude && pkg.GPSLongitude && (
                   <div className="bg-white border border-gray-200 rounded p-4 shadow-sm">

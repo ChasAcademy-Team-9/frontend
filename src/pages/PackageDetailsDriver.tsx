@@ -4,7 +4,7 @@ import MapComponent from "../components/Driver/MapComponent"
 import { useNavigate, useParams } from "react-router-dom"
 import { PrimaryButton } from "../components/PrimaryButton"
 import BackArrow from "../components/BackArrow"
-import { FaCamera } from "react-icons/fa"
+import { FaCamera, FaCheckCircle, FaMapMarkedAlt } from "react-icons/fa"
 import { useState, useEffect } from "react"
 import { packageService } from "../api/packageService"
 import type { Package } from "../types/package"
@@ -137,24 +137,33 @@ const PackageDetailsDriver = () => {
                          ]}
                     />
 
-                    {/* Action buttons with conditional logic */}
+          
                     <div className="space-y-4">
-                         <div className="flex flex-col sm:flex-row justify-center items-center gap-3 px-4">
-                              <PrimaryButton
-                                   icon={<FaCamera />}
-                                   text="Ta en bild"
+                         <div className="bg-secondary rounded-lg p-4 flex flex-col gap-3 shadow-md">
+                              <button
+                                   className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-blue-600 text-white font-bold text-lg shadow hover:bg-blue-700 transition"
                                    onClick={() => navigate('/photo')}
-                              />
+                              >
+                                   <FaCamera className="text-xl" /> Ta en bild
+                              </button>
+
+                              <button
+                                   className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-green-600 text-white font-bold text-lg shadow hover:bg-green-700 transition"
+                                   onClick={openGoogleMaps}
+                              >
+                                   <FaMapMarkedAlt className="text-xl" /> Visa rutt
+                              </button>
 
                               {packageData.Status !== 'ok' && packageData.Status !== 'delivered' && (
-                                   <PrimaryButton
-                                        text="Bekräfta leverans"
+                                   <button
+                                        className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-primary text-white font-bold text-lg shadow hover:bg-green-700 transition"
                                         onClick={() => navigate(`/confirmation-delivery/${paketId}`)}
-                                   />
+                                   >
+                                        <FaCheckCircle className="text-xl" /> Bekräfta leverans
+                                   </button>
                               )}
                          </div>
 
-                         {/* Progress Indicator - styled for app continuity */}
                          <div className="bg-secondary rounded-lg p-5 shadow flex flex-col items-center">
                               <h4 className="font-bold text-dark mb-4 text-lg tracking-wide">Leveransstatus</h4>
                               <div className="flex items-center w-full max-w-md gap-3">

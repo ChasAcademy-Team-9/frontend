@@ -258,39 +258,46 @@ export function New() {
               <caption className="text-left text-xl border-b">
                 Paketdetaljer
               </caption>
-              <tr>
-                <th>Vikt</th>
-                <td>{packageDetails.PackageWeight + " kg"}</td>
-              </tr>
-              <tr>
-                <th>Storlek</th>
-                <td>
-                  {packageDetails.PackageDepth} x {packageDetails.PackageWidth}{" "}
-                  x {packageDetails.PackageHeight} cm
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th>Vikt</th>
+                  <td>{packageDetails.PackageWeight + " kg"}</td>
+                </tr>
+                <tr>
+                  <th>Storlek</th>
+                  <td>
+                    {packageDetails.PackageDepth} x{" "}
+                    {packageDetails.PackageWidth} x{" "}
+                    {packageDetails.PackageHeight} cm
+                  </td>
+                </tr>
+              </tbody>
             </table>
             <table className="text-left">
               <caption className="text-left text-xl border-b">Leverans</caption>
-              <tr>
-                <th className="w-1/4">Förare</th>
-                <td>{driver.label}</td>
-              </tr>
-              <tr>
-                <th>Mottagare</th>
-                <td>{receiver.label}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th className="w-1/4">Förare</th>
+                  <td>{driver.label}</td>
+                </tr>
+                <tr>
+                  <th>Mottagare</th>
+                  <td>{receiver.label}</td>
+                </tr>
+              </tbody>
             </table>
             <table className="text-left">
               <caption className="text-left text-xl border-b">Adresser</caption>
-              <tr>
-                <th className="w-1/4">Avsändare</th>
-                <td>{packageDetails.Origin}</td>
-              </tr>
-              <tr>
-                <th>Mottagare</th>
-                <td>{packageDetails.Destination}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th className="w-1/4">Avsändare</th>
+                  <td>{packageDetails.Origin}</td>
+                </tr>
+                <tr>
+                  <th>Mottagare</th>
+                  <td>{packageDetails.Destination}</td>
+                </tr>
+              </tbody>
             </table>
           </>
         )}

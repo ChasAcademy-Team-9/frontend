@@ -97,15 +97,19 @@ const PackageDetailsDriver = () => {
                </div>
 
                <div className="p-4 space-y-6 pb-20">
+                    <div className="flex justify-center mb-2">
+                         <div className="flex items-center gap-2 px-5 py-2 rounded-full bg-secondary shadow font-bold text-dark text-base border border-gray-200">
+                              <span className="uppercase tracking-wide">Status:</span>
+                              <span className="capitalize">{packageData.Status || 'Okänd'}</span>
+                         </div>
+                    </div>
+
                     <InfoCard
                          title="Paketinformation"
                          items={[
                               { label: 'Paket ID:', value: packageData.PackageID.toString() },
-                              { label: 'Status:', value: packageData.Status || 'Okänd' },
                               { label: 'Vikt:', value: `${packageData.PackageWeight} kg` },
-                              { label: 'Bredd:', value: `${packageData.PackageWidth} cm` },
-                              { label: 'Höjd:', value: `${packageData.PackageHeight} cm` },
-                              { label: 'Djup:', value: `${packageData.PackageDepth} cm` }
+                              { label: 'Dimensioner:', value: `${packageData.PackageWidth} × ${packageData.PackageHeight} × ${packageData.PackageDepth} cm` }
                          ]}
                     />
 
@@ -115,16 +119,55 @@ const PackageDetailsDriver = () => {
                               { label: 'Start/Origin:', value: packageData.Origin || 'Ej angivet' },
                               { label: 'Destination:', value: packageData.Destination || 'Ej angivet' }
                          ]}
-                    />
+                    >
+                         <div className="flex justify-center">
+                              <PrimaryButton
+                                   text="Visa rutt"
+                                   onClick={openGoogleMaps}
+                              />
+                         </div>
+                    </InfoCard>
 
                     <InfoCard
-                         title="Personer"
+                         title="Kontaktinformation"
                          items={[
                               { label: 'Förare:', value: packageData.DriverName },
                               { label: 'Avsändare:', value: packageData.SenderName },
                               { label: 'Mottagare:', value: packageData.ReceiverName }
                          ]}
                     />
+
+                    {/* Action buttons with conditional logic */}
+                    <div className="space-y-4">
+                         <div className="flex flex-col sm:flex-row justify-center items-center gap-3 px-4">
+                              <PrimaryButton
+                                   icon={<FaCamera />}
+                                   text="Ta en bild"
+                                   onClick={() => navigate('/photo')}
+                              />
+
+                              {packageData.Status !== 'ok' && packageData.Status !== 'delivered' && (
+                                   <PrimaryButton
+                                        text="Bekräfta leverans"
+                                        onClick={() => navigate(`/confirmation-delivery/${paketId}`)}
+                                   />
+                              )}
+                         </div>
+
+                         {/* Progress Indicator - styled for app continuity */}
+                         <div className="bg-secondary rounded-lg p-5 shadow flex flex-col items-center">
+                              <h4 className="font-bold text-dark mb-4 text-lg tracking-wide">Leveransstatus</h4>
+                              <div className="flex items-center w-full max-w-md gap-3">
+                                   <div className={`w-4 h-4 rounded-full border-2 ${packageData.Status === 'pending' ? 'bg-yellow-400 border-yellow-600' : 'bg-green-500 border-green-700'}`}></div>
+                                   <span className="text-dark text-base font-medium">Hämtad</span>
+                                   <div className="flex-1 h-2 bg-gray-300 rounded mx-2 relative overflow-hidden">
+                                        <div className={`absolute left-0 top-0 h-2 rounded transition-all duration-300 ${packageData.Status === 'ok' || packageData.Status === 'delivered' ? 'bg-green-500 w-full' : 'bg-yellow-400 w-1/2'}`}></div>
+                                   </div>
+                                   <div className={`w-4 h-4 rounded-full border-2 ${packageData.Status === 'ok' || packageData.Status === 'delivered' ? 'bg-green-500 border-green-700' : 'bg-gray-200 border-gray-400'}`}></div>
+                                   <span className="text-dark text-base font-medium">Levererad</span>
+                              </div>
+                         </div>
+                    </div>
 
                     <div className="grid grid-cols-1 gap-4">
                          <Dashboard label="Temperatur" value={22} unit="°C" trend="up" onClick={() => navigate('/driver-list')} />
@@ -148,26 +191,10 @@ const PackageDetailsDriver = () => {
                          </div>
                     )}
 
-                    <div className="flex flex-col sm:flex-row justify-center items-center mt-6 gap-3 px-4">
-                         <PrimaryButton
-                              icon={<FaCamera />}
-                              text="Ta en bild"
-                              onClick={() => navigate('/photo')}
-                         />
 
-                         <PrimaryButton
-                              text="Visa rutt"
-                              onClick={openGoogleMaps}
-                         />
 
-                         <PrimaryButton
-                              text="Bekräfta leverans"
-                              onClick={() => navigate(`/confirmation-delivery/${paketId}`)}
-                         />
-                    </div>
-
-                    <div className="bg-secondary rounded-lg p-4 cursor-pointer transition-all" onClick={() => navigate('/package-list')}>
-                         <p className="text-center text-lg font-semibold text-dark">Packet List</p>
+                    <div className="bg-secondary rounded-lg p-4 cursor-pointer transition-all hover:bg-opacity-80" onClick={() => navigate('/package-list')}>
+                         <p className="text-center text-lg font-semibold text-dark">← Tillbaka till paketlista</p>
                     </div>
                </div>
           </div>

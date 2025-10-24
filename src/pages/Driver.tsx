@@ -84,10 +84,33 @@ const Driver = () => {
     return packages.length * averageDistancePerPackage;
   };
 
-  // Sample status mapping - you can adjust this based on your needs
+  // visar lista baserat på statusprioritet - error, warning, ok, rapportera
   const getRandomStatus = () => {
     const statuses = ['kritisk', 'ok', 'varning', 'rapportera', 'kärnd', 'pending'];
     return statuses[Math.floor(Math.random() * statuses.length)];
+  };
+
+  // Status med prioritet för sortering 
+  const getStatusPriority = (status: string): number => {
+    const priorities: Record<string, number> = {
+      'kritisk': 1,
+      'varning': 2,
+      'ok': 3,
+      'rapportera': 4,
+
+    };
+    return priorities[status] || 7;
+  };
+
+  const getSortedPackages = (packages: Package[]): (Package & { status: string })[] => {
+    const packagesWithStatus = packages.map(pkg => ({
+      ...pkg,
+      status: getRandomStatus()
+    }));
+
+    return packagesWithStatus.sort((a, b) => {
+      return getStatusPriority(a.status) - getStatusPriority(b.status);
+    });
   }; return (
     <div className="relative min-h-screen">
       <div className="relative z-10 min-h-screen">
@@ -139,12 +162,12 @@ const Driver = () => {
             <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" onClick={() => navigate('/driver-list')} />
           </div>
 
-          {/* Driver Package List */}
+
           {!loading && !error && (
             <div className="space-y-4">
-              <h2 className="text-xl font-bold text-dark">Paketlista</h2>
+              <h2 className="text-xl font-bold text-dark">Paketlista (sorterat efter prioritet)</h2>
               {packages.length > 0 ? (
-                packages.map((pkg) => (
+                getSortedPackages(packages).map((pkg) => (
                   <Card
                     key={pkg.PackageID}
                     variant="package"
@@ -152,7 +175,7 @@ const Driver = () => {
                     destination={pkg.Destination || 'Unknown'}
                     vikt={`${pkg.PackageWeight}kg`}
                     fordonId="AB123CD"
-                    status={getRandomStatus()}
+                    status={pkg.status}
                     info={{
                       stad: pkg.Origin || 'Unknown',
                       tid: '12:00',

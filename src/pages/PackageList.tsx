@@ -47,6 +47,30 @@ const PackageList = () => {
     setSelectedStatus('');
   };
 
+  // Funktion för att öppna Google Maps med GPS-koordinater
+  const openGoogleMaps = (latitude: number, longitude: number, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation(); // Förhindra att package card klickas
+    }
+    const url = `https://maps.google.com/?q=${latitude},${longitude}`;
+    window.open(url, '_blank');
+  };
+
+  // Funktion för att visa rutt från ursprung till destination
+  const showRoute = (origin: string | null, destination: string | null, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation(); // Förhindra att package card klickas
+    }
+
+    if (!origin || !destination) {
+      alert('Ursprung eller destination saknas för detta paket');
+      return;
+    }
+
+    const url = `https://maps.google.com/maps/dir/${encodeURIComponent(origin)}/${encodeURIComponent(destination)}`;
+    window.open(url, '_blank');
+  };
+
   useEffect(() => {
     const fetchPackages = async () => {
       try {
@@ -194,6 +218,14 @@ const PackageList = () => {
                   onClick={() => navigate(`/package-details-driver/${pkg.PackageID}`)}
                 />
 
+                {/* Rutt-knapp */}
+                <div className="flex justify-center">
+                  <PrimaryButton
+                    text="STARTA VÄGEN"
+                    onClick={(e) => showRoute(pkg.Origin, pkg.Destination, e)}
+                  />
+                </div>
+
                 {/* Transportinformation och Personinformation - kommenterat */}
                 {/*
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -229,11 +261,8 @@ const PackageList = () => {
                       <p><strong>Longitud:</strong> {pkg.GPSLongitude.toFixed(6)}</p>
                       <div className="mt-3">
                         <PrimaryButton
-                          text="Visa på karta"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(`https://maps.google.com/?q=${pkg.GPSLatitude},${pkg.GPSLongitude}`, '_blank');
-                          }}
+                          text="Visa på Google Maps"
+                          onClick={(e) => openGoogleMaps(pkg.GPSLatitude!, pkg.GPSLongitude!, e)}
                         />
                       </div>
                     </div>

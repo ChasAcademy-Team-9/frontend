@@ -17,11 +17,21 @@ const PackageDetailsDriver = () => {
      const [loading, setLoading] = useState(true)
      const [error, setError] = useState<string | null>(null)
 
+     // Funktion för att öppna Google Maps med GPS-koordinater
+     const openGoogleMaps = () => {
+          if (packageData?.GPSLatitude && packageData?.GPSLongitude) {
+               const url = `https://maps.google.com/?q=${packageData.GPSLatitude},${packageData.GPSLongitude}`
+               window.open(url, '_blank')
+          } else {
+               alert('GPS-koordinater inte tillgängliga för detta paket')
+          }
+     }
+
      // Hämta paketdata när komponenten laddas
      useEffect(() => {
           const fetchPackageData = async () => {
                if (!paketId) {
-                    setError("Package ID not found")
+                    setError("Paket ID saknas")
                     setLoading(false)
                     return
                }
@@ -30,16 +40,16 @@ const PackageDetailsDriver = () => {
                     const response = await packageService.getPackageById(parseInt(paketId))
                     setPackageData(response.package)
                } catch (err: unknown) {
-                    console.error("Error fetching package:", err)
+                    console.error("Fel vid hämtning av paket:", err)
                     const error = err as { response?: { status: number }; code?: string; message?: string }
                     if (error.response?.status === 404) {
-                         setError(`Package with ID ${paketId} not found`)
+                         setError(`Paket med ID ${paketId} hittades inte`)
                     } else if (error.response?.status && error.response.status >= 500) {
-                         setError("Server error - please try again later")
+                         setError("Serverfel - försök igen senare")
                     } else if (error.code === 'NETWORK_ERROR') {
-                         setError("Network error - please check your connection")
+                         setError("Nätverksfel - kontrollera din anslutning")
                     } else {
-                         setError(`Failed to load package data: ${error.message || 'Unknown error'}`)
+                         setError(`Kunde inte ladda paketdata: ${error.message || 'Okänt fel'}`)
                     }
                } finally {
                     setLoading(false)
@@ -54,7 +64,7 @@ const PackageDetailsDriver = () => {
           return (
                <div className="min-h-screen bg-background flex items-center justify-center">
                     <div className="text-center">
-                         <div className="text-xl font-semibold text-dark">Loading package details...</div>
+                         <div className="text-xl font-semibold text-dark">Laddar paketdetaljer...</div>
                     </div>
                </div>
           )
@@ -65,12 +75,12 @@ const PackageDetailsDriver = () => {
           return (
                <div className="min-h-screen bg-background flex items-center justify-center">
                     <div className="text-center">
-                         <div className="text-xl font-semibold text-red-600">{error || "Package not found"}</div>
+                         <div className="text-xl font-semibold text-red-600">{error || "Paket hittades inte"}</div>
                          <button
                               onClick={() => navigate(-1)}
                               className="mt-4 px-4 py-2 bg-secondary text-dark rounded-lg"
                          >
-                              Go Back
+                              Gå tillbaka
                          </button>
                     </div>
                </div>
@@ -125,13 +135,17 @@ const PackageDetailsDriver = () => {
                     <MapComponent />
 
                     {packageData.GPSLatitude && packageData.GPSLongitude && (
-                         <InfoCard
-                              title="GPS Position"
-                              items={[
-                                   { label: 'Latitud:', value: packageData.GPSLatitude.toString() },
-                                   { label: 'Longitud:', value: packageData.GPSLongitude.toString() }
-                              ]}
-                         />
+                         <div className="bg-white border border-gray-200 rounded p-4 shadow-sm">
+                              <h4 className="font-bold text-text-dark mb-3">GPS Position</h4>
+                              <div className="space-y-2 text-s text-text-dark mb-3">
+                                   <p><strong>Latitud:</strong> {packageData.GPSLatitude.toFixed(6)}</p>
+                                   <p><strong>Longitud:</strong> {packageData.GPSLongitude.toFixed(6)}</p>
+                              </div>
+                              <PrimaryButton
+                                   text="Visa på Google Maps"
+                                   onClick={openGoogleMaps}
+                              />
+                         </div>
                     )}
 
                     <div className="flex flex-col sm:flex-row justify-center items-center mt-6 gap-3 px-4">
@@ -139,6 +153,11 @@ const PackageDetailsDriver = () => {
                               icon={<FaCamera />}
                               text="Ta en bild"
                               onClick={() => navigate('/photo')}
+                         />
+
+                         <PrimaryButton
+                              text="Visa rutt"
+                              onClick={openGoogleMaps}
                          />
 
                          <PrimaryButton

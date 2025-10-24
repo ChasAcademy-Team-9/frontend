@@ -2,6 +2,7 @@ import Dashboard from "../components/Driver/Dashboard";
 import InfoCard from "../components/Driver/InfoCard";
 import { PrimaryButton } from "../components/PrimaryButton";
 import BottomNav from "../components/BottomNav";
+import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { packageService } from "../api/packageService";
@@ -11,6 +12,7 @@ const Driver = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [packages, setPackages] = useState<Package[]>([]);
   const [driverStats, setDriverStats] = useState({
     totalPackages: 0,
     totalDistance: 0,
@@ -27,6 +29,9 @@ const Driver = () => {
       try {
         setLoading(true);
         const response = await packageService.getAllPackages();
+
+        // Set packages for the driver list
+        setPackages(response.packages);
 
         // Beräkna statistik från paket
         const totalPackages = response.packages.length;
@@ -77,6 +82,12 @@ const Driver = () => {
     // För tillfället uppskattar vi baserat på antal paket och någon genomsnittlig distans
     const averageDistancePerPackage = 15; // km
     return packages.length * averageDistancePerPackage;
+  };
+
+  // Sample status mapping - you can adjust this based on your needs
+  const getRandomStatus = () => {
+    const statuses = ['kritisk', 'ok', 'varning', 'rapportera', 'kärnd', 'pending'];
+    return statuses[Math.floor(Math.random() * statuses.length)];
   }; return (
     <div className="relative min-h-screen">
       <div className="relative z-10 min-h-screen">
@@ -127,6 +138,36 @@ const Driver = () => {
             <Dashboard label="Temperatur" value={22} unit="°C" trend="up" onClick={() => navigate('/driver-list')} />
             <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" onClick={() => navigate('/driver-list')} />
           </div>
+
+          {/* Driver Package List */}
+          {!loading && !error && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-bold text-dark">Paketlista</h2>
+              {packages.length > 0 ? (
+                packages.map((pkg) => (
+                  <Card
+                    key={pkg.PackageID}
+                    variant="package"
+                    paketId={pkg.PackageID.toString()}
+                    destination={pkg.Destination || 'Unknown'}
+                    vikt={`${pkg.PackageWeight}kg`}
+                    fordonId="AB123CD"
+                    status={getRandomStatus()}
+                    info={{
+                      stad: pkg.Origin || 'Unknown',
+                      tid: '12:00',
+                      adress: 'Storgatan 1'
+                    }}
+                    onClick={() => navigate(`/package-details-driver/${pkg.PackageID}`)}
+                  />
+                ))
+              ) : (
+                <div className="bg-secondary rounded p-4 text-center text-dark">
+                  Inga paket tillgängliga
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

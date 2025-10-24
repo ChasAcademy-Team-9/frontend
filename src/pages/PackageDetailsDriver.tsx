@@ -4,7 +4,7 @@ import MapComponent from "../components/Driver/MapComponent"
 import { useNavigate, useParams } from "react-router-dom"
 import { PrimaryButton } from "../components/PrimaryButton"
 import BackArrow from "../components/BackArrow"
-import { FaCamera, FaCheckCircle, FaMapMarkedAlt } from "react-icons/fa"
+import { FaCamera, FaCheckCircle } from "react-icons/fa"
 import { useState, useEffect } from "react"
 import { packageService } from "../api/packageService"
 import type { Package } from "../types/package"
@@ -76,12 +76,10 @@ const PackageDetailsDriver = () => {
                <div className="min-h-screen bg-background flex items-center justify-center">
                     <div className="text-center">
                          <div className="text-xl font-semibold text-red-600">{error || "Paket hittades inte"}</div>
-                         <button
+                         <PrimaryButton
+                              text="Gå tillbaka"
                               onClick={() => navigate(-1)}
-                              className="mt-4 px-4 py-2 bg-secondary text-dark rounded-lg"
-                         >
-                              Gå tillbaka
-                         </button>
+                         />
                     </div>
                </div>
           )
@@ -121,10 +119,7 @@ const PackageDetailsDriver = () => {
                          ]}
                     >
                          <div className="flex justify-center">
-                              <PrimaryButton
-                                   text="Visa rutt"
-                                   onClick={openGoogleMaps}
-                              />
+                              {/* Visa rutt button removed */}
                          </div>
                     </InfoCard>
 
@@ -140,27 +135,22 @@ const PackageDetailsDriver = () => {
 
                     <div className="space-y-4">
                          <div className="bg-secondary rounded-lg p-4 flex flex-col gap-3 shadow-md">
-                              <button
-                                   className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-blue-600 text-white font-bold text-lg shadow hover:bg-blue-700 transition"
+                              <PrimaryButton
+                                   text="Ta en bild"
+                                   icon={<FaCamera className="text-xl" />}
+                                   fullWidth={true}
                                    onClick={() => navigate('/photo')}
-                              >
-                                   <FaCamera className="text-xl" /> Ta en bild
-                              </button>
+                              />
 
-                              <button
-                                   className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-green-600 text-white font-bold text-lg shadow hover:bg-green-700 transition"
-                                   onClick={openGoogleMaps}
-                              >
-                                   <FaMapMarkedAlt className="text-xl" /> Visa rutt
-                              </button>
+                              {/* Visa rutt button removed */}
 
                               {packageData.Status !== 'ok' && packageData.Status !== 'delivered' && (
-                                   <button
-                                        className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-primary text-white font-bold text-lg shadow hover:bg-green-700 transition"
+                                   <PrimaryButton
+                                        text="Bekräfta leverans"
+                                        icon={<FaCheckCircle className="text-xl" />}
+                                        fullWidth={true}
                                         onClick={() => navigate(`/confirmation-delivery/${paketId}`)}
-                                   >
-                                        <FaCheckCircle className="text-xl" /> Bekräfta leverans
-                                   </button>
+                                   />
                               )}
                          </div>
 

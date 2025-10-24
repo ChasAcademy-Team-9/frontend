@@ -90,7 +90,7 @@ export function New() {
         "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/drivers"
       );
       const { drivers } = await response.json();
-      const driverOptions = drivers.map((driver: any) => ({
+      const driverOptions = drivers.map((driver: Driver) => ({
         value: driver.DriverID,
         label: driver.FirstName + " " + driver.LastName,
       }));
@@ -107,7 +107,8 @@ export function New() {
       );
       const data = await response.json();
       const receivers = data.drivers; // OBS Intressant namngivning i api. Enligt dokumentation.
-      const receiverOptions = receivers.map((receiver: any) => ({
+      console.log("Mottagare hämtade från API:", receivers);
+      const receiverOptions = receivers.map((receiver: Receiver) => ({
         value: receiver.ReceiverID,
         label: receiver.FirstName + " " + receiver.LastName,
       }));
@@ -324,3 +325,18 @@ export function New() {
     </main>
   );
 }
+
+type Driver = {
+  FirstName: string;
+  LastName: string;
+  Password: string;
+  DriverID: number;
+  UserName: string;
+};
+type Receiver = {
+  FirstName: string;
+  LastName: string;
+  Password: string;
+  ReceiverID: number;
+  UserName: string;
+};

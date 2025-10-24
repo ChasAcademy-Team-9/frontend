@@ -1,6 +1,5 @@
 import Dashboard from "../components/Driver/Dashboard";
 import InfoCard from "../components/Driver/InfoCard";
-import NavigationCard from "../components/Driver/NavigationCard";
 import { PrimaryButton } from "../components/PrimaryButton";
 import BottomNav from "../components/BottomNav";
 import { useNavigate } from "react-router-dom";
@@ -120,11 +119,12 @@ const Driver = () => {
             <Dashboard label="Luftfuktighet" value={60} unit="%" trend="down" onClick={() => navigate('/driver-list')} />
           </div>
 
-          <NavigationCard
-            firstButtonText="Visa rutt"
-            secondButtonText="Lista paket"
-            onSecondButtonClick={() => navigate('/package-list')}
-          />
+          <div className="flex justify-center">
+            <PrimaryButton
+              text="Lista paket"
+              onClick={() => navigate('/package-list')}
+            />
+          </div>
         </div>
       </div>
 

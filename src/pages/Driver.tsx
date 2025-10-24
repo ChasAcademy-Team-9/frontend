@@ -107,18 +107,20 @@ const Driver = () => {
             />
           )}
 
-          <div className="flex justify-center">
-            <PrimaryButton
-              text="Skanna för att lägga till"
-              onClick={() => navigate('/scanning')}
-            />
-          </div>
+          <div className="space-y-4">
+            <div className="flex justify-center">
+              <PrimaryButton
+                text="Skanna för att lägga till"
+                onClick={() => navigate('/scanning')}
+              />
+            </div>
 
-          <div className="flex justify-center mt-4">
-            <PrimaryButton
-              text="Lista paket"
-              onClick={() => navigate('/package-list')}
-            />
+            <div className="flex justify-center">
+              <PrimaryButton
+                text="Lista paket"
+                onClick={() => navigate('/package-list')}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-4">

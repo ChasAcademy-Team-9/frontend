@@ -18,7 +18,6 @@ const Dashboard = ({
   min = 0,
   max = 100,
   color = '#f6edd9',
-  status = 'ok',
   onClick,
 }: DashboardProps) => {
   const percent = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));

@@ -55,10 +55,6 @@ const ConfirmationScanning: React.FC = () => {
           info={{ stad: 'Stockholm', tid: currentTime, adress: 'Centralenheten' }}
         />
       </div>
-
-      <div className='flex gap-3 justify-center px-4 pb-6 flex-wrap'>
-        <BackArrow />
-      </div>
     </div>
   );
 };

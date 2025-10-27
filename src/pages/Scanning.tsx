@@ -1,19 +1,17 @@
 import { useState } from "react";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { IoMdQrScanner } from "react-icons/io";
-import { FaPlus } from "react-icons/fa";
 import BackArrow from "../components/BackArrow";
 import QRScannerModal from "../components/Driver/QRScannerModal";
 
 const Scanning = () => {
   const [showScanner, setShowScanner] = useState(false);
-  const [setShowManualInput] = useState(false);
   const [lastScanned, setLastScanned] = useState<string>("");
 
   const handleScanSuccess = (decodedText: string) => {
     console.log("Skannad kod:", decodedText);
     setLastScanned(decodedText);
-    setShowScanner(false); // Stäng scannern efter lyckad skanning
+    setShowScanner(false);
     
     // TODO: Gör något med den skannade koden
   };
@@ -48,7 +46,6 @@ const Scanning = () => {
           </p>
         </div>
 
-        {/* Visa senast skannad kod */}
         {lastScanned && (
           <div className="mb-6 p-4 bg-green-100 border-2 border-green-400 rounded-lg w-full max-w-xs">
             <p className="font-semibold text-green-800 text-sm mb-1">
@@ -63,11 +60,6 @@ const Scanning = () => {
             text="Starta Skanning"
             icon={<IoMdQrScanner size={20} />}
             onClick={() => setShowScanner(true)}
-          />
-          <PrimaryButton
-            text="Ange Manuellt"
-            icon={<FaPlus size={16} />}
-            onClick={() => setShowManualInput(true)}
           />
         </div>
       </div>

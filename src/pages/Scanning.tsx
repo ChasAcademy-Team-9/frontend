@@ -5,15 +5,13 @@ import BackArrow from "../components/BackArrow";
 import QRScannerModal from "../components/Driver/QRScannerModal";
 
 const Scanning = () => {
-  const [showScanner, setShowScanner] = useState(false);
+  const [showScanner, setShowScanner] = useState(true); 
   const [lastScanned, setLastScanned] = useState<string>("");
 
   const handleScanSuccess = (decodedText: string) => {
     console.log("Skannad kod:", decodedText);
     setLastScanned(decodedText);
     setShowScanner(false);
-    
-    // TODO: Gör något med den skannade koden
   };
 
   return (
@@ -57,7 +55,7 @@ const Scanning = () => {
 
         <div className="flex flex-col items-center w-full space-y-4">
           <PrimaryButton
-            text="Starta Skanning"
+            text="Skanna igen"
             icon={<IoMdQrScanner size={20} />}
             onClick={() => setShowScanner(true)}
           />

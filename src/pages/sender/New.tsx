@@ -40,11 +40,12 @@ export function New() {
     },
   ];
   const [currentStep, setCurrentStep] = useState(steps[0]);
-  const [packageDetails, setPackageDetails] = useState({
+  const initialPackageDetails: PackageDetails = {
     SenderID: 1, // TODO Lägg in sender id från JWT-token
     PackageID: 999, // Skapas av api? Dokumentationen säger att det ska skickas
     Status: "Created", // Samma här
-  } as PackageDetails);
+  };
+  const [packageDetails, setPackageDetails] = useState(initialPackageDetails);
 
   function nextStep(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -337,7 +338,20 @@ export function New() {
         <div className="flex flex-col bg-background rounded-3xl shadow-lg gap-4 p-4">
           <p>{submitFormStatus}</p>
           {submitFormStatus != "Skickar paket..." ? (
-            <PrimaryButton text="OK" onClick={() => setSubmitFormStatus("")} />
+            <PrimaryButton
+              text="OK"
+              onClick={() => {
+                setSubmitFormStatus("");
+                if (submitFormStatus == "Paket skapat.") {
+                  //Återsäll forumuläret för att låta användare skriva in nästa paket.
+                  setPackageDetails(initialPackageDetails);
+                  setCurrentStep(steps[0]);
+                  setDriver({ value: "", label: "" });
+                  setReceiver({ value: "", label: "" });
+                  // Alternativ navigera till /sender
+                }
+              }}
+            />
           ) : (
             ""
           )}

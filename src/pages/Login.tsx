@@ -5,14 +5,18 @@ import { Link } from 'react-router-dom';
 import { Dropdown } from '../components/Dropdown';
 import { useState } from 'react';
 import HeaderNavigation from '../components/HeaderNavigation';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 function Login() {
   const [statusMsg, setStatusMsg] = useState('');
   const [userName, setUserName] = useState('');
   const [passWord, setPassWord] = useState('');
   const [roleAccount, setRoleAccount] = useState({ value: '', label: '' });
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit() {
+    setLoading(true);
+
     const newUser = {
       UserName: userName,
       Password: passWord,
@@ -39,13 +43,20 @@ function Login() {
 
       const data = await response.json();
       console.log('Success:', data);
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('username', data.UserName);
+      localStorage.setItem('role', data.Role);
+
       setStatusMsg('Välkommen in!');
       setUserName('');
       setPassWord('');
       setRoleAccount({ value: '', label: '' });
+      setLoading(false);
     } catch (error) {
       console.error('Error:', error);
       setStatusMsg('Registrering misslyckades. Försök igen.');
+      setLoading(false);
     }
   }
 
@@ -96,12 +107,16 @@ function Login() {
             max-sm:w-full'
         />
 
-        <PrimaryButton
-          fullWidth={true}
-          text='Logga in'
-          onClick={handleSubmit}
-        />
-
+        {loading ? (
+          <LoadingAnimation />
+        ) : (
+          <PrimaryButton
+            fullWidth={true}
+            text='Logga in'
+            onClick={handleSubmit}
+          />
+        )}
+        <p className='font-bold'>{statusMsg}</p>
         <div className='text-center'>
           <p className='text-text-dark '>
             Har du inget konto än?{' '}
@@ -113,7 +128,6 @@ function Login() {
             </Link>
           </p>
         </div>
-        <p className='font-bold'>{statusMsg}</p>
       </main>
     </>
   );

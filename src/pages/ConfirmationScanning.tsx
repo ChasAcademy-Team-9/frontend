@@ -1,7 +1,6 @@
 import Card from '../components/Card';
 import { useLocation } from 'react-router-dom';
 import BackArrow from '../components/BackArrow';
-import { PrimaryButton } from '../components/PrimaryButton';
 import { LuCheck } from 'react-icons/lu';
 
 const ConfirmationScanning: React.FC = () => {
@@ -13,28 +12,29 @@ const ConfirmationScanning: React.FC = () => {
   });
 
   return (
-    <div className='p-5 max-w-2xl mx-auto'>
-      <div className='text-center mb-8 p-5 bg-secondary text-dark rounded'>
-        <h1 className='text-4xl font-bold mb-3 flex items-center justify-center gap-3'>
+    <div className='min-h-screen bg-gray-50'>
+      <div className='bg-secondary text-dark p-4'>
+        <h1 className='text-3xl font-bold text-center flex items-center justify-center gap-3'>
           Confirmation Scanning
         </h1>
       </div>
 
-      <div className='flex justify-center mb-8'>
-        <div className='w-40 h-40 bg-success rounded-full flex items-center justify-center'>
-          <LuCheck className='text-text-light b' size={80} strokeWidth={3} />
+      <div className='flex justify-center py-6'>
+        <div className='w-32 h-32 bg-success rounded-full flex items-center justify-center'>
+          <LuCheck className='text-text-light' size={64} strokeWidth={3} />
         </div>
       </div>
 
-      <h2 className='text-2xl font-bold text-center mb-8'>Lyckad skanning!</h2>
+      <h2 className='text-2xl font-bold text-center mb-6 px-4'>Lyckad skanning!</h2>
+
       {scannedCode && (
-        <div className='mb-6 p-4 bg-green-100 border-2 border-green-400 rounded-lg w-full max-w-xs mx-auto'>
+        <div className='mx-4 mb-6 p-3 bg-green-100 border-2 border-green-400 rounded-lg'>
           <p className='font-semibold text-green-800 text-sm mb-1'>Skannad kod:</p>
           <p className='text-green-900 break-all'>{scannedCode}</p>
         </div>
       )}
 
-      <div className='mb-6'>
+      <div className='px-4 mb-4'>
         <Card
           variant='package'
           fordonId='XYZ123'
@@ -45,7 +45,7 @@ const ConfirmationScanning: React.FC = () => {
         />
       </div>
 
-      <div className='mb-6'>
+      <div className='px-4 mb-6'>
         <Card
           variant='transport'
           fordonId='XYZ123'
@@ -53,14 +53,8 @@ const ConfirmationScanning: React.FC = () => {
         />
       </div>
 
-      <div className='flex gap-4 justify-center mt-8 flex-wrap'>
+      <div className='flex gap-3 justify-center px-4 pb-6 flex-wrap'>
         <BackArrow />
-        <PrimaryButton
-          text='Starta transport'
-          onClick={() => {
-            alert('Starta transport!');
-          }}
-        />
       </div>
     </div>
   );

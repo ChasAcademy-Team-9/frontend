@@ -1,9 +1,12 @@
 import Card from '../components/Card';
+import { useLocation } from 'react-router-dom';
 import BackArrow from '../components/BackArrow';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { LuCheck } from 'react-icons/lu';
 
 const ConfirmationScanning: React.FC = () => {
+  const location = useLocation();
+  const scannedCode = location.state?.scannedCode;
   const currentTime = new Date().toLocaleTimeString('sv-SE', {
     hour: '2-digit',
     minute: '2-digit',
@@ -24,6 +27,12 @@ const ConfirmationScanning: React.FC = () => {
       </div>
 
       <h2 className='text-2xl font-bold text-center mb-8'>Lyckad skanning!</h2>
+      {scannedCode && (
+        <div className='mb-6 p-4 bg-green-100 border-2 border-green-400 rounded-lg w-full max-w-xs mx-auto'>
+          <p className='font-semibold text-green-800 text-sm mb-1'>Skannad kod:</p>
+          <p className='text-green-900 break-all'>{scannedCode}</p>
+        </div>
+      )}
 
       <div className='mb-6'>
         <Card

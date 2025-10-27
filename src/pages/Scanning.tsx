@@ -14,6 +14,7 @@ const Scanning = () => {
           console.log("Skannad kod:", decodedText);
           setLastScanned(decodedText);
           setShowScanner(false);
+          navigate('/confirmation-scanning', { state: { scannedCode: decodedText } });
      };
 
      return (

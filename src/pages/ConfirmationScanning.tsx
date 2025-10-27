@@ -13,8 +13,11 @@ const ConfirmationScanning: React.FC = () => {
 
   return (
     <div className='min-h-screen bg-gray-50'>
-      <div className='bg-secondary text-dark p-4'>
-        <h1 className='text-3xl font-bold text-center flex items-center justify-center gap-3'>
+      <div className='relative bg-secondary text-dark p-4 flex items-center'>
+        <div className='mr-6'>
+          <BackArrow />
+        </div>
+        <h1 className='text-3xl font-bold text-center flex-1'>
           Confirmation Scanning
         </h1>
       </div>

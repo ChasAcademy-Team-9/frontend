@@ -6,7 +6,7 @@ function HeaderNavigation() {
   return (
     <nav className='flex justify-between items-center gap-4 p-4 '>
       <Link to='/'>
-        <h2 className='text-2xl font-bold text-primary'>Chas 9</h2>
+        <h2 className='sm:text-2xl text-xl  font-bold text-primary'>Chas 9</h2>
       </Link>
       <div className='flex justify-center items-center gap-2'>
         <Link to='/sign-up'>

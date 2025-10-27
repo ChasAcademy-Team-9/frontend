@@ -6,6 +6,7 @@ import { Dropdown } from '../components/Dropdown';
 import { useState } from 'react';
 import HeaderNavigation from '../components/HeaderNavigation';
 import LoadingAnimation from '../components/LoadingAnimation';
+import { useNavigate } from 'react-router';
 
 function Login() {
   const [statusMsg, setStatusMsg] = useState('');
@@ -13,6 +14,7 @@ function Login() {
   const [passWord, setPassWord] = useState('');
   const [roleAccount, setRoleAccount] = useState({ value: '', label: '' });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit() {
     setLoading(true);
@@ -53,6 +55,14 @@ function Login() {
       setPassWord('');
       setRoleAccount({ value: '', label: '' });
       setLoading(false);
+
+      if (data.Role === 'receiver') {
+        navigate('/recipient');
+      } else if (data.Role === 'driver') {
+        navigate('/driver');
+      } else if (data.Role === 'sender') {
+        navigate('/sender');
+      }
     } catch (error) {
       console.error('Error:', error);
       setStatusMsg('Registrering misslyckades. Försök igen.');

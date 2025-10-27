@@ -5,6 +5,7 @@ import { PrimaryButton } from '../components/PrimaryButton';
 import BackArrow from '../components/BackArrow';
 import HeaderNavigation from '../components/HeaderNavigation';
 import LoadingAnimation from '../components/LoadingAnimation';
+import { useNavigate } from 'react-router';
 
 function SignUp() {
   const [firstName, setFirstName] = useState('');
@@ -16,6 +17,7 @@ function SignUp() {
   const [loading, setLoading] = useState(false);
 
   const [statusMsg, setStatusMsg] = useState('');
+  const navigate = useNavigate();
 
   async function handleSubmit() {
     setLoading(true);
@@ -48,7 +50,7 @@ function SignUp() {
 
       const data = await response.json();
       console.log('Success:', data);
-      setStatusMsg('Användaren skapad!');
+      setStatusMsg('Användaren skapad! Navigeras till login...');
 
       setFirstName('');
       setLastName('');
@@ -57,6 +59,11 @@ function SignUp() {
       setPasswordInput('');
       setRoleAccount({ value: '', label: '' });
       setLoading(false);
+
+      // väntar 2 sek innnan redirect login
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     } catch (error) {
       console.error('Error:', error);
       setLoading(false);

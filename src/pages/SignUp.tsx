@@ -4,6 +4,7 @@ import Input from '../components/Input';
 import { PrimaryButton } from '../components/PrimaryButton';
 import BackArrow from '../components/BackArrow';
 import HeaderNavigation from '../components/HeaderNavigation';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 function SignUp() {
   const [firstName, setFirstName] = useState('');
@@ -12,10 +13,13 @@ function SignUp() {
   const [userNameInput, setUserNameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [roleAccount, setRoleAccount] = useState({ value: '', label: '' });
+  const [loading, setLoading] = useState(false);
 
   const [statusMsg, setStatusMsg] = useState('');
 
   async function handleSubmit() {
+    setLoading(true);
+
     const newUser = {
       FirstName: firstName,
       LastName: lastName,
@@ -52,8 +56,10 @@ function SignUp() {
       setUserNameInput('');
       setPasswordInput('');
       setRoleAccount({ value: '', label: '' });
+      setLoading(false);
     } catch (error) {
       console.error('Error:', error);
+      setLoading(false);
       setStatusMsg('Registrering misslyckades. Försök igen.');
     }
   }
@@ -129,11 +135,15 @@ function SignUp() {
       max-sm:w-full'
         />
 
-        <PrimaryButton
-          text='Registrera'
-          fullWidth={true}
-          onClick={handleSubmit}
-        />
+        {loading ? (
+          <LoadingAnimation />
+        ) : (
+          <PrimaryButton
+            text='Registrera'
+            fullWidth={true}
+            onClick={handleSubmit}
+          />
+        )}
 
         <p className='font-bold'>{statusMsg}</p>
       </main>

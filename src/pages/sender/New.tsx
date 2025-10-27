@@ -55,23 +55,30 @@ export function New() {
       submitForm();
     }
   }
+  const [submitFormStatus, setSubmitFormStatus] = useState("");
   async function submitForm() {
-    console.log("Nytt paket:", packageDetails);
-    const response = await fetch(
-      "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/packages",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(packageDetails),
+    try {
+      setSubmitFormStatus("Skickar paket...");
+      console.log("Nytt paket:", packageDetails);
+      const response = await fetch(
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/packages",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(packageDetails),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      if (data.success == true) {
+        setSubmitFormStatus("Paket skapat.");
+        console.log("Paket skapat. Svar från API:", data);
       }
-    );
-    const data = await response.json();
-    console.log(data);
-    if (data.success == true) {
-      alert("Paket skapat.");
-      console.log("Paket skapat. Svar från API:", data);
+    } catch (error) {
+      setSubmitFormStatus("Misslyckades skapa paket.");
+      console.log("Fel vid skapande av paket:", error);
     }
   }
 
@@ -322,6 +329,20 @@ export function New() {
           />
         </nav>
       </form>
+      <div
+        className={`fixed top-0 left-0 right-0 bottom-0 m-0 p-0 grid place-items-center  bg-gray-400/50  ${
+          submitFormStatus ? "" : " hidden"
+        }`}
+      >
+        <div className="flex flex-col bg-background rounded-3xl shadow-lg gap-4 p-4">
+          <p>{submitFormStatus}</p>
+          {submitFormStatus != "Skickar paket..." ? (
+            <PrimaryButton text="OK" onClick={() => setSubmitFormStatus("")} />
+          ) : (
+            ""
+          )}
+        </div>
+      </div>
     </main>
   );
 }

@@ -4,6 +4,7 @@ import BackArrow from '../components/BackArrow';
 import { Link } from 'react-router-dom';
 import { Dropdown } from '../components/Dropdown';
 import { useState } from 'react';
+import HeaderNavigation from '../components/HeaderNavigation';
 
 function Login() {
   const [statusMsg, setStatusMsg] = useState('');
@@ -49,65 +50,72 @@ function Login() {
   }
 
   return (
-    <main className='p-8 flex flex-col justify-center items-center gap-8'>
-      <BackArrow />
+    <>
+      <HeaderNavigation />
+      <main className='p-8 flex flex-col justify-center items-center gap-8'>
+        <BackArrow />
 
-      <div className='text-center'>
-        <h1 className='text-4xl font-bold text-text-dark mb-2'>Välkommen!</h1>
-        <p className='text-lg text-text-dark opacity-80'>
-          Logga in för att fortsätta till din profil
-        </p>
-      </div>
+        <div className='text-center'>
+          <h1 className='text-4xl font-bold text-text-dark mb-2'>Välkommen!</h1>
+          <p className='text-lg text-text-dark opacity-80'>
+            Logga in för att fortsätta till din profil
+          </p>
+        </div>
 
-      <Input
-        label='Email'
-        name='email'
-        id='email'
-        type='email'
-        className='max-sm:w-full'
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-      />
+        <Input
+          label='Email'
+          name='email'
+          id='email'
+          type='email'
+          className='max-sm:w-full'
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+        />
 
-      <Input
-        label='Lösenord'
-        name='password'
-        id='password'
-        type='password'
-        className='max-sm:w-full'
-        value={passWord}
-        onChange={(e) => setPassWord(e.target.value)}
-      />
+        <Input
+          label='Lösenord'
+          name='password'
+          id='password'
+          type='password'
+          className='max-sm:w-full'
+          value={passWord}
+          onChange={(e) => setPassWord(e.target.value)}
+        />
 
-      <Dropdown
-        options={[
-          { value: 'driver', label: 'Driver' },
-          { value: 'sender', label: 'Sender' },
-          { value: 'receiver', label: 'Receiver' },
-        ]}
-        selectedValue={roleAccount.value}
-        onSelect={(o) => setRoleAccount(o)}
-        placeholder='Välj kontotyp'
-        className='
+        <Dropdown
+          options={[
+            { value: 'driver', label: 'Driver' },
+            { value: 'sender', label: 'Sender' },
+            { value: 'receiver', label: 'Receiver' },
+          ]}
+          selectedValue={roleAccount.value}
+          onSelect={(o) => setRoleAccount(o)}
+          placeholder='Välj kontotyp'
+          className='
             w-100
             max-sm:w-full'
-      />
+        />
 
-      <PrimaryButton fullWidth={true} text='Logga in' onClick={handleSubmit} />
+        <PrimaryButton
+          fullWidth={true}
+          text='Logga in'
+          onClick={handleSubmit}
+        />
 
-      <div className='text-center'>
-        <p className='text-text-dark '>
-          Har du inget konto än?{' '}
-          <Link
-            to='/sign-up'
-            className='underline font-bold hover:underline transition-colors'
-          >
-            Registrera dig här
-          </Link>
-        </p>
-      </div>
-      <p className='font-bold'>{statusMsg}</p>
-    </main>
+        <div className='text-center'>
+          <p className='text-text-dark '>
+            Har du inget konto än?{' '}
+            <Link
+              to='/sign-up'
+              className='underline font-bold hover:underline transition-colors'
+            >
+              Registrera dig här
+            </Link>
+          </p>
+        </div>
+        <p className='font-bold'>{statusMsg}</p>
+      </main>
+    </>
   );
 }
 

@@ -43,16 +43,16 @@ function HeaderNavigation() {
   }
 
   return (
-    <nav className='flex justify-between items-center gap-4 p-4 '>
+    <nav className='flex justify-between items-center sm:gap-4 p-4 '>
       <Link to='/'>
         <h2 className='sm:text-2xl text-xl  font-bold text-primary'>Chas 9</h2>
       </Link>
       {loggedIn ? (
-        <div className='flex justify-center items-center gap-4'>
+        <div className='flex justify-center items-center sm:gap-4'>
           <Link to={linkUrlProfile}>
             <button className='text-xl flex justify-center items-center gap-1 hover:bg-secondary brightness-150 hover:underline px-6 py-2 rounded-2xl'>
               <LuCircleUserRound />
-              {username}!
+              {username}
             </button>
           </Link>
 

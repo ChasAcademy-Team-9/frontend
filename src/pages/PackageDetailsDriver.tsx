@@ -111,18 +111,20 @@ const PackageDetailsDriver = () => {
                          ]}
                     />
 
+                    {/*
                     <InfoCard
-                         title="Transport"
+                         title="Transportinformation"
                          items={[
                               { label: 'Start/Origin:', value: packageData.Origin || 'Ej angivet' },
                               { label: 'Destination:', value: packageData.Destination || 'Ej angivet' }
                          ]}
                     >
                          <div className="flex justify-center">
-                              {/* Visa rutt button removed */}
                          </div>
                     </InfoCard>
+                    */}
 
+                    {/*
                     <InfoCard
                          title="Kontaktinformation"
                          items={[
@@ -131,6 +133,7 @@ const PackageDetailsDriver = () => {
                               { label: 'Mottagare:', value: packageData.ReceiverName }
                          ]}
                     />
+                    */}
 
 
                     <div className="space-y-4">
@@ -142,7 +145,6 @@ const PackageDetailsDriver = () => {
                                    onClick={() => navigate('/photo')}
                               />
 
-                              {/* Visa rutt button removed */}
 
                               {packageData.Status !== 'ok' && packageData.Status !== 'delivered' && (
                                    <PrimaryButton
@@ -171,7 +173,6 @@ const PackageDetailsDriver = () => {
                     <div className="grid grid-cols-1 gap-4">
                          <Dashboard label="Temperatur" value={22} unit="°C" status="ok" onClick={() => navigate('/driver-list')} />
                          <Dashboard label="Luftfuktighet" value={60} unit="%" status="warning" onClick={() => navigate('/driver-list')} />
-                         <Dashboard label="Batterinivå" value={65} unit="%" status="warning" onClick={() => navigate('/driver-list')} />
                     </div>
 
                     <MapComponent />

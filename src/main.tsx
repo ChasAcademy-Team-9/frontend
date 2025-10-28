@@ -46,9 +46,7 @@ const router = createBrowserRouter([
   { path: "/sender/new", element: <New /> },
   { path: "*", element: <NotFound /> },
   { path: "/photo", element: <Photo /> },
-  { path: "/package-details-driver", element: <PackageDetailsDriver /> },
-
-]);
+  { path: "/package-details-driver", element: <PackageDetailsDriver /> } ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

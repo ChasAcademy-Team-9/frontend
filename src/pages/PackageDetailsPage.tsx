@@ -1,14 +1,26 @@
 import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import BackArrow from "../components/BackArrow";
 
+interface Package {
+  paketId: string;
+  status: string;
+  destination: string;
+  avsändare?: string;
+  showReceipt?: boolean;
+}
+
 function getStatusColor(status: string) {
+  if (!status || typeof status !== 'string') {
+    return "bg-gray-300"; 
+    }
   switch (status.toLowerCase()) {
     case "levererad":
       return "bg-success";
     case "under transport":
       return "bg-warning";
     case "försenad":
-      return "bg-gray";
+      return "bg-danger";
     default:
       return "bg-secondary";
   }
@@ -17,16 +29,65 @@ function getStatusColor(status: string) {
 export default function PackageDetailsPage() {
   const { paketId } = useParams();
 
-  const packages = [
-    { paketId: "12345", destination: "Stockholm", status: "Under transport", leveransDatum: "2024-10-31", avsändare: "Chas Advance" },
-    { paketId: "67890", destination: "Göteborg", status: "Levererad", showReceipt: true, leveransDatum: "2024-10-17", avsändare: "Tech Solutions" },
-    { paketId: "54321", destination: "Malmö", status: "Försenad", leveransDatum: "2024-10-28", avsändare: "LogiCorp" },
-  ];
+  const [packageData, setPackageData] = useState<Package | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Hitta rätt paket baserat på URL-parametern
-  const packageData = packages.find(pkg => pkg.paketId === paketId);
+  useEffect(() => {
+    const fetchPackage = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `https://team9-webapp-b9f4e2g8hhfjeras.swedencentral-01.azurewebsites.net/api/packages/${paketId}`
+        );
+        if (!response.ok) {
+          throw new Error("Något gick fel vid hämtning av paketet");
+        }
+        const data = await response.json();
 
-  // Om inget paket hittas, visa fallback
+        if (data.success && data.package) {
+          setPackageData({
+            paketId: data.package.PackageID.toString(),
+            status: data.package.Status,
+            destination: data.package.Destination,
+            avsändare: data.package.SenderName,
+            showReceipt: true,
+          });
+        } else {
+          throw new Error("Paketet hittades inte");
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Ett oväntat fel inträffade');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPackage();
+  }, [paketId]);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-background px-6 py-8">
+        <div className="max-w-md mx-auto text-white text-center">
+          <BackArrow />
+          <p className="mt-8 text-lg">Laddar paketinformation...</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="min-h-screen bg-background px-6 py-8">
+        <div className="max-w-md mx-auto text-white text-center">
+          <BackArrow />
+          <p className="mt-8 text-lg">Fel: {error}</p>
+        </div>
+      </main>
+    );
+  }
+
   if (!packageData) {
     return (
       <main className="min-h-screen bg-background px-6 py-8">
@@ -43,7 +104,7 @@ export default function PackageDetailsPage() {
   return (
     <main className="min-h-screen bg-background px-6 py-8">
       <div className="max-w-2xl mx-auto space-y-6">
-        {/* Våran tillbaka-knapp till föregående sida */}
+        {/* Tillbaka-knapp */}
         <BackArrow />
 
         {/* Paketkort */}
@@ -67,20 +128,12 @@ export default function PackageDetailsPage() {
             Destination: <em>{packageData.destination}</em>
           </p>
 
-          {/* Leveransdatum */}
-          {packageData.leveransDatum && (
-            <p className="text-white font-inter text-md" >
-              Beräknat leveransdatum: <em>{packageData.leveransDatum}</em>
-            </p>
-          )}
-
           {/* Avsändare */}
           {packageData.avsändare && (
             <p className="text-white font-inter text-md">
               Avsändare: <em>{packageData.avsändare}</em>
             </p>
           )}
-
 
           {/* Kvitto-knapp */}
           {packageData.showReceipt && (

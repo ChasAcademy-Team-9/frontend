@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "../../components/Dropdown";
 import Input from "../../components/Input";
 import { PrimaryButton } from "../../components/PrimaryButton";
@@ -6,18 +6,21 @@ import BackArrow from "../../components/BackArrow";
 import { SecondaryButton } from "../../components/SecondaryButton";
 
 type PackageDetails = {
-  description?: string;
-  weight?: string;
-  length?: string;
-  width?: string;
-  height?: string;
-  deliveryDate?: string;
-  name?: string;
-  address?: string;
-  postCode?: string;
-  city?: string;
-  maxTemp?: string;
-  maxHumidity?: string;
+  PackageID?: number;
+
+  DriverID?: number;
+  ReceiverID?: number;
+  SenderID?: number;
+
+  Status?: string;
+
+  PackageWeight?: number;
+  PackageDepth?: number;
+  PackageWidth?: number;
+  PackageHeight?: number;
+
+  Origin?: string;
+  Destination?: string;
 };
 
 export function New() {
@@ -26,10 +29,10 @@ export function New() {
       number: 1,
       name: "Paketdetaljer",
     },
-    { number: 2, name: "Mottagare" },
+    { number: 2, name: "Leverans" },
     {
       number: 3,
-      name: "Gränsvärden",
+      name: "Adresser",
     },
     {
       number: 4,
@@ -37,11 +40,14 @@ export function New() {
     },
   ];
   const [currentStep, setCurrentStep] = useState(steps[0]);
-  const [packageDetails, setPackageDetails] = useState({} as PackageDetails);
+  const [packageDetails, setPackageDetails] = useState({
+    SenderID: 1, // TODO Lägg in sender id från JWT-token
+    PackageID: 999, // Skapas av api? Dokumentationen säger att det ska skickas
+    Status: "Created", // Samma här
+  } as PackageDetails);
 
   function nextStep(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    console.log("next step", currentStep);
     const next = steps.find((s) => s.number === currentStep.number + 1);
     if (next) {
       setCurrentStep(next);
@@ -49,11 +55,26 @@ export function New() {
       submitForm();
     }
   }
-  function submitForm() {
-    // TODO
-    alert("Skicka till api.");
+  async function submitForm() {
     console.log("Nytt paket:", packageDetails);
+    const response = await fetch(
+      "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/packages",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(packageDetails),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    if (data.success == true) {
+      alert("Paket skapat.");
+      console.log("Paket skapat. Svar från API:", data);
+    }
   }
+
   function prevStep(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     const prev = steps.find((s) => s.number === currentStep.number - 1);
@@ -62,12 +83,42 @@ export function New() {
     }
   }
 
-  const priorities = [
-    { value: "normal", label: "Normal" },
-    { value: "economy", label: "Ekonomi" },
-    { value: "express", label: "Express" },
-  ];
-  const [priority, setPriority] = useState({ value: "", label: "" }); // TODO flytta in i packageDetails
+  const [drivers, setDrivers] = useState([]);
+  useEffect(() => {
+    async function fetchDrivers() {
+      const response = await fetch(
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/drivers"
+      );
+      const { drivers } = await response.json();
+      const driverOptions = drivers.map((driver: Driver) => ({
+        value: driver.DriverID,
+        label: driver.FirstName + " " + driver.LastName,
+      }));
+      setDrivers(driverOptions);
+    }
+    fetchDrivers();
+  }, []);
+
+  const [recievers, setReceivers] = useState([]);
+  useEffect(() => {
+    async function fetchReceivers() {
+      const response = await fetch(
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/receivers"
+      );
+      const data = await response.json();
+      const receivers = data.drivers; // OBS Intressant namngivning i api. Enligt dokumentation.
+      console.log("Mottagare hämtade från API:", receivers);
+      const receiverOptions = receivers.map((receiver: Receiver) => ({
+        value: receiver.ReceiverID,
+        label: receiver.FirstName + " " + receiver.LastName,
+      }));
+      setReceivers(receiverOptions);
+    }
+    fetchReceivers();
+  }, []);
+
+  const [driver, setDriver] = useState({ value: "", label: "" });
+  const [receiver, setReceiver] = useState({ value: "", label: "" });
 
   return (
     <main className="flex flex-col p-8 gap-8 max-w-4xl mx-auto">
@@ -84,28 +135,16 @@ export function New() {
         {currentStep.number == 1 && (
           <>
             <Input
-              label="Beskrivning"
-              id="a"
-              name="description"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  description: e.target.value,
-                })
-              }
-              value={packageDetails.description || ""}
-            />
-            <Input
               label="Vikt (kg)"
               name="0.0"
               id="weight"
               onChange={(e) =>
                 setPackageDetails({
                   ...packageDetails,
-                  weight: e.target.value,
+                  PackageWeight: +e.target.value,
                 })
               }
-              value={packageDetails.weight || ""}
+              value={packageDetails.PackageWeight || ""}
             />
             <fieldset className="flex flex-wrap gap-4">
               <legend>Storlek (cm)</legend>
@@ -117,10 +156,10 @@ export function New() {
                 onChange={(e) =>
                   setPackageDetails({
                     ...packageDetails,
-                    length: e.target.value,
+                    PackageDepth: +e.target.value,
                   })
                 }
-                value={packageDetails.length || ""}
+                value={packageDetails.PackageDepth || ""}
               />
               <Input
                 label=""
@@ -130,10 +169,10 @@ export function New() {
                 onChange={(e) =>
                   setPackageDetails({
                     ...packageDetails,
-                    width: e.target.value,
+                    PackageWidth: +e.target.value,
                   })
                 }
-                value={packageDetails.width || ""}
+                value={packageDetails.PackageWidth || ""}
               />
               <Input
                 label=""
@@ -143,118 +182,73 @@ export function New() {
                 onChange={(e) =>
                   setPackageDetails({
                     ...packageDetails,
-                    height: e.target.value,
+                    PackageHeight: +e.target.value,
                   })
                 }
-                value={packageDetails.height || ""}
+                value={packageDetails.PackageHeight || ""}
               />
             </fieldset>
-            <label>
-              Prioritet
-              <Dropdown
-                onSelect={(o) => setPriority(o)}
-                options={priorities}
-                selectedValue={priority.value}
-                placeholder="Välj prioritet"
-              />
-            </label>
-            <Input
-              label="Önskad leveransdag"
-              id="delivery-date"
-              name="åååå-mm-dd"
-              type="date"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  deliveryDate: e.target.value,
-                })
-              }
-              value={packageDetails.deliveryDate || ""}
-            />
           </>
         )}
         {currentStep.number == 2 && (
           <>
-            <Input
-              label="Namn"
-              id="name"
-              name="name"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  name: e.target.value,
-                })
-              }
-              value={packageDetails.name || ""}
-            />
-            <Input
-              label="Adress"
-              id="address"
-              name="address"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  address: e.target.value,
-                })
-              }
-              value={packageDetails.address || ""}
-            />
-            <Input
-              label="Postnummer"
-              id="postal"
-              name="postal"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  postCode: e.target.value,
-                })
-              }
-              value={packageDetails.postCode || ""}
-            />
-            <Input
-              label="Stad"
-              id="city"
-              name="city"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  city: e.target.value,
-                })
-              }
-              value={packageDetails.city || ""}
-            />
+            <label>
+              Förare
+              <Dropdown
+                onSelect={(o) => {
+                  setDriver(o);
+                  setPackageDetails({
+                    ...packageDetails,
+                    DriverID: +o.value,
+                  });
+                }}
+                options={drivers}
+                selectedValue={driver.value}
+                placeholder="Välj förare"
+              />
+            </label>
+            <label>
+              Mottagare
+              <Dropdown
+                onSelect={(o) => {
+                  setReceiver(o);
+                  setPackageDetails({
+                    ...packageDetails,
+                    ReceiverID: +o.value,
+                  });
+                }}
+                options={recievers}
+                selectedValue={receiver.value}
+                placeholder="Välj mottagare"
+              />
+            </label>
           </>
         )}
         {currentStep.number == 3 && (
           <>
-            <label>
-              {" "}
-              Typ av paket/Gränsvärden
-              {/* <Dropdown */}
-            </label>
             <Input
-              label="Högsta temperatur (°C)"
-              id="max-temp"
-              name="max-temp"
+              label="Avsändarens adress"
+              id="origin"
+              name="Malmö"
               onChange={(e) =>
                 setPackageDetails({
                   ...packageDetails,
-                  maxTemp: e.target.value,
+                  Origin: e.target.value,
                 })
               }
-              value={packageDetails.maxTemp || ""}
+              value={packageDetails.Origin || ""}
             />
             <Input
-              label="Gräns luftfuktighet (%)"
-              id="max-humidity"
-              name="max-humidity"
+              label="Mottagarens adress"
+              id="destination"
+              name="Göteborg"
               onChange={(e) =>
                 setPackageDetails({
                   ...packageDetails,
-                  maxHumidity: e.target.value,
+                  Destination: e.target.value,
                 })
               }
-              value={packageDetails.maxHumidity || ""}
+              value={packageDetails.Destination || ""}
             />
           </>
         )}
@@ -265,63 +259,46 @@ export function New() {
               <caption className="text-left text-xl border-b">
                 Paketdetaljer
               </caption>
-              <tr>
-                <th className="w-1/4">Beskrivning</th>
-                <td>{packageDetails.description}</td>
-              </tr>
-              <tr>
-                <th>Vikt</th>
-                <td>{packageDetails.weight + " kg"}</td>
-              </tr>
-              <tr>
-                <th>Storlek</th>
-                <td>
-                  {packageDetails.length} x {packageDetails.width} x{" "}
-                  {packageDetails.height} cm
-                </td>
-              </tr>
-              <tr>
-                <th>Prioritet</th>
-                <td>{priority.label}</td>
-              </tr>
-              <tr>
-                <th>Önskad leveransdag</th>
-                <td>{packageDetails.deliveryDate}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th>Vikt</th>
+                  <td>{packageDetails.PackageWeight + " kg"}</td>
+                </tr>
+                <tr>
+                  <th>Storlek</th>
+                  <td>
+                    {packageDetails.PackageDepth} x{" "}
+                    {packageDetails.PackageWidth} x{" "}
+                    {packageDetails.PackageHeight} cm
+                  </td>
+                </tr>
+              </tbody>
             </table>
             <table className="text-left">
-              <caption className="text-left text-xl border-b">
-                Mottagare
-              </caption>
-              <tr>
-                <th className="w-1/4">Namn</th>
-                <td>{packageDetails.name}</td>
-              </tr>
-              <tr>
-                <th>Adress</th>
-                <td>{packageDetails.address}</td>
-              </tr>
-              <tr>
-                <th>Postnummer</th>
-                <td>{packageDetails.postCode}</td>
-              </tr>
-              <tr>
-                <th>Stad</th>
-                <td>{packageDetails.city}</td>
-              </tr>
+              <caption className="text-left text-xl border-b">Leverans</caption>
+              <tbody>
+                <tr>
+                  <th className="w-1/4">Förare</th>
+                  <td>{driver.label}</td>
+                </tr>
+                <tr>
+                  <th>Mottagare</th>
+                  <td>{receiver.label}</td>
+                </tr>
+              </tbody>
             </table>
             <table className="text-left">
-              <caption className="text-left text-xl border-b">
-                Gränsvärden
-              </caption>
-              <tr>
-                <th className="w-1/4">Högsta temperatur</th>
-                <td>{packageDetails.maxTemp + " ℃"}</td>
-              </tr>
-              <tr>
-                <th>Gräns luftfuktighet</th>
-                <td>{packageDetails.maxHumidity + " %"}</td>
-              </tr>
+              <caption className="text-left text-xl border-b">Adresser</caption>
+              <tbody>
+                <tr>
+                  <th className="w-1/4">Avsändare</th>
+                  <td>{packageDetails.Origin}</td>
+                </tr>
+                <tr>
+                  <th>Mottagare</th>
+                  <td>{packageDetails.Destination}</td>
+                </tr>
+              </tbody>
             </table>
           </>
         )}
@@ -348,3 +325,18 @@ export function New() {
     </main>
   );
 }
+
+type Driver = {
+  FirstName: string;
+  LastName: string;
+  Password: string;
+  DriverID: number;
+  UserName: string;
+};
+type Receiver = {
+  FirstName: string;
+  LastName: string;
+  Password: string;
+  ReceiverID: number;
+  UserName: string;
+};

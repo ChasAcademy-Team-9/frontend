@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import BackArrow from "../components/BackArrow";
 import { useState, useEffect } from "react";
 import { packageService } from "../api/packageService";
@@ -87,6 +88,7 @@ export default function ReceiptPage() {
           <p className="text-white font-inter text-md">
             <strong>Mottagare:</strong> {packageData.ReceiverName}
           </p>
+       
 
           <div className="flex justify-center pt-4">
             <button

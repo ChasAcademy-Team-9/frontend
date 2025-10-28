@@ -1,8 +1,17 @@
 import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import BackArrow from "../components/BackArrow";
 import { useState, useEffect } from "react";
 import { packageService } from "../api/packageService";
 import type { Package } from "../types/package";
+
+interface Package {
+  paketId: string;
+  status: string;
+  destination: string;
+  avsändare?: string;
+  showReceipt?: boolean;
+}
 
 function getStatusColor(status: string) {
   switch (status?.toLowerCase()) {
@@ -75,7 +84,7 @@ export default function PackageDetailsPage() {
   return (
     <main className="min-h-screen bg-background px-6 py-8">
       <div className="max-w-2xl mx-auto space-y-6">
-        {/* Våran tillbaka-knapp till föregående sida */}
+        {/* Tillbaka-knapp */}
         <BackArrow />
 
         {/* Paketkort */}

@@ -1,3 +1,5 @@
+import type React from "react";
+
 export function SecondaryButton(props: {
   text: string;
   fullWidth?: boolean;

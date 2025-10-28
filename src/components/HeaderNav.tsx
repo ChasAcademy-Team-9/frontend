@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaHome, FaMapMarkerAlt, FaQrcode } from "react-icons/fa";
+import type React from "react";
 
 export function HeaderNav() {
   return (

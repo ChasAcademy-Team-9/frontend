@@ -2,6 +2,7 @@ import Card from "../components/Card";
 import BackArrow from "../components/BackArrow";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { LuCheck } from "react-icons/lu";
+import type React from "react";
 
 const ConfirmationRapport: React.FC = () => {
   const currentTime = new Date().toLocaleTimeString("sv-SE", {

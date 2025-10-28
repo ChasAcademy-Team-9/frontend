@@ -1,3 +1,5 @@
+import type React from "react";
+
 export function PrimaryButton(props: {
   text: string;
   icon?: React.ReactNode;

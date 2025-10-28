@@ -5,9 +5,11 @@ import Card from '../../components/Card';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import HeaderNavigation from '../../components/HeaderNavigation';
+import LoadingAnimation from '../../components/LoadingAnimation';
 
 export function Sender() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [packages, setPackages] = useState([] as ApiPackage[]);
 
@@ -15,6 +17,7 @@ export function Sender() {
 
   useEffect(() => {
     async function loadPackages() {
+      setLoading(true);
       if (!token) return;
       const response = await fetch(
         'https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/package/me',
@@ -27,6 +30,7 @@ export function Sender() {
       );
       const data = await response.json();
       setPackages(data.packages);
+      setLoading(false);
     }
     loadPackages();
   }, [token]);
@@ -108,6 +112,7 @@ export function Sender() {
             <h2 className='text-2xl'>Mina paket</h2>
             <span>{packages.length > 0 ? packages.length + ' paket' : ''}</span>
           </div>
+          {loading && <LoadingAnimation />}
           {/* // TODO Visa laddar paket... före laddat och inga paket om 0 st */}
           {packageCards}
         </div>

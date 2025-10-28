@@ -11,16 +11,36 @@ export function Sender() {
 
   const [packages, setPackages] = useState([] as ApiPackage[]);
 
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
     async function loadPackages() {
+      if (!token) return;
       const response = await fetch(
-        'https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/packages'
+        'https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/package/me',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
       );
       const data = await response.json();
       setPackages(data.packages);
     }
     loadPackages();
-  }, []);
+  }, [token]);
+
+  //   useEffect(() => {
+  //   async function loadPackages() {
+  //     const response = await fetch(
+  //       'https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/packages'
+  //     );
+  //     const data = await response.json();
+  //     setPackages(data.packages);
+  //   }
+  //   loadPackages();
+  // }, []);
 
   const packageCards = packages.map((p: ApiPackage) => (
     <Card

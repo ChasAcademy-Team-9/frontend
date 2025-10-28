@@ -16,6 +16,12 @@ export function Sender() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
+
+  useEffect(() => {
     async function loadPackages() {
       setLoading(true);
       if (!token) return;

@@ -40,6 +40,8 @@ function HeaderNavigation() {
     setLoggedIn(false);
     setUsername('');
     setLinkUrlProfile('');
+
+    window.location.reload();
   }
 
   return (

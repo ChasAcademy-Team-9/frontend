@@ -10,7 +10,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky",
+    "test": "echo \"No tests for project\" && exit 0"
+  },
+  "lint-stage": {
+    "**/*": "eslint . && prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^7.4.7",
@@ -41,6 +46,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "prettier": "3.6.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",

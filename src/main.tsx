@@ -24,7 +24,6 @@ import Photo from "./pages/Photo.tsx";
 import Scanning from "./pages/Scanning.tsx";
 import PackageDetailsDriver from "./pages/PackageDetailsDriver.tsx";
 
-
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/sign-up", element: <SignUp /> },
@@ -47,11 +46,10 @@ const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
   { path: "/photo", element: <Photo /> },
   { path: "/package-details-driver", element: <PackageDetailsDriver /> },
-
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>
+  </StrictMode>,
 );

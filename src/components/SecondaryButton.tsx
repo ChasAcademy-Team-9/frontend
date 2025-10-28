@@ -8,7 +8,7 @@ export function SecondaryButton(props: {
   return (
     <button
       className={`   
-        ${fullWidth ? 'w-full' : 'w-auto'} 
+        ${fullWidth ? "w-full" : "w-auto"} 
 
         sm:w-auto
 

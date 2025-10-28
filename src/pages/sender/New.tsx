@@ -65,7 +65,7 @@ export function New() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(packageDetails),
-      }
+      },
     );
     const data = await response.json();
     console.log(data);
@@ -87,7 +87,7 @@ export function New() {
   useEffect(() => {
     async function fetchDrivers() {
       const response = await fetch(
-        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/drivers"
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/drivers",
       );
       const { drivers } = await response.json();
       const driverOptions = drivers.map((driver: Driver) => ({
@@ -103,7 +103,7 @@ export function New() {
   useEffect(() => {
     async function fetchReceivers() {
       const response = await fetch(
-        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/receivers"
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/receivers",
       );
       const data = await response.json();
       const receivers = data.drivers; // OBS Intressant namngivning i api. Enligt dokumentation.

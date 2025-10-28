@@ -2,16 +2,31 @@ import { useParams } from "react-router-dom";
 import BackArrow from "../components/BackArrow";
 
 const allPackages = [
-  { paketId: "12345", destination: "Stockholm", status: "Under transport", date: "2025-10-01" },
-  { paketId: "67890", destination: "Göteborg", status: "Levererad", date: "2025-10-03" },
-  { paketId: "54321", destination: "Malmö", status: "Försenad", date: "2025-10-02" },
+  {
+    paketId: "12345",
+    destination: "Stockholm",
+    status: "Under transport",
+    date: "2025-10-01",
+  },
+  {
+    paketId: "67890",
+    destination: "Göteborg",
+    status: "Levererad",
+    date: "2025-10-03",
+  },
+  {
+    paketId: "54321",
+    destination: "Malmö",
+    status: "Försenad",
+    date: "2025-10-02",
+  },
 ];
 
 export default function ReceiptPage() {
   const { paketId } = useParams();
 
   console.log("paketId från URL:", paketId); // 🔍 felsökning
-  const packageData = allPackages.find(pkg => pkg.paketId === paketId);
+  const packageData = allPackages.find((pkg) => pkg.paketId === paketId);
 
   if (!packageData) {
     return (
@@ -32,7 +47,9 @@ export default function ReceiptPage() {
         <BackArrow />
 
         <div className="bg-secondary rounded-lg shadow-md p-6 space-y-4">
-          <h2 className="text-white font-bold text-xl text-center">Leveransbekräftelse</h2>
+          <h2 className="text-white font-bold text-xl text-center">
+            Leveransbekräftelse
+          </h2>
 
           <p className="text-white font-inter text-md">
             <strong>Paket-ID:</strong> {packageData.paketId}

@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { PrimaryButton } from '../PrimaryButton';
-import MapComponent from './MapComponent';
+import { useState } from "react";
+import { PrimaryButton } from "../PrimaryButton";
+import MapComponent from "./MapComponent";
 
 interface NavigationCardProps {
   firstButtonText: string;
@@ -8,12 +8,14 @@ interface NavigationCardProps {
   onSecondButtonClick: () => void;
 }
 
-const NavigationCard = ({ 
-  firstButtonText, 
-  secondButtonText, 
-  onSecondButtonClick 
+const NavigationCard = ({
+  firstButtonText,
+  secondButtonText,
+  onSecondButtonClick,
 }: NavigationCardProps) => {
-  const [openGoogleMaps, setOpenGoogleMaps] = useState<(() => void) | null>(null);
+  const [openGoogleMaps, setOpenGoogleMaps] = useState<(() => void) | null>(
+    null,
+  );
 
   const handleRouteLoaded = (openMapsFn: () => void) => {
     setOpenGoogleMaps(() => openMapsFn);
@@ -22,7 +24,7 @@ const NavigationCard = ({
   return (
     <div className="bg-secondary rounded p-4">
       <h3 className="font-bold text-lg text-dark mb-4">Navigation</h3>
-      
+
       <div className="flex gap-2 justify-center mb-4 p-4">
         <PrimaryButton
           text={firstButtonText}
@@ -30,15 +32,12 @@ const NavigationCard = ({
             if (openGoogleMaps) {
               openGoogleMaps();
             } else {
-              alert('Rutten laddas fortfarande...');
+              alert("Rutten laddas fortfarande...");
             }
           }}
         />
-        
-        <PrimaryButton
-          text={secondButtonText}
-          onClick={onSecondButtonClick}
-        />
+
+        <PrimaryButton text={secondButtonText} onClick={onSecondButtonClick} />
       </div>
 
       <MapComponent onRouteLoaded={handleRouteLoaded} />

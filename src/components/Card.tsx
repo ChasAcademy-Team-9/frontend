@@ -83,7 +83,7 @@
 //       tabIndex={0}
 //     >
 
-//   // Beroende på variant, så ska det rendera olika innehåll. 
+//   // Beroende på variant, så ska det rendera olika innehåll.
 //   // I detta fall paket, transport, bekräftelse eller status...
 //   // Dessa är alltså våra huvudbehållare för kort informationen.
 //   const hasNestedInteractiveElements = variant === 'confirmation';
@@ -147,11 +147,16 @@
 
 // export default Card;
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 // Olika varianter av vår Card-komponent
-type CardVariant = 'package' | 'transport' | 'status' | 'confirmation' | 'error';
+type CardVariant =
+  | "package"
+  | "transport"
+  | "status"
+  | "confirmation"
+  | "error";
 
 type TransportInfo = {
   stad?: string;
@@ -172,37 +177,37 @@ type CardProps = {
 };
 
 const getVariantStyle = (variant: CardVariant, status?: string) => {
-  const baseClasses = 'card p-4 rounded shadow-md cursor-pointer';
+  const baseClasses = "card p-4 rounded shadow-md cursor-pointer";
 
   const getStatusBasedColor = (status?: string) => {
     if (status) {
       switch (status.toLowerCase()) {
-        case 'kritisk':
+        case "kritisk":
           return `${baseClasses} bg-error text-text-light`;
-        case 'varning':
+        case "varning":
           return `${baseClasses} bg-warning text-dark`;
-        case 'ok':
+        case "ok":
           return `${baseClasses} bg-success text-text-light`;
         default:
           return `${baseClasses} bg-primary text-text-light`;
       }
     }
-    return 'bg-secondary';
+    return "bg-secondary";
   };
 
   switch (variant) {
-    case 'confirmation':
-      return 'bg-success';
-    case 'status':
+    case "confirmation":
+      return "bg-success";
+    case "status":
       return getStatusBasedColor(status);
-    case 'package':
+    case "package":
       return getStatusBasedColor(status);
-    case 'transport':
-      return 'bg-secondary';
-    case 'error':
-      return 'bg-error';
+    case "transport":
+      return "bg-secondary";
+    case "error":
+      return "bg-error";
     default:
-      return 'bg-background';
+      return "bg-background";
   }
 };
 
@@ -217,33 +222,45 @@ const Card: React.FC<CardProps> = ({
   onClick,
 }) => {
   const cardClasses = getVariantStyle(variant, status);
-  const isFullClassName = cardClasses.includes('card p-4');
+  const isFullClassName = cardClasses.includes("card p-4");
 
   return (
     <div
-      className={isFullClassName ? cardClasses : `card p-4 rounded shadow-md ${cardClasses} cursor-pointer`}
+      className={
+        isFullClassName
+          ? cardClasses
+          : `card p-4 rounded shadow-md ${cardClasses} cursor-pointer`
+      }
       onClick={onClick}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === "Enter" || e.key === " ") {
           onClick?.();
         }
       }}
-      role='button'
+      role="button"
       tabIndex={0}
     >
-      {variant === 'package' && (
+      {variant === "package" && (
         <>
           <h3 className="text-lg font-bold mb-2">Paketinformation</h3>
-          <p><strong>Paket-ID:</strong> {paketId}</p>
-          <p><strong>Destination:</strong> {destination}</p>
-          <p><strong>Vikt:</strong> {vikt}</p>
+          <p>
+            <strong>Paket-ID:</strong> {paketId}
+          </p>
+          <p>
+            <strong>Destination:</strong> {destination}
+          </p>
+          <p>
+            <strong>Vikt:</strong> {vikt}
+          </p>
         </>
       )}
 
-      {variant === 'transport' && (
+      {variant === "transport" && (
         <>
           <h3 className="text-lg font-bold mb-2">Transportinformation</h3>
-          <p><strong>Fordon-ID:</strong> {fordonId}</p>
+          <p>
+            <strong>Fordon-ID:</strong> {fordonId}
+          </p>
           {info && (
             <p>
               <strong>Plats:</strong> {info.stad}, {info.tid}, {info.adress}
@@ -252,14 +269,16 @@ const Card: React.FC<CardProps> = ({
         </>
       )}
 
-      {variant === 'status' && (
+      {variant === "status" && (
         <>
           <h3 className="text-lg font-bold mb-2">Status</h3>
-          <p><strong>Nuvarande status:</strong> {status}</p>
+          <p>
+            <strong>Nuvarande status:</strong> {status}
+          </p>
         </>
       )}
 
-      {variant === 'confirmation' && (
+      {variant === "confirmation" && (
         <>
           <h3 className="text-lg font-bold mb-2">Bekräftelse</h3>
           <p>Lyckad skanning!</p>

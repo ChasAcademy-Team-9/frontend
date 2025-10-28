@@ -18,13 +18,32 @@ export default function PackageDetailsPage() {
   const { paketId } = useParams();
 
   const packages = [
-    { paketId: "12345", destination: "Stockholm", status: "Under transport", leveransDatum: "2024-10-31", avsändare: "Chas Advance" },
-    { paketId: "67890", destination: "Göteborg", status: "Levererad", showReceipt: true, leveransDatum: "2024-10-17", avsändare: "Tech Solutions" },
-    { paketId: "54321", destination: "Malmö", status: "Försenad", leveransDatum: "2024-10-28", avsändare: "LogiCorp" },
+    {
+      paketId: "12345",
+      destination: "Stockholm",
+      status: "Under transport",
+      leveransDatum: "2024-10-31",
+      avsändare: "Chas Advance",
+    },
+    {
+      paketId: "67890",
+      destination: "Göteborg",
+      status: "Levererad",
+      showReceipt: true,
+      leveransDatum: "2024-10-17",
+      avsändare: "Tech Solutions",
+    },
+    {
+      paketId: "54321",
+      destination: "Malmö",
+      status: "Försenad",
+      leveransDatum: "2024-10-28",
+      avsändare: "LogiCorp",
+    },
   ];
 
   // Hitta rätt paket baserat på URL-parametern
-  const packageData = packages.find(pkg => pkg.paketId === paketId);
+  const packageData = packages.find((pkg) => pkg.paketId === paketId);
 
   // Om inget paket hittas, visa fallback
   if (!packageData) {
@@ -58,7 +77,9 @@ export default function PackageDetailsPage() {
                 className={`w-4 h-4 rounded-full ${getStatusColor(packageData.status)}`}
                 title={packageData.status}
               />
-              <span className="text-white font-inter">{packageData.status}</span>
+              <span className="text-white font-inter">
+                {packageData.status}
+              </span>
             </div>
           </div>
 
@@ -69,7 +90,7 @@ export default function PackageDetailsPage() {
 
           {/* Leveransdatum */}
           {packageData.leveransDatum && (
-            <p className="text-white font-inter text-md" >
+            <p className="text-white font-inter text-md">
               Beräknat leveransdatum: <em>{packageData.leveransDatum}</em>
             </p>
           )}
@@ -80,7 +101,6 @@ export default function PackageDetailsPage() {
               Avsändare: <em>{packageData.avsändare}</em>
             </p>
           )}
-
 
           {/* Kvitto-knapp */}
           {packageData.showReceipt && (

@@ -12,7 +12,7 @@ export function PrimaryButton(props: {
 
         flex items-center justify-center gap-2
 
-        ${fullWidth ? 'w-full' : 'w-auto'} 
+        ${fullWidth ? "w-full" : "w-auto"} 
 
         sm:w-auto
 

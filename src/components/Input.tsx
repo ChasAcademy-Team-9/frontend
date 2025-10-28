@@ -1,4 +1,4 @@
-import type { FC, InputHTMLAttributes } from 'react';
+import type { FC, InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -17,15 +17,15 @@ const Input: FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <div className={`flex flex-col gap-2 w-100 ${className || ''}`}>
-      <label htmlFor={id} className={`text-text-dark ${labelClassName || ''}`}>
+    <div className={`flex flex-col gap-2 w-100 ${className || ""}`}>
+      <label htmlFor={id} className={`text-text-dark ${labelClassName || ""}`}>
         {label}
       </label>
       <input
         id={id}
         name={name}
         placeholder={name}
-        className='
+        className="
                          px-4 py-3
                          bg-background   
                          border-secondary border-2
@@ -38,7 +38,7 @@ const Input: FC<InputProps> = ({
                          cursor-text   
                          disabled:cursor-not-allowed   
                          disabled:opacity-50    
-               '
+               "
         {...props}
       />
     </div>

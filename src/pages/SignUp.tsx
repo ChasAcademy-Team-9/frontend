@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { Dropdown } from '../components/Dropdown';
-import Input from '../components/Input';
-import { PrimaryButton } from '../components/PrimaryButton';
-import BackArrow from '../components/BackArrow';
+import { useState } from "react";
+import { Dropdown } from "../components/Dropdown";
+import Input from "../components/Input";
+import { PrimaryButton } from "../components/PrimaryButton";
+import BackArrow from "../components/BackArrow";
 
 function SignUp() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   // const [userAdress, setUserAdress] = useState('');
-  const [userNameInput, setUserNameInput] = useState('');
-  const [passwordInput, setPasswordInput] = useState('');
-  const [roleAccount, setRoleAccount] = useState({ value: '', label: '' });
+  const [userNameInput, setUserNameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [roleAccount, setRoleAccount] = useState({ value: "", label: "" });
 
-  const [statusMsg, setStatusMsg] = useState('');
+  const [statusMsg, setStatusMsg] = useState("");
 
   async function handleSubmit() {
     const newUser = {
@@ -27,14 +27,14 @@ function SignUp() {
 
     try {
       const response = await fetch(
-        'https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register',
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register",
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(newUser),
-        }
+        },
       );
 
       if (!response.ok) {
@@ -42,44 +42,44 @@ function SignUp() {
       }
 
       const data = await response.json();
-      console.log('Success:', data);
-      setStatusMsg('Användaren skapad!');
+      console.log("Success:", data);
+      setStatusMsg("Användaren skapad!");
 
-      setFirstName('');
-      setLastName('');
+      setFirstName("");
+      setLastName("");
       // setUserAdress('');
-      setUserNameInput('');
-      setPasswordInput('');
-      setRoleAccount({ value: '', label: '' });
+      setUserNameInput("");
+      setPasswordInput("");
+      setRoleAccount({ value: "", label: "" });
     } catch (error) {
-      console.error('Error:', error);
-      setStatusMsg('Registrering misslyckades. Försök igen.');
+      console.error("Error:", error);
+      setStatusMsg("Registrering misslyckades. Försök igen.");
     }
   }
 
   return (
-    <main className='p-8 flex flex-col justify-center items-center gap-8'>
+    <main className="p-8 flex flex-col justify-center items-center gap-8">
       <BackArrow />
-      <h1 className='text-4xl font-bold text-text-dark mb-2'>Skapa konto</h1>
+      <h1 className="text-4xl font-bold text-text-dark mb-2">Skapa konto</h1>
 
       <Input
-        label='Förnamn'
-        name='firstName'
-        id='firstName'
-        type='text'
+        label="Förnamn"
+        name="firstName"
+        id="firstName"
+        type="text"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
-        className='max-sm:w-full'
+        className="max-sm:w-full"
       />
 
       <Input
-        label='Efternamn'
-        name='lastName'
-        id='lastName'
-        type='text'
+        label="Efternamn"
+        name="lastName"
+        id="lastName"
+        type="text"
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
-        className='max-sm:w-full'
+        className="max-sm:w-full"
       />
 
       {/* <Input
@@ -93,46 +93,46 @@ function SignUp() {
       /> */}
 
       <Input
-        label='Username'
-        name='Username'
-        id='Username'
-        type='text'
+        label="Username"
+        name="Username"
+        id="Username"
+        type="text"
         value={userNameInput}
         onChange={(e) => setUserNameInput(e.target.value)}
-        className='max-sm:w-full'
+        className="max-sm:w-full"
       />
 
       <Input
-        label='Lösenord'
-        name='password'
-        id='password'
-        type='password'
+        label="Lösenord"
+        name="password"
+        id="password"
+        type="password"
         value={passwordInput}
         onChange={(e) => setPasswordInput(e.target.value)}
-        className='max-sm:w-full'
+        className="max-sm:w-full"
       />
 
       <Dropdown
         options={[
-          { value: 'driver', label: 'Driver' },
-          { value: 'sender', label: 'Sender' },
-          { value: 'receiver', label: 'Receiver' },
+          { value: "driver", label: "Driver" },
+          { value: "sender", label: "Sender" },
+          { value: "receiver", label: "Receiver" },
         ]}
         selectedValue={roleAccount.value}
         onSelect={(o) => setRoleAccount(o)}
-        placeholder='Välj kontotyp'
-        className='
+        placeholder="Välj kontotyp"
+        className="
       w-100
-      max-sm:w-full'
+      max-sm:w-full"
       />
 
       <PrimaryButton
-        text='Registrera'
+        text="Registrera"
         fullWidth={true}
         onClick={handleSubmit}
       />
 
-      <p className='font-bold'>{statusMsg}</p>
+      <p className="font-bold">{statusMsg}</p>
     </main>
   );
 }

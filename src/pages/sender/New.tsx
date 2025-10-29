@@ -4,6 +4,7 @@ import Input from "../../components/Input";
 import { PrimaryButton } from "../../components/PrimaryButton";
 import BackArrow from "../../components/BackArrow";
 import { SecondaryButton } from "../../components/SecondaryButton";
+import { useNavigate } from "react-router-dom";
 
 type PackageDetails = {
   PackageID?: number;
@@ -24,6 +25,8 @@ type PackageDetails = {
 };
 
 export function New() {
+  const navigate = useNavigate();
+
   const steps = [
     {
       number: 1,
@@ -69,11 +72,12 @@ export function New() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(packageDetails),
-        }
+        },
       );
       const data = await response.json();
       console.log(data);
       if (data.success == true) {
+        packageDetails.PackageID = data.package.PackageID; // Send id from api to qr-code page later.
         setSubmitFormStatus("Paket skapat.");
         console.log("Paket skapat. Svar från API:", data);
       }
@@ -95,7 +99,7 @@ export function New() {
   useEffect(() => {
     async function fetchDrivers() {
       const response = await fetch(
-        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/drivers"
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/drivers",
       );
       const { drivers } = await response.json();
       const driverOptions = drivers.map((driver: Driver) => ({
@@ -111,7 +115,7 @@ export function New() {
   useEffect(() => {
     async function fetchReceivers() {
       const response = await fetch(
-        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/receivers"
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/receivers",
       );
       const data = await response.json();
       const receivers = data.drivers; // OBS Intressant namngivning i api. Enligt dokumentation.
@@ -343,12 +347,7 @@ export function New() {
               onClick={() => {
                 setSubmitFormStatus("");
                 if (submitFormStatus == "Paket skapat.") {
-                  //Återsäll forumuläret för att låta användare skriva in nästa paket.
-                  setPackageDetails(initialPackageDetails);
-                  setCurrentStep(steps[0]);
-                  setDriver({ value: "", label: "" });
-                  setReceiver({ value: "", label: "" });
-                  // Alternativ navigera till /sender
+                  navigate("/sender/qr/" + JSON.stringify(packageDetails));
                 }
               }}
             />

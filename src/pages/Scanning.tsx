@@ -12,27 +12,28 @@ const Scanning = () => {
      const [lastScanned, setLastScanned] = useState<string>("");
      const [isCreating, setIsCreating] = useState(false);
 
-     const handleScanSuccess = async (decodedText: string) => {
-          console.log("Skannad kod:", decodedText);
-          setLastScanned(decodedText);
-          setShowScanner(false);
+const handleScanSuccess = async (decodedText: string) => {
+     console.log("Skannad kod:", decodedText);
+     setLastScanned(decodedText);
+     setShowScanner(false);
+     
+     try {
+          setIsCreating(true);
+          const newPackage = await packageService.createPackageFromQR(decodedText);
 
-          try {
-               setIsCreating(true);
-               const newPackage = await packageService.createPackageFromQR(decodedText);
-               navigate('/confirmation-scanning', {
-                    state: {
-                         scannedCode: decodedText,
-                         packageId: newPackage.PackageID
-                    }
-               });
-          } catch (error) {
-               console.error("Fel vid skapande av paket:", error);
-               alert("Fel vid skapande av paket");
-          } finally {
-               setIsCreating(false);
-          }
-     };
+          navigate('/confirmation-scanning', { 
+               state: { 
+                    scannedCode: decodedText,
+                    packageId: newPackage.PackageID 
+               } 
+          });
+     } catch (error) {
+          console.error("Fel vid skapande av paket:", error);
+          alert("Kunde inte skapa paket. Försök igen.");
+     } finally {
+          setIsCreating(false);
+     }
+};
 
      return (
           <div className="min-h-screen flex flex-col bg-background">

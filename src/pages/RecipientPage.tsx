@@ -1,12 +1,55 @@
 import PackageItem from "../pages/PackageItem";
-
-const packages = [
-  { paketId: "12345", destination: "Stockholm", status: "Under transport" },
-  { paketId: "67890", destination: "Göteborg", status: "Levererad", showReceipt: true },
-  { paketId: "54321", destination: "Malmö", status: "Försenad" },
-];
+import { useState, useEffect } from "react";
+import { packageService } from "../api/packageService";
+import type { Package } from "../types/package";
 
 export default function RecipientPage() {
+  const [packages, setPackages] = useState<Package[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const response = await packageService.getAllPackages();
+        setPackages(response.packages);
+      } catch (err: unknown) {
+        console.error("Error fetching packages:", err);
+        setError("Failed to load packages");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPackages();
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-background px-6 py-8">
+        <div className="max-w-4xl mx-auto text-white text-center">
+          <div className="text-xl font-semibold">Loading packages...</div>
+        </div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="min-h-screen bg-background px-6 py-8">
+        <div className="max-w-4xl mx-auto text-white text-center">
+          <div className="text-xl font-semibold text-red-600">{error}</div>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-secondary text-dark rounded-lg"
+          >
+            Try Again
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-background px-6 py-8">
       <div className="max-w-4xl mx-auto space-y-12">
@@ -15,18 +58,18 @@ export default function RecipientPage() {
           <p className="text-md text-white text-center font-inter">Du har {packages.length} leveranser</p>
         </div>
 
-    <div className="space-y-4">
-     <div className="space-y-4">
-  {packages.map((pkg) => (
-    <PackageItem
-      key={pkg.paketId}
-      paketId={pkg.paketId}
-      destination={pkg.destination}
-      status={pkg.status}
-      showReceipt={pkg.showReceipt ?? false}
-    />
-  ))}
-</div>
+        <div className="space-y-4">
+          <div className="space-y-4">
+            {packages.map((pkg) => (
+              <PackageItem
+                key={pkg.PackageID}
+                paketId={pkg.PackageID.toString()}
+                destination={pkg.Destination || 'Unknown'}
+                status={pkg.Status || 'Unknown'}
+                showReceipt={pkg.Status === 'Delivered' || pkg.Status === 'Levererad'}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </main>

@@ -1,13 +1,24 @@
-import { PrimaryButton } from "../components/PrimaryButton"
-import { IoMdQrScanner } from "react-icons/io"
-import { FaPlus } from "react-icons/fa"
-import BackArrow from "../components/BackArrow"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PrimaryButton } from "../components/PrimaryButton";
+import { IoMdQrScanner } from "react-icons/io";
+import BackArrow from "../components/BackArrow";
+import QRScannerModal from "../components/Driver/QRScannerModal";
 
 const Scanning = () => {
+     const [showScanner, setShowScanner] = useState(true);
+     const navigate = useNavigate();
+     const [lastScanned, setLastScanned] = useState<string>("");
+
+     const handleScanSuccess = (decodedText: string) => {
+          console.log("Skannad kod:", decodedText);
+          setLastScanned(decodedText);
+          setShowScanner(false);
+          navigate('/confirmation-scanning', { state: { scannedCode: decodedText } });
+     };
+
      return (
           <div className="min-h-screen flex flex-col bg-background">
-
-
                <div className="relative p-5 bg-secondary text-text-dark">
                     <div className="absolute left-5 top-1/2 transform -translate-y-1/2">
                          <BackArrow />
@@ -16,10 +27,8 @@ const Scanning = () => {
                </div>
 
                <div className="flex-1 flex flex-col items-center justify-center px-5 pb-20">
-
                     <div className="mb-8">
                          <div className="w-56 h-56 border-[3px] border-text-dark rounded-[2rem] flex items-center justify-center relative">
-
                               <div className="absolute top-3 left-3 w-12 h-12 border-t-[3px] border-l-[3px] border-text-dark rounded-tl-xl"></div>
                               <div className="absolute top-3 right-3 w-12 h-12 border-t-[3px] border-r-[3px] border-text-dark rounded-tr-xl"></div>
                               <div className="absolute bottom-3 left-3 w-12 h-12 border-b-[3px] border-l-[3px] border-text-dark rounded-bl-xl"></div>
@@ -38,23 +47,35 @@ const Scanning = () => {
                          </p>
                     </div>
 
+                    {lastScanned && (
+                         <div className="mb-6 p-4 bg-green-100 border-2 border-green-400 rounded-lg w-full max-w-xs">
+                              <p className="font-semibold text-green-800 text-sm mb-1">
+                                   Senast skannad:
+                              </p>
+                              <p className="text-green-900 break-all">{lastScanned}</p>
+                         </div>
+                    )}
+
                     <div className="flex flex-col items-center w-full space-y-4">
                          <PrimaryButton
-                              text="Starta Skanning"
+                              text="Skanna igen"
                               icon={<IoMdQrScanner size={20} />}
-                              onClick={() => console.log("Starta Skanning")}
-                         />
-                         <PrimaryButton
-                              text="Ange Manuellt"
-                              icon={<FaPlus size={16} />}
-                              onClick={() => console.log("Ange Manuellt")}
+                              onClick={() => setShowScanner(true)}
                          />
                     </div>
-
                </div>
 
+               {showScanner && (
+                    <QRScannerModal
+                         onScanSuccess={handleScanSuccess}
+                         onClose={() => {
+                              setShowScanner(false);
+                              navigate('/driver');
+                         }}
+                    />
+               )}
           </div>
-     )
-}
+     );
+};
 
-export default Scanning
+export default Scanning;

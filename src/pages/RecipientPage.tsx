@@ -1,15 +1,7 @@
-import { useEffect, useState } from "react";
-import PackageItem from "../pages/PackageItem"; 
-
-type Package = {
-  paketId: string | number;
-  destination: string;
-  status: string;
-  showReceipt?: boolean;
-  driverName: string;
-  senderName: string;
-  receiverName: string; 
-};
+import PackageItem from "../pages/PackageItem";
+import { useState, useEffect } from "react";
+import { packageService } from "../api/packageService";
+import type { Package } from "../types/package";
 
 export default function RecipientPage() {
   const [packages, setPackages] = useState<Package[]>([]);
@@ -17,53 +9,45 @@ export default function RecipientPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchPackages() {
+    const fetchPackages = async () => {
       try {
-        const response = await fetch("https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/packages");
-        if (!response.ok) {
-          throw new Error("Ett fel uppstod vid hämtning av paket");
-        }
-        const data = await response.json();
-
-        if (data.success) {
-          type ApiPackage = {
-            PackageID: string | number;
-            Destination: string;
-            Status: string;
-            DriverName: string;
-            SenderName: string;
-            ReceiverName: string;
-          };
-
-          const fetchedPackages: Package[] = data.packages.map((pkg: ApiPackage) => ({
-            paketId: pkg.PackageID,
-            destination: pkg.Destination,
-            status: pkg.Status,
-            showReceipt: true, 
-            driverName: pkg.DriverName,
-            senderName: pkg.SenderName,
-            receiverName: pkg.ReceiverName,
-          }));
-          setPackages(fetchedPackages);
-        } else {
-          throw new Error("API svarade inte med success");
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Okänt fel");
+        const response = await packageService.getAllPackages();
+        setPackages(response.packages);
+      } catch (err: unknown) {
+        console.error("Error fetching packages:", err);
+        setError("Failed to load packages");
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchPackages();
   }, []);
 
   if (loading) {
-    return <div>Laddar paket...</div>;
+    return (
+      <main className="min-h-screen bg-background px-6 py-8">
+        <div className="max-w-4xl mx-auto text-white text-center">
+          <div className="text-xl font-semibold">Loading packages...</div>
+        </div>
+      </main>
+    );
   }
 
   if (error) {
-    return <div>Fel: {error}</div>;
+    return (
+      <main className="min-h-screen bg-background px-6 py-8">
+        <div className="max-w-4xl mx-auto text-white text-center">
+          <div className="text-xl font-semibold text-red-600">{error}</div>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-secondary text-dark rounded-lg"
+          >
+            Try Again
+          </button>
+        </div>
+      </main>
+    );
   }
 
   return (
@@ -74,20 +58,18 @@ export default function RecipientPage() {
           <p className="text-md text-white text-center font-inter">Du har {packages.length} leveranser</p>
         </div>
 
-        {/* Paketlista med PackageItem komponenten */}
         <div className="space-y-4">
-          {packages.map((item) => (
-            <PackageItem
-              key={item.paketId}
-              paketId={String(item.paketId)}
-              destination={item.destination}
-              status={item.status}
-              driverName={item.driverName}
-              senderName={item.senderName}
-              receiverName={item.receiverName}
-              showReceipt={true} 
-            />
-          ))}
+          <div className="space-y-4">
+            {packages.map((pkg) => (
+              <PackageItem
+                key={pkg.PackageID}
+                paketId={pkg.PackageID.toString()}
+                destination={pkg.Destination || 'Unknown'}
+                status={pkg.Status || 'Unknown'}
+                showReceipt={pkg.Status === 'Delivered' || pkg.Status === 'Levererad'}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </main>

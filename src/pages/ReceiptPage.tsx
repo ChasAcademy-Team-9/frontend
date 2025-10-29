@@ -1,81 +1,54 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 import BackArrow from "../components/BackArrow";
+import { useState, useEffect } from "react";
+import { packageService } from "../api/packageService";
+import type { Package } from "../types/package";
 
 export default function ReceiptPage() {
-  const { paketId } = useParams<{ paketId?: string }>();
-
-  interface PackageData {
-    paketId: string;
-    destination?: string;
-    status?: string;
-    date?: string;
-    [key: string]: string | undefined;
-  }
-
-  const [packageData, setPackageData] = useState<PackageData | null>(null);
+  const { paketId } = useParams();
+  const [packageData, setPackageData] = useState<Package | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPackage = async () => {
-    try {
-      const response = await fetch(`https://team9-webapp-b9f4e2g8hhfjeras.swedencentral-01.azurewebsites.net/api/packages/${paketId}`);
-      if (!response.ok) {
-        throw new Error("Något gick fel vid hämtning av data");
-      }
-      const data = await response.json();
-console.log("API-data:", data);
-      // Om API:t returnerar en lista av paket, filtrera efter paketId
-      const paket = Array.isArray(data)
-        ? data.find((p) => p.paketId === paketId)
-        : data; // Om API:t bara returnerar ett objekt, då behöver du inte filtrera
-
-      if (!paket) {
-        throw new Error("Paketet hittades inte");
-      }
-
-      setPackageData(data.package);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      setError(message || "Ett fel uppstod");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchPackage();
+    const fetchPackageData = async () => {
+      if (!paketId) {
+        setError("Package ID not found");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await packageService.getPackageById(parseInt(paketId));
+        setPackageData(response.package);
+      } catch (err: unknown) {
+        console.error("Error fetching package:", err);
+        setError("Failed to load package data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPackageData();
   }, [paketId]);
 
   if (loading) {
     return (
       <main className="min-h-screen bg-background px-6 py-8">
         <div className="max-w-md mx-auto text-white text-center">
-          <BackArrow />
-          <p className="mt-8 text-lg">Laddar kvitto...</p>
+          <div className="text-xl font-semibold">Loading receipt...</div>
         </div>
       </main>
     );
   }
 
-  if (error) {
-    return (
-      <main className="min-h-screen bg-background px-6 py-8">
-        <div className="max-w-md mx-auto text-white text-center">
-          <BackArrow />
-          <p className="mt-8 text-lg">{error}</p>
-        </div>
-      </main>
-    );
-  }
-
-  if (!packageData) {
+  if (error || !packageData) {
     return (
       <main className="min-h-screen bg-background px-6 py-8">
         <div className="max-w-md mx-auto text-white text-center">
           <BackArrow />
           <p className="mt-8 text-lg">
-            Ingen kvittoinformation hittades för <strong>{paketId}</strong>.
+            {error || `Ingen kvittoinformation hittades för ${paketId}.`}
           </p>
         </div>
       </main>
@@ -94,12 +67,26 @@ console.log("API-data:", data);
             <strong>Paket-ID:</strong> {packageData.PackageID}
           </p>
           <p className="text-white font-inter text-md">
-            <strong>Destination:</strong> {packageData.Destination}
+            <strong>Destination:</strong> {packageData.Destination || 'Unknown'}
           </p>
           <p className="text-white font-inter text-md">
-            <strong>Status:</strong> {packageData.Status}
+            <strong>Status:</strong> {packageData.Status || 'Unknown'}
           </p>
-       
+          <p className="text-white font-inter text-md">
+            <strong>Origin:</strong> {packageData.Origin || 'Unknown'}
+          </p>
+          <p className="text-white font-inter text-md">
+            <strong>Vikt:</strong> {packageData.PackageWeight} kg
+          </p>
+          <p className="text-white font-inter text-md">
+            <strong>Förare:</strong> {packageData.DriverName}
+          </p>
+          <p className="text-white font-inter text-md">
+            <strong>Avsändare:</strong> {packageData.SenderName}
+          </p>
+          <p className="text-white font-inter text-md">
+            <strong>Mottagare:</strong> {packageData.ReceiverName}
+          </p>
 
           <div className="flex justify-center pt-4">
             <button

@@ -77,6 +77,7 @@ export function New() {
       const data = await response.json();
       console.log(data);
       if (data.success == true) {
+        packageDetails.PackageID = data.package.PackageID; // Send id from api to qr-code page later.
         setSubmitFormStatus("Paket skapat.");
         console.log("Paket skapat. Svar från API:", data);
       }

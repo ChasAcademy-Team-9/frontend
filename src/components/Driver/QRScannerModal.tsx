@@ -12,6 +12,7 @@ const QRScannerModal = ({ onScanSuccess, onClose }: QRScannerModalProps) => {
      const [scannedResult, setScannedResult] = useState<string>("");
      const [error, setError] = useState<string>("");
      const html5QrCodeRef = useRef<Html5Qrcode | null>(null);
+     const hasScannedRef = useRef(false);
 
      useEffect(() => {
           startScanning();
@@ -19,7 +20,7 @@ const QRScannerModal = ({ onScanSuccess, onClose }: QRScannerModalProps) => {
           return () => {
                stopScanning();
           };
-     } );
+     }, []);
 
      const startScanning = async () => {
           try {
@@ -32,17 +33,23 @@ const QRScannerModal = ({ onScanSuccess, onClose }: QRScannerModalProps) => {
                          fps: 10,
                          qrbox: { width: 250, height: 250 },
                     },
-                    (decodedText) => {
+                    async (decodedText) => {
+                         // Förhindra multiple scans
+                         if (hasScannedRef.current) return;
+                         hasScannedRef.current = true;
+
                          console.log("✅ Streckkod läst:", decodedText);
                          setScannedResult(decodedText);
+                         
+                         // Stoppa scannern FÖRST
+                         await stopScanning();
+                         
+                         // Sedan kalla callbacks
                          onScanSuccess(decodedText);
-
-                         setTimeout(() => {
-                              stopScanning();
-                              onClose();
-                         }, 1500);
+                         onClose();
                     },
                     () => {
+                         // Error callback - gör inget
                     }
                );
           } catch (err) {
@@ -54,8 +61,12 @@ const QRScannerModal = ({ onScanSuccess, onClose }: QRScannerModalProps) => {
      const stopScanning = async () => {
           if (html5QrCodeRef.current) {
                try {
-                    await html5QrCodeRef.current.stop();
+                    const isScanning = html5QrCodeRef.current.isScanning;
+                    if (isScanning) {
+                         await html5QrCodeRef.current.stop();
+                    }
                     html5QrCodeRef.current.clear();
+                    html5QrCodeRef.current = null;
                } catch (err) {
                     console.error("Error stopping scanner:", err);
                }
@@ -71,8 +82,8 @@ const QRScannerModal = ({ onScanSuccess, onClose }: QRScannerModalProps) => {
                          text="Stäng"
                          icon={<IoMdClose size={20} />}
                          fullWidth={false}
-                         onClick={() => {
-                              stopScanning();
+                         onClick={async () => {
+                              await stopScanning();
                               onClose();
                          }}
                     />

@@ -42,17 +42,13 @@ const ConfirmationScanning = () => {
      return (
           <div className="min-h-screen bg-background p-4">
                <div className="text-center mb-6 mt-8">
-                    <div className="text-6xl mb-4">✅</div>
-                    <h1 className="text-2xl font-bold text-dark">
-                         Paket tillagt!
+                    <h1 className="text-2xl font-bold text-dark mt-2">
+                         Rapport Skickad
                     </h1>
-                    <p className="text-gray-600 mt-2">
-                         Paketet har lagts till i din lista
-                    </p>
                </div>
 
                {packageData && (
-                    <div className="mb-6 p-4 bg-green-100 border-2 border-green-400 rounded-lg animate-pulse">
+                    <div className="mb-6 p-4 bg-green-100 border-2 border-green-400 rounded-lg">
                          <Card
                               variant='package'
                               paketId={packageData.PackageID.toString()}
@@ -77,8 +73,8 @@ const ConfirmationScanning = () => {
                     />
                     <PrimaryButton
                          text="Tillbaka till listan"
-                         onClick={() => navigate('/package-list', { 
-                              state: { newPackageId: packageId } 
+                         onClick={() => navigate('/package-list', {
+                              state: { newPackageId: packageId }
                          })}
                          fullWidth
                     />

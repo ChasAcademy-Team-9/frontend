@@ -12,28 +12,27 @@ const Scanning = () => {
      const [lastScanned, setLastScanned] = useState<string>("");
      const [isCreating, setIsCreating] = useState(false);
 
-const handleScanSuccess = async (decodedText: string) => {
-     console.log("Skannad kod:", decodedText);
-     setLastScanned(decodedText);
-     setShowScanner(false);
-     
-     try {
-          setIsCreating(true);
-          const newPackage = await packageService.createPackageFromQR(decodedText);
+     const handleScanSuccess = async (decodedText: string) => {
+          console.log("Skannad kod:", decodedText);
+          setLastScanned(decodedText);
+          setShowScanner(false);
 
-          navigate('/confirmation-scanning', { 
-               state: { 
-                    scannedCode: decodedText,
-                    packageId: newPackage.PackageID 
-               } 
-          });
-     } catch (error) {
-          console.error("Fel vid skapande av paket:", error);
-          alert("Kunde inte skapa paket. Försök igen.");
-     } finally {
-          setIsCreating(false);
-     }
-};
+          try {
+               setIsCreating(true);
+               const existingPackage = await packageService.addExistingPackageFromQR(decodedText);
+               navigate('/confirmation-scanning', {
+                    state: {
+                         scannedCode: decodedText,
+                         packageId: existingPackage.package.PackageID
+                    }
+               });
+          } catch (error) {
+               console.error("Fel vid hämtning av paket:", error);
+               alert("Kunde inte hitta paketet. Försök igen.");
+          } finally {
+               setIsCreating(false);
+          }
+     };
 
      return (
           <div className="min-h-screen flex flex-col bg-background">
@@ -48,7 +47,7 @@ const handleScanSuccess = async (decodedText: string) => {
                     {isCreating ? (
                          <div className="text-center">
                               <div className="text-xl font-semibold text-dark">
-                                   Skapar paket...
+                                   Hämtar paket...
                               </div>
                          </div>
                     ) : (

@@ -1,8 +1,3 @@
-// Skicka hit pakteid eller all data?
-// skapa qr-kod
-// skriv ut knapp
-// tillbaka/hem knapp
-
 import { useNavigate, useParams } from "react-router-dom";
 
 import { PrimaryButton } from "../../components/PrimaryButton";
@@ -11,19 +6,42 @@ import { FaHome, FaPrint } from "react-icons/fa";
 import { QRCodeSVG } from "qrcode.react";
 
 export default function Qr() {
-  const { paketId } = useParams<{ paketId: string }>();
+  const { paket } = useParams<{ paket: string }>();
+  const paketData = JSON.parse(paket || "{}");
 
   const navigate = useNavigate();
 
   const qrCodeData = JSON.stringify({
-    paketId,
+    paketId: paketData.PackageID,
+    destination: paketData.Destination,
+    origin: paketData.Origin,
   });
 
   return (
-    <main>
-      <h1>Paket {paketId}</h1>
+    <main className="flex flex-col  gap-8 p-8 max-w-2xl mx-auto">
+      <h1>QR-kod skapad</h1>
+      <p>Skriv ut qr-koden och fäst på paketet.</p>
 
-      <QRCodeSVG value="paketId" />
+      <div className="flex gap-4 border-2 p-4 text-left">
+        <QRCodeSVG value={qrCodeData} />
+
+        <table>
+          <tbody>
+            <tr>
+              <th className="w-24">Paket-ID </th>
+              <td>{paketData.PackageID}</td>
+            </tr>
+            <tr>
+              <th>Till </th>
+              <td>{paketData.Destination}</td>
+            </tr>
+            <tr>
+              <th>Från </th>
+              <td>{paketData.Origin}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <PrimaryButton
         text="Skriv ut"

@@ -53,7 +53,7 @@ const router = createBrowserRouter([
   { path: "/receipt/:paketId", element: <ReceiptPage /> },
   { path: "/sender", element: <Sender /> },
   { path: "/sender/new", element: <New /> },
-  { path: "/sender/qr/:paketId", element: <Qr /> },
+  { path: "/sender/qr/:paket", element: <Qr /> },
   { path: "*", element: <NotFound /> },
   { path: "/photo", element: <Photo /> },
   { path: "/package-details-driver", element: <PackageDetailsDriver /> },
@@ -66,5 +66,5 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>
+  </StrictMode>,
 );

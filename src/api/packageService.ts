@@ -13,4 +13,11 @@ export const packageService = {
           const response = await apiClient.get<PackageResponse>(`/api/packages/${packageId}`);
           return response.data;
      },
+
+      createPackageFromQR: async (qrCode: string) => {
+    const response = await apiClient.post('/packages', {
+      qrCode: qrCode,
+    });
+    return response.data;
+  }
 };

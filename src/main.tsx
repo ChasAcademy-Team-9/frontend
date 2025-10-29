@@ -20,10 +20,10 @@ import ConfirmationDelivery from "./pages/ConfirmationDelivery.tsx";
 import Driver from "./pages/Driver.tsx";
 import { Sender } from "./pages/sender/Sender.tsx";
 import { New } from "./pages/sender/New.tsx";
+import Qr from "./pages/sender/Qr.tsx";
 import Photo from "./pages/Photo.tsx";
 import Scanning from "./pages/Scanning.tsx";
 import PackageDetailsDriver from "./pages/PackageDetailsDriver.tsx";
-
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -38,20 +38,29 @@ const router = createBrowserRouter([
   { path: "/confirmation-rapport", element: <ConfirmationRapport /> },
   { path: "/confirmation-rapport/:paketId", element: <ConfirmationRapport /> },
   { path: "/confirmation-scanning", element: <ConfirmationScanning /> },
-  { path: "/confirmation-scanning/:paketId", element: <ConfirmationScanning /> },
+  {
+    path: "/confirmation-scanning/:paketId",
+    element: <ConfirmationScanning />,
+  },
   { path: "/confirmation-delivery", element: <ConfirmationDelivery /> },
-  { path: "/confirmation-delivery/:paketId", element: <ConfirmationDelivery /> },
+  {
+    path: "/confirmation-delivery/:paketId",
+    element: <ConfirmationDelivery />,
+  },
   { path: "/scanning", element: <Scanning /> },
   { path: "/recipient", element: <Recipient /> },
   { path: "/package/:paketId", element: <PackageDetailsPage /> },
   { path: "/receipt/:paketId", element: <ReceiptPage /> },
   { path: "/sender", element: <Sender /> },
   { path: "/sender/new", element: <New /> },
+  { path: "/sender/qr/:paketId", element: <Qr /> },
   { path: "*", element: <NotFound /> },
   { path: "/photo", element: <Photo /> },
   { path: "/package-details-driver", element: <PackageDetailsDriver /> },
-  { path: "/package-details-driver/:paketId", element: <PackageDetailsDriver /> }
-
+  {
+    path: "/package-details-driver/:paketId",
+    element: <PackageDetailsDriver />,
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(

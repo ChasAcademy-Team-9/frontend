@@ -4,6 +4,7 @@ import Input from "../../components/Input";
 import { PrimaryButton } from "../../components/PrimaryButton";
 import BackArrow from "../../components/BackArrow";
 import { SecondaryButton } from "../../components/SecondaryButton";
+import HeaderNavigation from "../../components/HeaderNavigation";
 
 type PackageDetails = {
   PackageID?: number;
@@ -69,7 +70,7 @@ export function New() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(packageDetails),
-        }
+        },
       );
       const data = await response.json();
       console.log(data);
@@ -95,7 +96,7 @@ export function New() {
   useEffect(() => {
     async function fetchDrivers() {
       const response = await fetch(
-        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/drivers"
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/drivers",
       );
       const { drivers } = await response.json();
       const driverOptions = drivers.map((driver: Driver) => ({
@@ -111,7 +112,7 @@ export function New() {
   useEffect(() => {
     async function fetchReceivers() {
       const response = await fetch(
-        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/receivers"
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/receivers",
       );
       const data = await response.json();
       const receivers = data.drivers; // OBS Intressant namngivning i api. Enligt dokumentation.
@@ -129,235 +130,244 @@ export function New() {
   const [receiver, setReceiver] = useState({ value: "", label: "" });
 
   return (
-    <main className="flex flex-col p-8 gap-8 max-w-4xl mx-auto">
-      <header className="flex gap-2">
-        <BackArrow />
-        <div className="flex flex-col">
-          <h1 className="text-4xl">Nytt paket</h1>
-          <p>
-            Steg {currentStep.number} av {steps.length}: {currentStep.name}
-          </p>
-        </div>
-      </header>
-      <form className="flex flex-col gap-8 bg-white/75 p-4 m-[-1rem] rounded-b-3xl rounded-t-2xl min-h-[calc(100vh-16rem)]">
-        {currentStep.number == 1 && (
-          <>
-            <Input
-              label="Vikt (kg)"
-              name="0.0"
-              id="weight"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  PackageWeight: +e.target.value,
-                })
-              }
-              value={packageDetails.PackageWeight || ""}
-            />
-            <fieldset className="flex flex-wrap gap-4">
-              <legend>Storlek (cm)</legend>
+    <>
+      <HeaderNavigation />
+      <main className="flex flex-col p-8 gap-8 max-w-4xl mx-auto">
+        <header className="flex gap-2">
+          <BackArrow />
+          <div className="flex flex-col">
+            <h1 className="text-4xl">Nytt paket</h1>
+            <p>
+              Steg {currentStep.number} av {steps.length}: {currentStep.name}
+            </p>
+          </div>
+        </header>
+        <form className="flex flex-col gap-8 bg-white/75 p-4 m-[-1rem] rounded-b-3xl rounded-t-2xl min-h-[calc(100vh-16rem)]">
+          {currentStep.number == 1 && (
+            <>
               <Input
-                label=""
-                id="l"
-                name="Längd"
-                className="flex-1 basis-full md:basis-1/4"
+                label="Vikt (kg)"
+                name="0.0"
+                id="weight"
                 onChange={(e) =>
                   setPackageDetails({
                     ...packageDetails,
-                    PackageDepth: +e.target.value,
+                    PackageWeight: +e.target.value,
                   })
                 }
-                value={packageDetails.PackageDepth || ""}
+                value={packageDetails.PackageWeight || ""}
               />
-              <Input
-                label=""
-                id="w"
-                name="Bredd"
-                className="flex-1 basis-full md:basis-1/4"
-                onChange={(e) =>
-                  setPackageDetails({
-                    ...packageDetails,
-                    PackageWidth: +e.target.value,
-                  })
-                }
-                value={packageDetails.PackageWidth || ""}
-              />
-              <Input
-                label=""
-                id="h"
-                name="Höjd"
-                className="flex-1 basis-full md:basis-1/4"
-                onChange={(e) =>
-                  setPackageDetails({
-                    ...packageDetails,
-                    PackageHeight: +e.target.value,
-                  })
-                }
-                value={packageDetails.PackageHeight || ""}
-              />
-            </fieldset>
-          </>
-        )}
-        {currentStep.number == 2 && (
-          <>
-            <label>
-              Förare
-              <Dropdown
-                onSelect={(o) => {
-                  setDriver(o);
-                  setPackageDetails({
-                    ...packageDetails,
-                    DriverID: +o.value,
-                  });
-                }}
-                options={drivers}
-                selectedValue={driver.value}
-                placeholder="Välj förare"
-              />
-            </label>
-            <label>
-              Mottagare
-              <Dropdown
-                onSelect={(o) => {
-                  setReceiver(o);
-                  setPackageDetails({
-                    ...packageDetails,
-                    ReceiverID: +o.value,
-                  });
-                }}
-                options={recievers}
-                selectedValue={receiver.value}
-                placeholder="Välj mottagare"
-              />
-            </label>
-          </>
-        )}
-        {currentStep.number == 3 && (
-          <>
-            <Input
-              label="Avsändarens adress"
-              id="origin"
-              name="Malmö"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  Origin: e.target.value,
-                })
-              }
-              value={packageDetails.Origin || ""}
-            />
-            <Input
-              label="Mottagarens adress"
-              id="destination"
-              name="Göteborg"
-              onChange={(e) =>
-                setPackageDetails({
-                  ...packageDetails,
-                  Destination: e.target.value,
-                })
-              }
-              value={packageDetails.Destination || ""}
-            />
-          </>
-        )}
-        {currentStep.number == 4 && (
-          <>
-            <p>Kontrollera att uppgifterna stämmer.</p>
-            <table className="text-left">
-              <caption className="text-left text-xl border-b">
-                Paketdetaljer
-              </caption>
-              <tbody>
-                <tr>
-                  <th>Vikt</th>
-                  <td>{packageDetails.PackageWeight + " kg"}</td>
-                </tr>
-                <tr>
-                  <th>Storlek</th>
-                  <td>
-                    {packageDetails.PackageDepth} x{" "}
-                    {packageDetails.PackageWidth} x{" "}
-                    {packageDetails.PackageHeight} cm
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className="text-left">
-              <caption className="text-left text-xl border-b">Leverans</caption>
-              <tbody>
-                <tr>
-                  <th className="w-1/4">Förare</th>
-                  <td>{driver.label}</td>
-                </tr>
-                <tr>
-                  <th>Mottagare</th>
-                  <td>{receiver.label}</td>
-                </tr>
-              </tbody>
-            </table>
-            <table className="text-left">
-              <caption className="text-left text-xl border-b">Adresser</caption>
-              <tbody>
-                <tr>
-                  <th className="w-1/4">Avsändare</th>
-                  <td>{packageDetails.Origin}</td>
-                </tr>
-                <tr>
-                  <th>Mottagare</th>
-                  <td>{packageDetails.Destination}</td>
-                </tr>
-              </tbody>
-            </table>
-          </>
-        )}
-        <nav
-          className={
-            "grid " +
-            (currentStep.number != 1
-              ? "sm:grid-cols-1 md:grid-cols-2"
-              : "grid-cols-1") +
-            " gap-4 mt-auto"
-          }
-        >
-          {currentStep.number != 1 && (
-            <SecondaryButton text="Föregående steg" onClick={prevStep} />
+              <fieldset className="flex flex-wrap gap-4">
+                <legend>Storlek (cm)</legend>
+                <Input
+                  label=""
+                  id="l"
+                  name="Längd"
+                  className="flex-1 basis-full md:basis-1/4"
+                  onChange={(e) =>
+                    setPackageDetails({
+                      ...packageDetails,
+                      PackageDepth: +e.target.value,
+                    })
+                  }
+                  value={packageDetails.PackageDepth || ""}
+                />
+                <Input
+                  label=""
+                  id="w"
+                  name="Bredd"
+                  className="flex-1 basis-full md:basis-1/4"
+                  onChange={(e) =>
+                    setPackageDetails({
+                      ...packageDetails,
+                      PackageWidth: +e.target.value,
+                    })
+                  }
+                  value={packageDetails.PackageWidth || ""}
+                />
+                <Input
+                  label=""
+                  id="h"
+                  name="Höjd"
+                  className="flex-1 basis-full md:basis-1/4"
+                  onChange={(e) =>
+                    setPackageDetails({
+                      ...packageDetails,
+                      PackageHeight: +e.target.value,
+                    })
+                  }
+                  value={packageDetails.PackageHeight || ""}
+                />
+              </fieldset>
+            </>
           )}
-          <PrimaryButton
-            text={
-              currentStep.number != steps.length ? "Nästa steg" : "Skapa paket"
+          {currentStep.number == 2 && (
+            <>
+              <label>
+                Förare
+                <Dropdown
+                  onSelect={(o) => {
+                    setDriver(o);
+                    setPackageDetails({
+                      ...packageDetails,
+                      DriverID: +o.value,
+                    });
+                  }}
+                  options={drivers}
+                  selectedValue={driver.value}
+                  placeholder="Välj förare"
+                />
+              </label>
+              <label>
+                Mottagare
+                <Dropdown
+                  onSelect={(o) => {
+                    setReceiver(o);
+                    setPackageDetails({
+                      ...packageDetails,
+                      ReceiverID: +o.value,
+                    });
+                  }}
+                  options={recievers}
+                  selectedValue={receiver.value}
+                  placeholder="Välj mottagare"
+                />
+              </label>
+            </>
+          )}
+          {currentStep.number == 3 && (
+            <>
+              <Input
+                label="Avsändarens adress"
+                id="origin"
+                name="Malmö"
+                onChange={(e) =>
+                  setPackageDetails({
+                    ...packageDetails,
+                    Origin: e.target.value,
+                  })
+                }
+                value={packageDetails.Origin || ""}
+              />
+              <Input
+                label="Mottagarens adress"
+                id="destination"
+                name="Göteborg"
+                onChange={(e) =>
+                  setPackageDetails({
+                    ...packageDetails,
+                    Destination: e.target.value,
+                  })
+                }
+                value={packageDetails.Destination || ""}
+              />
+            </>
+          )}
+          {currentStep.number == 4 && (
+            <>
+              <p>Kontrollera att uppgifterna stämmer.</p>
+              <table className="text-left">
+                <caption className="text-left text-xl border-b">
+                  Paketdetaljer
+                </caption>
+                <tbody>
+                  <tr>
+                    <th>Vikt</th>
+                    <td>{packageDetails.PackageWeight + " kg"}</td>
+                  </tr>
+                  <tr>
+                    <th>Storlek</th>
+                    <td>
+                      {packageDetails.PackageDepth} x{" "}
+                      {packageDetails.PackageWidth} x{" "}
+                      {packageDetails.PackageHeight} cm
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table className="text-left">
+                <caption className="text-left text-xl border-b">
+                  Leverans
+                </caption>
+                <tbody>
+                  <tr>
+                    <th className="w-1/4">Förare</th>
+                    <td>{driver.label}</td>
+                  </tr>
+                  <tr>
+                    <th>Mottagare</th>
+                    <td>{receiver.label}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table className="text-left">
+                <caption className="text-left text-xl border-b">
+                  Adresser
+                </caption>
+                <tbody>
+                  <tr>
+                    <th className="w-1/4">Avsändare</th>
+                    <td>{packageDetails.Origin}</td>
+                  </tr>
+                  <tr>
+                    <th>Mottagare</th>
+                    <td>{packageDetails.Destination}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </>
+          )}
+          <nav
+            className={
+              "grid " +
+              (currentStep.number != 1
+                ? "sm:grid-cols-1 md:grid-cols-2"
+                : "grid-cols-1") +
+              " gap-4 mt-auto"
             }
-            onClick={nextStep}
-          />
-        </nav>
-      </form>
-      <div
-        className={`fixed top-0 left-0 right-0 bottom-0 m-0 p-0 grid place-items-center  bg-gray-400/50  ${
-          submitFormStatus ? "" : " hidden"
-        }`}
-      >
-        <div className="flex flex-col bg-background rounded-3xl shadow-lg gap-4 p-4">
-          <p>{submitFormStatus}</p>
-          {submitFormStatus != "Skickar paket..." ? (
+          >
+            {currentStep.number != 1 && (
+              <SecondaryButton text="Föregående steg" onClick={prevStep} />
+            )}
             <PrimaryButton
-              text="OK"
-              onClick={() => {
-                setSubmitFormStatus("");
-                if (submitFormStatus == "Paket skapat.") {
-                  //Återsäll forumuläret för att låta användare skriva in nästa paket.
-                  setPackageDetails(initialPackageDetails);
-                  setCurrentStep(steps[0]);
-                  setDriver({ value: "", label: "" });
-                  setReceiver({ value: "", label: "" });
-                  // Alternativ navigera till /sender
-                }
-              }}
+              text={
+                currentStep.number != steps.length
+                  ? "Nästa steg"
+                  : "Skapa paket"
+              }
+              onClick={nextStep}
             />
-          ) : (
-            ""
-          )}
+          </nav>
+        </form>
+        <div
+          className={`fixed top-0 left-0 right-0 bottom-0 m-0 p-0 grid place-items-center  bg-gray-400/50  ${
+            submitFormStatus ? "" : " hidden"
+          }`}
+        >
+          <div className="flex flex-col bg-background rounded-3xl shadow-lg gap-4 p-4">
+            <p>{submitFormStatus}</p>
+            {submitFormStatus != "Skickar paket..." ? (
+              <PrimaryButton
+                text="OK"
+                onClick={() => {
+                  setSubmitFormStatus("");
+                  if (submitFormStatus == "Paket skapat.") {
+                    //Återsäll forumuläret för att låta användare skriva in nästa paket.
+                    setPackageDetails(initialPackageDetails);
+                    setCurrentStep(steps[0]);
+                    setDriver({ value: "", label: "" });
+                    setReceiver({ value: "", label: "" });
+                    // Alternativ navigera till /sender
+                  }
+                }}
+              />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 

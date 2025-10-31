@@ -5,7 +5,7 @@ import Input from "../components/Input";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
-import { packageService } from "../api/packageService";
+// import { packageService } from "../api/packageService";
 import type { Package } from "../types/package";
 import { FaSearch, FaTimes } from "react-icons/fa";
 import HeaderNavigation from "../components/HeaderNavigation";
@@ -21,6 +21,14 @@ const PackageList = () => {
   const [searchPackageId, setSearchPackageId] = useState("");
   const [searchDestination, setSearchDestination] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]);
 
   const quickFilters = [
     { label: "Alla", status: "" },
@@ -88,8 +96,21 @@ const PackageList = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await packageService.getAllPackages();
-        setPackages(response.packages);
+        // const response = await packageService.getAllPackages();
+
+        const response = await fetch(
+          "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/package/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          },
+        );
+
+        const data = await response.json();
+
+        setPackages(data.packages);
 
         if (location.state?.newPackageId) {
           setNewPackageId(location.state.newPackageId);
@@ -103,7 +124,7 @@ const PackageList = () => {
     };
 
     fetchPackages();
-  }, [location.state]);
+  }, [token, location.state?.newPackageId]);
 
   useEffect(() => {
     if (newPackageId) {

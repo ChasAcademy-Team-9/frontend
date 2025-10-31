@@ -104,6 +104,7 @@ export function New() {
         "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/register/drivers",
       );
       const { drivers } = await response.json();
+      console.log("Förare hämtade från API:", drivers);
       const driverOptions = drivers.map((driver: Driver) => ({
         value: driver.DriverID,
         label: driver.FirstName + " " + driver.LastName,
@@ -131,8 +132,27 @@ export function New() {
     fetchReceivers();
   }, []);
 
+  const [arduinos, setArduinos] = useState([]);
+  useEffect(() => {
+    async function fetchArdunios() {
+      const response = await fetch(
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/arduino/available",
+      );
+      const data = await response.json();
+      const arduinos = data.arduinos;
+      console.log("Lediga ardunio hämtade från API:", arduinos);
+      const arduinoOptions = arduinos.map((arduino) => ({
+        value: arduino.ArduinoID,
+        label: arduino.ArduinoID,
+      }));
+      setArduinos(arduinoOptions);
+    }
+    fetchArdunios();
+  }, []);
+
   const [driver, setDriver] = useState({ value: "", label: "" });
   const [receiver, setReceiver] = useState({ value: "", label: "" });
+  const [arduino, setArduino] = useState({ value: "", label: "" });
 
   return (
     <main className="flex flex-col p-8 gap-8 max-w-4xl mx-auto">
@@ -236,6 +256,18 @@ export function New() {
                 placeholder="Välj mottagare"
               />
             </label>
+            <label>
+              Arduino
+              <Dropdown
+                onSelect={(o) => {
+                  setArduino(o);
+                  // Skickas inte med i package details.
+                }}
+                options={arduinos}
+                selectedValue={arduino.value}
+                placeholder="Välj arduino"
+              />
+            </label>
           </>
         )}
         {currentStep.number == 3 && (
@@ -298,6 +330,10 @@ export function New() {
                 <tr>
                   <th>Mottagare</th>
                   <td>{receiver.label}</td>
+                </tr>
+                <tr>
+                  <th>Arduino</th>
+                  <td>{arduino.label}</td>
                 </tr>
               </tbody>
             </table>

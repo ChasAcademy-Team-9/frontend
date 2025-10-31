@@ -27,6 +27,8 @@ type PackageDetails = {
 export function New() {
   const navigate = useNavigate();
 
+  const senderId = parseInt(localStorage.getItem("id") || "");
+
   const steps = [
     {
       number: 1,
@@ -44,7 +46,7 @@ export function New() {
   ];
   const [currentStep, setCurrentStep] = useState(steps[0]);
   const initialPackageDetails: PackageDetails = {
-    SenderID: 1, // TODO Lägg in sender id från JWT-token
+    SenderID: senderId,
     PackageID: 999, // Skapas av api? Dokumentationen säger att det ska skickas
     Status: "Created", // Samma här
   };

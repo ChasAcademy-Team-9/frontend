@@ -26,6 +26,12 @@ const Driver = () => {
 
   const token = localStorage.getItem("token");
 
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]);
+
   // Hämta paket och beräkna förarstatistik (ME) V2
   useEffect(() => {
     const fetchDriverData = async () => {

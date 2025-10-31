@@ -5,7 +5,7 @@ import BottomNav from "../components/BottomNav";
 import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { packageService } from "../api/packageService";
+// import { packageService } from "../api/packageService";
 import type { Package } from "../types/package";
 import HeaderNavigation from "../components/HeaderNavigation";
 
@@ -24,21 +24,35 @@ const Driver = () => {
     }),
   });
 
-  // Hämta paket och beräkna förarstatistik
+  const token = localStorage.getItem("token");
+
+  // Hämta paket och beräkna förarstatistik (ME) V2
   useEffect(() => {
     const fetchDriverData = async () => {
       try {
         setLoading(true);
-        const response = await packageService.getAllPackages();
+        // const response = await packageService.getAllPackages();
+
+        const response = await fetch(
+          "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/package/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          },
+        );
+
+        const data = await response.json();
 
         // Set packages for the driver list
-        setPackages(response.packages);
+        setPackages(data.packages);
 
         // Beräkna statistik från paket
-        const totalPackages = response.packages.length;
+        const totalPackages = data.packages.length;
 
         // Beräkna total distans (exempelberäkning baserad på tillgänglig data)
-        const totalDistance = calculateTotalDistance(response.packages);
+        const totalDistance = calculateTotalDistance(data.packages);
 
         // Beräkna medelhastighet (exempel: distans/tidsuppskattning)
         const averageSpeed =
@@ -77,7 +91,62 @@ const Driver = () => {
     }, 60000);
 
     return () => clearInterval(timeInterval);
-  }, []);
+  }, [token]);
+
+  // // Hämta paket och beräkna förarstatistik
+  // useEffect(() => {
+  //   const fetchDriverData = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const response = await packageService.getAllPackages();
+
+  //       // Set packages for the driver list
+  //       setPackages(response.packages);
+
+  //       // Beräkna statistik från paket
+  //       const totalPackages = response.packages.length;
+
+  //       // Beräkna total distans (exempelberäkning baserad på tillgänglig data)
+  //       const totalDistance = calculateTotalDistance(response.packages);
+
+  //       // Beräkna medelhastighet (exempel: distans/tidsuppskattning)
+  //       const averageSpeed =
+  //         totalDistance > 0
+  //           ? Math.round(totalDistance / Math.max(totalPackages * 0.5, 1))
+  //           : 0;
+
+  //       setDriverStats({
+  //         totalPackages,
+  //         totalDistance,
+  //         averageSpeed,
+  //         currentTime: new Date().toLocaleTimeString("sv-SE", {
+  //           hour: "2-digit",
+  //           minute: "2-digit",
+  //         }),
+  //       });
+  //     } catch (err) {
+  //       console.error("Fel vid hämtning av förardata:", err);
+  //       setError("Kunde inte ladda förardata");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchDriverData();
+
+  //   // Uppdatera tid varje minut
+  //   const timeInterval = setInterval(() => {
+  //     setDriverStats((prev) => ({
+  //       ...prev,
+  //       currentTime: new Date().toLocaleTimeString("sv-SE", {
+  //         hour: "2-digit",
+  //         minute: "2-digit",
+  //       }),
+  //     }));
+  //   }, 60000);
+
+  //   return () => clearInterval(timeInterval);
+  // }, []);
 
   // Beräkna total distans från paket
   const calculateTotalDistance = (packages: Package[]): number => {
@@ -201,7 +270,7 @@ const Driver = () => {
             {!loading && !error && (
               <div className="space-y-4">
                 <h2 className="text-xl font-bold text-dark">
-                  Paketlista (sorterat efter prioritet)
+                  Paketlista {packages.length} paket (sorterat efter prioritet)
                 </h2>
                 {packages.length > 0 ? (
                   getSortedPackages(packages).map((pkg) => (

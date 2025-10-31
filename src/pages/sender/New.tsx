@@ -66,6 +66,8 @@ export function New() {
     try {
       setSubmitFormStatus("Skickar paket...");
       console.log("Nytt paket:", packageDetails);
+
+      // Skapa paket.
       const response = await fetch(
         "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/packages",
         {
@@ -77,11 +79,36 @@ export function New() {
         },
       );
       const data = await response.json();
-      console.log(data);
+      console.log("Svar från POST /api/packages", data);
       if (data.success == true) {
         packageDetails.PackageID = data.package.PackageID; // Send id from api to qr-code page later.
+      } else {
+        throw new Error("API did not return success: true");
+      }
+
+      // Skapa koppling till arduino
+      const response2 = await fetch(
+        "https://team9testwebapp-h3b5c7gqgbeqhxgp.swedencentral-01.azurewebsites.net/api/arduino",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ArduinoID: +arduino.value,
+            PackageID: +data.package.PackageID,
+          }),
+        },
+      );
+      console.log("resreser", response2);
+      const data2 = await response2.json();
+      console.log(
+        "Svar från koppla paket och arduino POST /api/arduino",
+        data2,
+      );
+
+      if (response2.ok) {
         setSubmitFormStatus("Paket skapat.");
-        console.log("Paket skapat. Svar från API:", data);
       }
     } catch (error) {
       setSubmitFormStatus("Misslyckades skapa paket.");

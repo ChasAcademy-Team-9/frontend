@@ -109,7 +109,7 @@ export default function RecipientPage() {
                   destination={pkg.Destination || "Unknown"}
                   status={pkg.Status || "Unknown"}
                   showReceipt={
-                    pkg.Status === "Delivered" || pkg.Status === "Levererad"
+                    pkg.Status === "Delivered" || pkg.Status === "Registered"
                   }
                   driverName={pkg.DriverName}
                   senderName={pkg.SenderName}

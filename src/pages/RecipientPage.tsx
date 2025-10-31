@@ -1,6 +1,6 @@
 import PackageItem from "../pages/PackageItem";
 import { useState, useEffect } from "react";
-import { packageService } from "../api/packageService";
+// import { packageService } from "../api/packageService";
 import type { Package } from "../types/package";
 import HeaderNavigation from "../components/HeaderNavigation";
 import LoadingAnimation from "../components/LoadingAnimation";

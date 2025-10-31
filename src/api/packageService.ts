@@ -13,4 +13,20 @@ export const packageService = {
           const response = await apiClient.get<PackageResponse>(`/api/packages/${packageId}`);
           return response.data;
      },
+
+     // Hämta befintligt paket från QR-kod (lägg till i lista)
+     addExistingPackageFromQR: async (qrCode: string): Promise<PackageResponse> => {
+          const qrData = JSON.parse(qrCode);
+          const packageId = qrData.paketId;
+
+          const response = await apiClient.get<PackageResponse>(`/api/packages/${packageId}`);
+          return response.data;
+     },
+
+     createPackageFromQR: async (qrCode: string) => {
+          const response = await apiClient.post('/api/packages', { 
+               qrCode: qrCode,
+          });
+          return response.data;
+     }
 };
